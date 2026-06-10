@@ -205,7 +205,8 @@ select {
 }
 
 .panel.wide,
-.kpi-grid.wide {
+.kpi-grid.wide,
+.posture-grid.wide {
   grid-column: 1 / -1;
 }
 
@@ -228,6 +229,56 @@ select {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
+}
+
+.posture-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.posture-card {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 12px;
+  align-items: start;
+  min-height: 126px;
+  border: 1px solid rgba(32, 47, 44, 0.1);
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 14px 30px rgba(32, 47, 44, 0.08);
+}
+
+.posture-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: #e8f4ef;
+  color: #0f6f62;
+}
+
+.posture-card p {
+  margin: 0 0 5px;
+  color: #52635f;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.posture-card strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.35rem;
+}
+
+.posture-card em,
+.module-row em,
+.definition-grid span {
+  color: #52635f;
+  font-size: 0.84rem;
+  font-style: normal;
 }
 
 .kpi-tile {
@@ -420,13 +471,16 @@ select {
 }
 
 .option-list,
-.driver-list {
+.driver-list,
+.module-map,
+.definition-grid {
   display: grid;
   gap: 10px;
 }
 
 .option-row,
-.driver-row {
+.driver-row,
+.module-row {
   display: grid;
   gap: 5px;
   padding: 10px 0;
@@ -434,7 +488,8 @@ select {
 }
 
 .option-row:last-child,
-.driver-row:last-child {
+.driver-row:last-child,
+.module-row:last-child {
   border-bottom: 0;
 }
 
@@ -454,6 +509,38 @@ select {
 .driver-row {
   grid-template-columns: 1fr auto;
   align-items: center;
+}
+
+.module-map {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.module-row {
+  min-height: 112px;
+  border: 1px solid #dce8e3;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fbfdfc;
+}
+
+.module-row span {
+  color: #405753;
+  font-size: 0.86rem;
+}
+
+.definition-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.definition-grid article {
+  min-height: 92px;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  border: 1px solid #dce8e3;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fbfdfc;
 }
 
 .model-card dl {
@@ -553,7 +640,10 @@ footer {
   }
 
   .kpi-grid,
-  .heat-grid {
+  .heat-grid,
+  .posture-grid,
+  .module-map,
+  .definition-grid {
     grid-template-columns: 1fr;
   }
 
@@ -570,4 +660,3 @@ footer {
     grid-template-columns: 1fr;
   }
 }
-

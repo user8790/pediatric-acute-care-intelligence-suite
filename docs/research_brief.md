@@ -136,6 +136,10 @@ Useful sources:
 - Franklin et al., "Hospital Capacity Command Centers: A Benchmarking Survey on an Emerging Mechanism to Manage Patient Flow," PubMed: https://pubmed.ncbi.nlm.nih.gov/36781349/
 - Johns Hopkins Medicine, Judy Reitz Capacity Command Center: https://www.hopkinsmedicine.org/emergency-medicine/c3
 - Johns Hopkins Medicine, command center announcement: https://www.hopkinsmedicine.org/news/articles/2016/03/command-center-to-improve-patient-flow
+- Cincinnati Children's Access Hub, described by Cincinnati Children's as a central capacity command center for access, capacity, flow, referrals, transfers, direct admits, and transport: https://www.cincinnatichildrens.org/professional/resources/access-hub
+- SickKids SKAI Service, described as an enterprise service to develop, assess, monitor, and scale AI systems for patients, families, and staff: https://www.sickkids.ca/en/news/archive/2025/sickkids-launches-trailblazing-artificial-intelligence-program-for-paediatric-health/
+- CHOP Arcus and pediatric sepsis surveillance work: https://www.research.chop.edu/cornerstone-blog/chop-researchers-co-leading-cdc-project-to-develop-national-pediatric-sepsis-surveillance-tool
+- CHOP Arcus case study describing linkage of biological, clinical, research, and environmental data: https://aws.amazon.com/solutions/case-studies/chop-omics-case-study/
 
 Design implications:
 
@@ -184,3 +188,22 @@ Design implications:
 - Future real-data integration happens through curated, de-identified or appropriately governed Snowflake views.
 - No direct PHI, MRNs, health-card numbers, addresses, phone numbers, or patient names are generated.
 - Streamlit in Snowflake apps are designed for Snowsight upload/copy workflows and no local installs on target AHS computers.
+
+## Governance and Reporting Standards Added in the Quality Pass
+
+The quality pass strengthened the app and documentation around standards named in the user's guidance:
+
+- TRIPOD+AI for clinical prediction model reporting and validation transparency: https://www.tripod-statement.org/
+- NIST AI Risk Management Framework for AI lifecycle risk management: https://www.nist.gov/itl/ai-risk-management-framework
+- Health Canada/FDA/MHRA Good Machine Learning Practice guidance for AI/ML-enabled medical-device development: https://www.canada.ca/en/health-canada/services/drugs-health-products/medical-devices/good-machine-learning-practice-medical-device-development.html
+- Alberta Health Information Act overview: https://www.alberta.ca/health-information-act
+- SMART on FHIR documentation: https://docs.smarthealthit.org/
+- CDS Hooks specification: https://cds-hooks.hl7.org/
+
+## Streamlit Community Cloud Deployment Note
+
+Streamlit Community Cloud documentation says dependency files are searched from the entrypoint directory first and that `environment.yml` has higher priority than `requirements.txt`. Because the Snowflake apps must keep Snowflake-channel `environment.yml` files, this repository now includes separate Community Cloud wrappers under `apps/streamlit_cloud`.
+
+Source:
+
+- Streamlit Community Cloud app dependencies: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies

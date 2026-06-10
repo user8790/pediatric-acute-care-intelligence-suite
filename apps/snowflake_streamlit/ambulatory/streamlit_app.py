@@ -6,16 +6,32 @@ from pathlib import Path
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[3]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+APP_DIR = Path(__file__).resolve().parent
+for candidate in (
+    APP_DIR / "lib",
+    APP_DIR / "shared" / "lib",
+    APP_DIR.parent / "shared" / "lib",
+    ROOT,
+):
+    if candidate.exists() and str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
 
-from apps.snowflake_streamlit.shared.lib.common import (  # noqa: E402
-    SYNTHETIC_NOTICE,
-    load_table_or_sample,
-    safe_metric,
-    status_panel,
-    try_store_scenario,
-)
+try:
+    from common import (  # type: ignore  # noqa: E402
+        SYNTHETIC_NOTICE,
+        load_table_or_sample,
+        safe_metric,
+        status_panel,
+        try_store_scenario,
+    )
+except Exception:  # pragma: no cover - local repo fallback
+    from apps.snowflake_streamlit.shared.lib.common import (  # noqa: E402
+        SYNTHETIC_NOTICE,
+        load_table_or_sample,
+        safe_metric,
+        status_panel,
+        try_store_scenario,
+    )
 
 st.set_page_config(page_title="Ambulatory Access Intelligence Centre", layout="wide")
 
@@ -53,6 +69,10 @@ if access.data.empty:
     st.error("No ambulatory access data found. Run the Snowflake setup SQL or generate local samples.")
     st.stop()
 
+persona = st.sidebar.selectbox(
+    "Role view",
+    ["Executive", "Ambulatory program", "Clinic operations", "Access hub", "Analytics"],
+)
 site_options = ["All sites"] + sorted(access.data["site_id"].dropna().astype(str).unique().tolist())
 program_options = ["All programs"] + sorted(access.data["program"].dropna().astype(str).unique().tolist())
 site = st.sidebar.selectbox("Site", site_options)
@@ -64,7 +84,17 @@ if site != "All sites":
 if program != "All programs":
     view = view[view["program"].astype(str) == program]
 
-tabs = st.tabs(["Mission Control", "Access Detail", "Forecasts", "Simulation Lab", "Data Quality", "Model Registry / Methods"])
+tabs = st.tabs(
+    [
+        "Mission Control",
+        "Access Detail",
+        "Forecasts",
+        "Simulation Lab",
+        "Data Quality",
+        "Model Registry / Methods",
+        "Definitions / Governance",
+    ]
+)
 
 with tabs[0]:
     st.subheader("Access mission control")
@@ -78,6 +108,7 @@ with tabs[0]:
     with c4:
         safe_metric("Urgent breach risk", f"{view['urgent_breach_risk'].mean() * 100:.1f}%")
     st.dataframe(view, use_container_width=True, hide_index=True)
+    st.caption(f"Current role view: {persona}. Patient-level detail is suppressed by default.")
 
 with tabs[1]:
     st.subheader("Referral, waitlist, and clinic utilization detail")
@@ -118,3 +149,15 @@ with tabs[5]:
     st.subheader("Model registry and methods")
     st.dataframe(models.data, use_container_width=True, hide_index=True)
 
+with tabs[6]:
+    st.subheader("Definitions and governance")
+    st.write(
+        {
+            "Third next available": "Access metric less sensitive to short-term cancellations than next open slot.",
+            "Waitlist over target": "Synthetic count exceeding local target window by program and week.",
+            "No-show risk": "Synthetic probability proxy for scheduling and reminder scenarios.",
+            "Equity lens": "Travel burden, language support, virtual suitability, and subgroup calibration.",
+            "Governance rail": "Alberta HIA, TRIPOD+AI, NIST AI RMF, GMLP, subgroup calibration, and audit logs.",
+        }
+    )
+    st.warning("No real patient data is included. Future real-data use requires local governance and validation.")

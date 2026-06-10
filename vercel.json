@@ -1,0 +1,7 @@
+{
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm run build:showcase",
+  "outputDirectory": "apps/showcase/dist",
+  "framework": "vite"
+}
+

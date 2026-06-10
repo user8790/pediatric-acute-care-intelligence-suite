@@ -43,6 +43,27 @@ For no-CLI Snowsight deployment, start with:
 
 Run SQL scripts in order, then upload or paste the Streamlit files through Snowsight.
 
+## Streamlit Community Cloud Demo Path
+
+For public/sample-mode Streamlit Cloud demos, use:
+
+- `docs/README_DEPLOY_STREAMLIT_CLOUD.md`
+- Inpatient entrypoint: `apps/streamlit_cloud/inpatient/streamlit_app.py`
+- Ambulatory entrypoint: `apps/streamlit_cloud/ambulatory/streamlit_app.py`
+
+These wrappers avoid the Snowflake `environment.yml` dependency behavior and run with committed synthetic sample CSVs.
+
+## Vercel Showcase Deployment
+
+The root `vercel.json` builds the showcase app from the monorepo root:
+
+```powershell
+pnpm install --frozen-lockfile
+pnpm run build:showcase
+```
+
+Output directory: `apps/showcase/dist`.
+
 ## Safety Boundary
 
 - All hospital, patient-flow, staffing, safety, and clinic records are synthetic.
@@ -50,4 +71,3 @@ Run SQL scripts in order, then upload or paste the Streamlit files through Snows
 - Patient-level examples, where present, use synthetic IDs and minimal fields.
 - Real open data is used only for public context such as respiratory surveillance, weather, AQHI, population, and calendar effects.
 - Future production mapping must use curated governed views, not direct PHI tables.
-

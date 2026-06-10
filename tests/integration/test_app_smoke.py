@@ -7,6 +7,8 @@ def test_streamlit_apps_compile():
         Path("apps/snowflake_streamlit/inpatient/streamlit_app.py"),
         Path("apps/snowflake_streamlit/ambulatory/streamlit_app.py"),
         Path("apps/snowflake_streamlit/shared/lib/common.py"),
+        Path("apps/streamlit_cloud/inpatient/streamlit_app.py"),
+        Path("apps/streamlit_cloud/ambulatory/streamlit_app.py"),
     ]
     for file in files:
         py_compile.compile(str(file), doraise=True)
@@ -15,4 +17,3 @@ def test_streamlit_apps_compile():
 def test_showcase_entry_files_exist():
     assert Path("apps/showcase/src/App.tsx").exists()
     assert Path("apps/showcase/public/demo-data.json").exists()
-

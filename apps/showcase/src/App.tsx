@@ -2,17 +2,24 @@ import {
   Activity,
   BedDouble,
   CalendarClock,
+  ClipboardCheck,
   DatabaseZap,
+  FileText,
   FlaskConical,
   Gauge,
+  GitBranch,
   HeartPulse,
   LineChart,
+  MapPin,
   Network,
+  Radio,
   ShieldCheck,
   SlidersHorizontal,
   Stethoscope,
+  TimerReset,
+  Users,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { BarList, ForecastBand, HeatGrid, KpiTile } from "./components/Charts";
 import { fallbackDemoData } from "./data/fallbackDemoData";
 
@@ -45,6 +52,7 @@ const tabs = [
   { id: "simulation", label: "Simulation", icon: SlidersHorizontal },
   { id: "methods", label: "Methods", icon: FlaskConical },
   { id: "quality", label: "Quality", icon: ShieldCheck },
+  { id: "governance", label: "Governance", icon: FileText },
 ] as const;
 
 const personas = [
@@ -55,6 +63,48 @@ const personas = [
   "Ambulatory program",
   "Analytics",
 ];
+
+const inpatientModules = [
+  ["Flow command", "ADT, beds, EVS, transport, staffing", "1-5 min future feed"],
+  ["Deterioration watch", "Vitals, PEWS, labs, oxygen support", "5-15 min future feed"],
+  ["Sepsis surveillance", "Labs, cultures, antimicrobials, organ support", "5-15 min future feed"],
+  ["Medication safety", "Orders, MAR, allergy, renal/weight context", "daily stewardship view"],
+  ["Discharge and transfer", "Milestones, pharmacy, imaging, home supports", "hourly"],
+  ["Equity and family", "Interpreter, geography, family readiness, PROs", "daily to weekly"],
+];
+
+const ambulatoryModules = [
+  ["Access and referrals", "Referral demand, waitlists, templates", "hourly to daily"],
+  ["No-show optimization", "Lead time, reminders, distance, weather", "daily"],
+  ["Chronic disease and PROs", "PROMIS, labs, meds, utilization", "daily to weekly future feed"],
+  ["Acute follow-up", "ED/inpatient discharge, callbacks, revisit risk", "1-4 h future feed"],
+  ["Virtual and outreach", "Travel burden, virtual suitability, outreach slots", "daily to monthly"],
+];
+
+const governanceRows = [
+  ["Alberta HIA", "Purpose limitation, minimization, role-based access, auditability"],
+  ["TRIPOD+AI", "Prediction-model documentation, validation, intended use, limitations"],
+  ["NIST AI RMF", "Map, measure, manage, and govern model risk through the lifecycle"],
+  ["GMLP", "Human-AI performance, quality systems, transparency, monitoring"],
+  ["FHIR/SMART/CDS Hooks", "Standards path for future EHR-embedded apps and workflow triggers"],
+];
+
+const metricDefinitions = [
+  ["Effective beds", "Physical capacity after staffing, isolation, and step-down constraints"],
+  ["Boarder hours", "Admitted ED patients awaiting inpatient placement times wait duration"],
+  ["Third next available", "Access metric less sensitive to short-term cancellations than next open slot"],
+  ["Breach risk", "Synthetic probability proxy that a cohort exceeds local target wait time"],
+  ["Fairness drift", "Subgroup calibration, alert burden, and intervention-receipt monitoring"],
+];
+
+function sumRows(rows: Record<string, unknown>[], key: string) {
+  return rows.reduce((total, row) => total + (Number(row[key]) || 0), 0);
+}
+
+function avgRows(rows: Record<string, unknown>[], key: string) {
+  if (!rows.length) return 0;
+  return sumRows(rows, key) / rows.length;
+}
 
 function App() {
   const [data, setData] = useState<DemoData>(fallbackDemoData as DemoData);
@@ -91,6 +141,13 @@ function App() {
   const scopedUnits = data.unitPressure.filter((row) => site === "All sites" || String(row.site_id) === site);
   const adjustedBoarderDelta = Math.round(surgeBeds * -2.4);
   const adjustedBacklogDelta = Math.round(clinicSessions * -42);
+  const syntheticWatch = sumRows(data.safetySignals, "deterioration_watch_count_synth");
+  const sepsisSignals = sumRows(data.safetySignals, "sepsis_screen_signal_count_synth");
+  const staffingStrain = avgRows(scopedUnits, "staffing_gap_pct");
+  const urgentBreach = avgRows(data.ambulatoryAccess, "urgent_breach_risk");
+  const noShowAvg = avgRows(data.clinicUtilization, "no_show_rate");
+  const virtualShare = avgRows(data.clinicUtilization, "virtual_share");
+  const qualityFailures = sumRows(data.quality, "failed_rows");
 
   return (
     <main className="app-shell">
@@ -175,6 +232,26 @@ function App() {
               <KpiTile key={kpi.label} {...kpi} />
             ))}
           </section>
+          <section className="posture-grid wide" aria-label="Inpatient posture summary">
+            <PostureCard
+              icon={<BedDouble size={19} />}
+              title="Hospital posture"
+              value={`${data.inpatientKpis[0]?.value ?? 0}${data.inpatientKpis[0]?.unit ?? "%"}`}
+              detail="Flow risk is driven by effective capacity, boarders, and discharge reliability."
+            />
+            <PostureCard
+              icon={<Radio size={19} />}
+              title="Safety posture"
+              value={`${syntheticWatch} watch`}
+              detail={`${sepsisSignals} synthetic sepsis-screen signals. Demonstration indicators only.`}
+            />
+            <PostureCard
+              icon={<Users size={19} />}
+              title="Equity and family posture"
+              value={`${Math.round(staffingStrain * 100)}% strain`}
+              detail="Future lens: interpreter demand, family readiness, geography, and travel burden."
+            />
+          </section>
           <section className="panel xlarge">
             <div className="panel-heading">
               <div>
@@ -233,6 +310,16 @@ function App() {
             </div>
             <OptionList rows={data.inpatientOptions} />
           </section>
+          <section className="panel wide">
+            <div className="panel-heading">
+              <div>
+                <p className="eyebrow">Role-based module stack</p>
+                <h3>Command centre, unit awareness, and future in-EHR worklists</h3>
+              </div>
+              <GitBranch size={22} />
+            </div>
+            <ModuleMap rows={inpatientModules} />
+          </section>
         </section>
       )}
 
@@ -252,6 +339,26 @@ function App() {
             {data.ambulatoryKpis.map((kpi) => (
               <KpiTile key={kpi.label} {...kpi} />
             ))}
+          </section>
+          <section className="posture-grid wide" aria-label="Ambulatory posture summary">
+            <PostureCard
+              icon={<CalendarClock size={19} />}
+              title="Access posture"
+              value={`${Math.round(urgentBreach * 100)}%`}
+              detail="Mean urgent breach-risk proxy across visible programs."
+            />
+            <PostureCard
+              icon={<TimerReset size={19} />}
+              title="Reliability posture"
+              value={`${(noShowAvg * 100).toFixed(1)}%`}
+              detail="Synthetic no-show and late-cancel risk informs guarded overbooking."
+            />
+            <PostureCard
+              icon={<MapPin size={19} />}
+              title="Virtual and travel posture"
+              value={`${(virtualShare * 100).toFixed(1)}%`}
+              detail="Virtual-care share is a proxy lens for geography and family burden."
+            />
           </section>
           <section className="panel xlarge">
             <div className="panel-heading">
@@ -317,6 +424,16 @@ function App() {
               <Network size={22} />
             </div>
             <OptionList rows={data.ambulatoryOptions} />
+          </section>
+          <section className="panel wide">
+            <div className="panel-heading">
+              <div>
+                <p className="eyebrow">Role-based module stack</p>
+                <h3>Access hub, clinic operations, and outreach intelligence</h3>
+              </div>
+              <GitBranch size={22} />
+            </div>
+            <ModuleMap rows={ambulatoryModules} />
           </section>
         </section>
       )}
@@ -389,6 +506,16 @@ function App() {
               <p className="caveat">{String(card.caveat)}</p>
             </section>
           ))}
+          <section className="panel wide">
+            <div className="panel-heading">
+              <div>
+                <p className="eyebrow">Metric definitions</p>
+                <h3>Definition-rich displays reduce dashboard ambiguity</h3>
+              </div>
+              <ClipboardCheck size={22} />
+            </div>
+            <DefinitionGrid rows={metricDefinitions} />
+          </section>
         </section>
       )}
 
@@ -422,6 +549,70 @@ function App() {
               ))}
             </div>
           </section>
+          <section className="panel">
+            <div className="panel-heading">
+              <div>
+                <p className="eyebrow">Audit posture</p>
+                <h3>Current validation summary</h3>
+              </div>
+              <ShieldCheck size={22} />
+            </div>
+            <div className="impact-callout">
+              <strong>{qualityFailures} failed rows in generated checks</strong>
+              <span>Checks include uniqueness, non-negative values, bounds, and direct-identifier scans.</span>
+            </div>
+          </section>
+        </section>
+      )}
+
+      {activeTab === "governance" && (
+        <section className="dashboard-grid">
+          <div className="panel wide intro-panel">
+            <div>
+              <p className="eyebrow">Governance, standards, and future production path</p>
+              <h2>AI and operations governance is treated as part of the product surface</h2>
+            </div>
+            <div className="persona-chip">
+              <FileText size={18} />
+              Audit-ready prototype
+            </div>
+          </div>
+          <section className="panel xlarge">
+            <div className="panel-heading">
+              <div>
+                <p className="eyebrow">Lifecycle controls</p>
+                <h3>Minimum governance rail for future real-data implementation</h3>
+              </div>
+              <ShieldCheck size={22} />
+            </div>
+            <DefinitionGrid rows={governanceRows} />
+          </section>
+          <section className="panel">
+            <div className="panel-heading">
+              <div>
+                <p className="eyebrow">Integration path</p>
+                <h3>Curated views before apps</h3>
+              </div>
+              <DatabaseZap size={22} />
+            </div>
+            <div className="option-list">
+              <article className="option-row">
+                <strong>Event-driven future state</strong>
+                <span>FHIR, SMART, CDS Hooks, DICOM, ADT, staffing, scheduling, and open context feeds.</span>
+                <em>Current prototype remains static synthetic data.</em>
+              </article>
+              <article className="option-row">
+                <strong>Latency tiers</strong>
+                <span>Streaming, near-real-time, intra-day, and daily public context refreshes.</span>
+                <em>Every model output shows freshness and caveat.</em>
+              </article>
+              <article className="option-row">
+                <strong>Fairness and calibration</strong>
+                <span>Subgroup calibration, alert burden, false-negative review, and intervention receipt.</span>
+                <em>No patient-level real data is included.</em>
+              </article>
+            </div>
+          </section>
         </section>
       )}
 
@@ -440,6 +631,56 @@ function OptionList({ rows }: { rows: { option: string; expected_effect: string;
           <strong>{row.option}</strong>
           <span>{row.expected_effect}</span>
           <em>{row.watch}</em>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function PostureCard({
+  icon,
+  title,
+  value,
+  detail,
+}: {
+  icon: ReactNode;
+  title: string;
+  value: string;
+  detail: string;
+}) {
+  return (
+    <article className="posture-card">
+      <span className="posture-icon">{icon}</span>
+      <div>
+        <p>{title}</p>
+        <strong>{value}</strong>
+        <em>{detail}</em>
+      </div>
+    </article>
+  );
+}
+
+function ModuleMap({ rows }: { rows: string[][] }) {
+  return (
+    <div className="module-map">
+      {rows.map(([name, inputs, cadence]) => (
+        <article className="module-row" key={name}>
+          <strong>{name}</strong>
+          <span>{inputs}</span>
+          <em>{cadence}</em>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function DefinitionGrid({ rows }: { rows: string[][] }) {
+  return (
+    <div className="definition-grid">
+      {rows.map(([term, definition]) => (
+        <article key={term}>
+          <strong>{term}</strong>
+          <span>{definition}</span>
         </article>
       ))}
     </div>

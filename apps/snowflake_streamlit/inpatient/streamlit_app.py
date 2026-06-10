@@ -7,17 +7,34 @@ import pandas as pd
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[3]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+APP_DIR = Path(__file__).resolve().parent
+for candidate in (
+    APP_DIR / "lib",
+    APP_DIR / "shared" / "lib",
+    APP_DIR.parent / "shared" / "lib",
+    ROOT,
+):
+    if candidate.exists() and str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
 
-from apps.snowflake_streamlit.shared.lib.common import (  # noqa: E402
-    SYNTHETIC_NOTICE,
-    format_pct,
-    load_table_or_sample,
-    safe_metric,
-    status_panel,
-    try_store_scenario,
-)
+try:
+    from common import (  # type: ignore  # noqa: E402
+        SYNTHETIC_NOTICE,
+        format_pct,
+        load_table_or_sample,
+        safe_metric,
+        status_panel,
+        try_store_scenario,
+    )
+except Exception:  # pragma: no cover - local repo fallback
+    from apps.snowflake_streamlit.shared.lib.common import (  # noqa: E402
+        SYNTHETIC_NOTICE,
+        format_pct,
+        load_table_or_sample,
+        safe_metric,
+        status_panel,
+        try_store_scenario,
+    )
 
 st.set_page_config(page_title="Inpatient Command Centre", layout="wide")
 
@@ -55,11 +72,25 @@ if mission.data.empty:
     st.error("No inpatient mission-control data found. Run the Snowflake setup SQL or generate local samples.")
     st.stop()
 
+persona = st.sidebar.selectbox(
+    "Role view",
+    ["Executive", "Site operations", "Patient flow", "Unit manager", "Analytics"],
+)
 site_options = ["All sites"] + sorted(mission.data["site_id"].dropna().astype(str).unique().tolist())
 site = st.sidebar.selectbox("Site", site_options)
 view = mission.data if site == "All sites" else mission.data[mission.data["site_id"].astype(str) == site]
 
-tabs = st.tabs(["Mission Control", "Flow Detail", "Forecasts", "Simulation Lab", "Data Quality", "Model Registry / Methods"])
+tabs = st.tabs(
+    [
+        "Mission Control",
+        "Flow Detail",
+        "Forecasts",
+        "Simulation Lab",
+        "Data Quality",
+        "Model Registry / Methods",
+        "Definitions / Governance",
+    ]
+)
 
 with tabs[0]:
     st.subheader("Current state")
@@ -76,6 +107,7 @@ with tabs[0]:
         safe_metric("Predicted discharges", int(totals.get("predicted_discharges", 0)))
     st.dataframe(view, use_container_width=True, hide_index=True)
     st.info("Scenario options are planning estimates, not directives.")
+    st.caption(f"Current role view: {persona}. Unit-level detail remains aggregate synthetic data.")
 
 with tabs[1]:
     st.subheader("Flow and capacity")
@@ -115,3 +147,15 @@ with tabs[5]:
     st.subheader("Model registry and methods")
     st.dataframe(models.data, use_container_width=True, hide_index=True)
 
+with tabs[6]:
+    st.subheader("Definitions and governance")
+    st.write(
+        {
+            "Effective beds": "Physical capacity after staffing, isolation, and step-down constraints.",
+            "ED boarding": "Admitted ED patients awaiting inpatient bed assignment or arrival.",
+            "Safety signals": "Synthetic demonstration indicators only, not clinical decision support.",
+            "Future standards path": "FHIR, SMART on FHIR, CDS Hooks, DICOM/ImagingStudy, curated Snowflake views.",
+            "Governance rail": "Alberta HIA, TRIPOD+AI, NIST AI RMF, GMLP, subgroup calibration, and audit logs.",
+        }
+    )
+    st.warning("No real patient data is included. Future real-data use requires local governance and validation.")

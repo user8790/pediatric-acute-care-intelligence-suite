@@ -1,0 +1,274 @@
+{
+  "rows": [
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "horizon_hours": 6,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7348,
+      "p10": 0.6664,
+      "p90": 0.8135,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "horizon_hours": 12,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7385,
+      "p10": 0.6668,
+      "p90": 0.821,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "horizon_hours": 24,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7424,
+      "p10": 0.6641,
+      "p90": 0.8324,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "horizon_hours": 48,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7464,
+      "p10": 0.6548,
+      "p90": 0.8514,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "horizon_hours": 72,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7488,
+      "p10": 0.6438,
+      "p90": 0.8688,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "horizon_hours": 6,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.6285,
+      "p10": 0.5602,
+      "p90": 0.7072,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "horizon_hours": 12,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.6322,
+      "p10": 0.5605,
+      "p90": 0.7147,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "horizon_hours": 24,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.6361,
+      "p10": 0.5578,
+      "p90": 0.7261,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "horizon_hours": 48,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.6402,
+      "p10": 0.5485,
+      "p90": 0.7452,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "horizon_hours": 72,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.6426,
+      "p10": 0.5376,
+      "p90": 0.7626,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "horizon_hours": 6,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7447,
+      "p10": 0.6763,
+      "p90": 0.8234,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "horizon_hours": 12,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7484,
+      "p10": 0.6767,
+      "p90": 0.8309,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "horizon_hours": 24,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7523,
+      "p10": 0.674,
+      "p90": 0.8423,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "horizon_hours": 48,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7563,
+      "p10": 0.6647,
+      "p90": 0.8613,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "horizon_hours": 72,
+      "model_name": "occupancy_forecast_gradient_boosted_synth",
+      "model_version": "v2.0",
+      "prediction": 0.7587,
+      "p10": 0.6537,
+      "p90": 0.8787,
+      "threshold_probability": 0.03,
+      "top_drivers": [
+        "respiratory activity",
+        "staffing gap",
+        "predicted discharges"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Scenario planning estimate only."
+    }
+  ]
+}

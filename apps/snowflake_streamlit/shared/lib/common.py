@@ -9,8 +9,9 @@ from typing import Any
 import pandas as pd
 import streamlit as st
 
-APP_VERSION = "0.1.0"
+APP_VERSION = "v2.0"
 SYNTHETIC_NOTICE = "Synthetic demonstration data. Not validated for clinical decision-making."
+SNOWFLAKE_SAFE_PACKAGES = ("river", "dowhy", "mesa", "cleanlab")
 
 
 @dataclass
@@ -22,7 +23,7 @@ class DataResult:
 
 def optional_package_status() -> dict[str, bool]:
     status = {}
-    for name in ("simpy", "ciw", "river", "dowhy", "mesa", "cleanlab"):
+    for name in SNOWFLAKE_SAFE_PACKAGES:
         try:
             __import__(name)
             status[name] = True
@@ -57,7 +58,13 @@ def load_table_or_sample(sql: str, sample_name: str) -> DataResult:
     return DataResult(pd.DataFrame(), "No data", f"Missing sample file: {path}")
 
 
-def status_panel(data_source: str) -> None:
+def status_panel(
+    data_source: str,
+    *,
+    last_refresh: str | None = None,
+    mart_available: bool | None = None,
+    scenario_write_available: bool | None = None,
+) -> None:
     optional = optional_package_status()
     with st.sidebar:
         st.caption(SYNTHETIC_NOTICE)
@@ -65,13 +72,17 @@ def status_panel(data_source: str) -> None:
         st.write(
             {
                 "data_source": data_source,
-                "package_mode": "Snowflake Anaconda baseline + optional adapters",
+                "last_refresh": last_refresh or "sample/local fallback",
+                "package_mode": "Snowflake Anaconda baseline; no advanced DES runtime packages required",
                 "app_version": APP_VERSION,
                 "synthetic_real_data_mode": "synthetic demo",
+                "snowflake_mart_available": mart_available if mart_available is not None else data_source.startswith("Snowflake"),
+                "scenario_write_available": scenario_write_available if scenario_write_available is not None else get_snowpark_session() is not None,
             }
         )
         st.subheader("Optional packages")
         st.write(optional)
+        st.caption("Streamlit/Snowflake path uses SQL marts, pandas/numpy/scipy/sklearn/statsmodels, Plotly/Altair, and deterministic fallbacks.")
 
 
 def format_pct(value: float) -> str:
@@ -83,6 +94,17 @@ def safe_metric(label: str, value: Any, delta: Any | None = None) -> None:
         st.metric(label, value, delta=delta)
     except Exception:
         st.write({label: value, "delta": delta})
+
+
+def panel_note(title: str, body: str) -> None:
+    st.info(f"**{title}**\n\n{body}")
+
+
+def first_present_column(data: pd.DataFrame, candidates: list[str]) -> str | None:
+    for column in candidates:
+        if column in data.columns:
+            return column
+    return None
 
 
 def try_store_scenario(table_name: str, payload: dict[str, Any]) -> str:

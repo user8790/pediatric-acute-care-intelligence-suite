@@ -1,0 +1,484 @@
+{
+  "rows": [
+    {
+      "table_name": "INPATIENT_MISSION_CONTROL",
+      "check_name": "freshness",
+      "status": "review",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_MISSION_CONTROL",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_MISSION_CONTROL",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_MISSION_CONTROL",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_MISSION_CONTROL",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_MISSION_CONTROL",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FLOW",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FLOW",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FLOW",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FLOW",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FLOW",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FLOW",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FORECASTS",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FORECASTS",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FORECASTS",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FORECASTS",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FORECASTS",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_FORECASTS",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_SCENARIOS",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_SCENARIOS",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_SCENARIOS",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_SCENARIOS",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_SCENARIOS",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "INPATIENT_SCENARIOS",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_MISSION_CONTROL",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_MISSION_CONTROL",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_MISSION_CONTROL",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 2,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_MISSION_CONTROL",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_MISSION_CONTROL",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_MISSION_CONTROL",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_ACCESS",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_ACCESS",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_ACCESS",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_ACCESS",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_ACCESS",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_ACCESS",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_FORECASTS",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_FORECASTS",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_FORECASTS",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_FORECASTS",
+      "check_name": "bounds",
+      "status": "review",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_FORECASTS",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_FORECASTS",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_SCENARIOS",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 2,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_SCENARIOS",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_SCENARIOS",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_SCENARIOS",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_SCENARIOS",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "AMBULATORY_SCENARIOS",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "MODEL_CARDS",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "MODEL_CARDS",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "MODEL_CARDS",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "MODEL_CARDS",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "MODEL_CARDS",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "MODEL_CARDS",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "OPEN_DATA_CONTEXT",
+      "check_name": "freshness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "OPEN_DATA_CONTEXT",
+      "check_name": "primary_key",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "OPEN_DATA_CONTEXT",
+      "check_name": "direct_identifier_scan",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "OPEN_DATA_CONTEXT",
+      "check_name": "bounds",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "OPEN_DATA_CONTEXT",
+      "check_name": "missingness",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    },
+    {
+      "table_name": "OPEN_DATA_CONTEXT",
+      "check_name": "timestamp_order",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_checked": "2026-06-10T12:00:00-06:00",
+      "owner": "synthetic prototype data quality"
+    }
+  ]
+}

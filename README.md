@@ -1,13 +1,13 @@
 # Pediatric Acute Care Intelligence Suite
 
-Production-shaped prototype suite for pediatric inpatient and ambulatory operations intelligence, inspired by Stollery Children's Hospital / Alberta Children's Hospital operational patterns.
+Production-shaped v2 prototype suite for pediatric inpatient and ambulatory operations intelligence, inspired by Alberta pediatric operational patterns.
 
 This is a synthetic demonstration. It is not connected to Alberta Health Services, Epic, Connect Care, Stollery, Alberta Children's Hospital, or Snowflake production data. It is not validated for clinical decision-making.
 
 ## What Is Included
 
-- Version A: a TypeScript + React showcase app under `apps/showcase`.
-- Version B: two Streamlit in Snowflake transferable apps under `apps/snowflake_streamlit`.
+- Showcase track: a modular TypeScript + React product experience under `apps/showcase`.
+- Streamlit/Snowflake track: two conservative transferable apps under `apps/snowflake_streamlit`.
 - Deterministic synthetic pediatric operations data generator under `packages/synthetic`.
 - Transparent queueing, simulation, forecasting, modelling, data-quality, and explainability helpers under `packages/core`.
 - SQL-first Snowflake setup scripts under `snowflake/sql`.
@@ -17,12 +17,15 @@ This is a synthetic demonstration. It is not connected to Alberta Health Service
 
 ```powershell
 python packages/synthetic/generate_synthetic_data.py
+python packages/synthetic/generate_v2_showcase_data.py
 python -m pytest
 pnpm install
 pnpm run dev:showcase
 ```
 
 The showcase app runs locally with cached generated data and built-in fallbacks.
+
+Start with `docs/v2_product_brief.md`, `docs/v2_executive_demo_script.md`, and `docs/v2_gap_analysis_and_upgrade_plan.md` for the v2 product story.
 
 ## Streamlit Local Smoke
 
@@ -41,7 +44,7 @@ For no-CLI Snowsight deployment, start with:
 - `snowflake/sql/00_context_and_roles_template.sql`
 - `snowflake/sql/01_create_database_schema.sql`
 
-Run SQL scripts in order, then upload or paste the Streamlit files through Snowsight.
+Run SQL scripts `00` through `12` in order, then upload or paste the Streamlit files through Snowsight.
 
 ## Streamlit Community Cloud Demo Path
 

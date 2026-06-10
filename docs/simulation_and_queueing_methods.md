@@ -21,7 +21,7 @@
 
 ## Optional Adapters
 
-If approved and available in the Snowflake runtime, adapters can use SimPy, Ciw, Mesa, River, DoWhy, and Cleanlab. The baseline prototype does not require them.
+Advanced simulation packages are showcase-only or research-only. The Snowflake Streamlit path uses SQL-precomputed scenario tables, deterministic fallback formulas, and Snowflake-channel packages.
 
 ## Scenario Outputs
 
@@ -35,4 +35,3 @@ If approved and available in the Snowflake runtime, adapters can use SimPy, Ciw,
 - Confidence intervals.
 
 All scenario estimates are planning estimates, not directives.
-

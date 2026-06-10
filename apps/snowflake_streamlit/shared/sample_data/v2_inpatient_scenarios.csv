@@ -1,0 +1,9 @@
+scenario_name,impact_score,effort_score,operational_risk_score,fairness_proxy_delta,boarder_hours_mean,boarder_hours_p10,boarder_hours_p90,bed_shortage_hours,elective_cancellation_risk,discharge_reliability,picu_nicu_pressure
+Current state baseline,14,1,1,0.0,82,53,113,25,0.172,0.748,0.946
+Open staffed surge beds,44,3,2,0.02,49,33,71,20,0.108,0.812,0.862
+Increase morning discharges,36,2,1,0.03,59,37,80,20,0.122,0.798,0.881
+Add evening/weekend discharge support,48,3,2,0.04,53,30,64,16,0.098,0.822,0.849
+Protect PICU/NICU step-down capacity,52,4,2,0.01,46,27,58,14,0.088,0.832,0.836
+Reduce bed turnaround by 20 minutes,35,2,1,0.0,69,40,87,20,0.132,0.788,0.894
+Smooth elective OR load,41,4,3,0.02,60,35,76,20,0.116,0.804,0.873
+Inter-site transfer support,51,5,3,0.05,46,31,67,19,0.102,0.818,0.854

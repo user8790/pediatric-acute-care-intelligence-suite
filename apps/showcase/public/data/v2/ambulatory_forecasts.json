@@ -1,0 +1,1828 @@
+{
+  "rows": [
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 6,
+      "p10": 4,
+      "p90": 7,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 5,
+      "p10": 4,
+      "p90": 5,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 5,
+      "p10": 4,
+      "p90": 5,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 3,
+      "p10": 2,
+      "p90": 3,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 12,
+      "p10": 9,
+      "p90": 14,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 11,
+      "p10": 9,
+      "p90": 12,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 10,
+      "p10": 8,
+      "p90": 11,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 7,
+      "p10": 5,
+      "p90": 8,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "respiratory",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "cardiology",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "neurology",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "surgery_followup",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 8,
+      "p10": 6,
+      "p90": 9,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 7,
+      "p10": 5,
+      "p90": 8,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 7,
+      "p10": 5,
+      "p90": 8,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 4,
+      "p10": 3,
+      "p90": 4,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "complex_care",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 33,
+      "p10": 27,
+      "p90": 38,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 30,
+      "p10": 24,
+      "p90": 35,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 28,
+      "p10": 22,
+      "p90": 33,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "mental_health",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 19,
+      "p10": 15,
+      "p90": 22,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 72,
+      "p10": 59,
+      "p90": 84,
+      "breach_probability": 0.033,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 66,
+      "p10": 54,
+      "p90": 77,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 61,
+      "p10": 50,
+      "p90": 71,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 42,
+      "p10": 34,
+      "p90": 49,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "respiratory",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 75,
+      "p10": 61,
+      "p90": 88,
+      "breach_probability": 0.034,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "respiratory",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 69,
+      "p10": 56,
+      "p90": 81,
+      "breach_probability": 0.031,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "respiratory",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 63,
+      "p10": 51,
+      "p90": 74,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "respiratory",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 43,
+      "p10": 35,
+      "p90": 50,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "cardiology",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "cardiology",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "cardiology",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "cardiology",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "neurology",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 35,
+      "p10": 28,
+      "p90": 41,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "neurology",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 32,
+      "p10": 26,
+      "p90": 37,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "neurology",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 29,
+      "p10": 23,
+      "p90": 34,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "neurology",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 20,
+      "p10": 16,
+      "p90": 23,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 0,
+      "p10": 0,
+      "p90": 0,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 24,
+      "p10": 19,
+      "p90": 28,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 22,
+      "p10": 18,
+      "p90": 25,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 20,
+      "p10": 16,
+      "p90": 23,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 14,
+      "p10": 11,
+      "p90": 16,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 30,
+      "p10": 24,
+      "p90": 35,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 28,
+      "p10": 22,
+      "p90": 33,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 25,
+      "p10": 20,
+      "p90": 29,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 17,
+      "p10": 13,
+      "p90": 20,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 4,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 12,
+      "p10": 9,
+      "p90": 14,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 8,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 11,
+      "p10": 9,
+      "p90": 12,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 12,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 10,
+      "p10": 8,
+      "p90": 11,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "horizon_weeks": 26,
+      "model_name": "ambulatory_backlog_forecast_synth",
+      "model_version": "v2.0",
+      "prediction": 7,
+      "p10": 5,
+      "p90": 8,
+      "breach_probability": 0.03,
+      "top_drivers": [
+        "referral demand",
+        "template capacity",
+        "no-show/late-cancel risk"
+      ],
+      "freshness": "2026-06-10T12:00:00-06:00",
+      "validation_status": "Synthetic v2 demonstration; not clinically validated",
+      "caveat": "Backlog forecast is a planning estimate."
+    }
+  ]
+}

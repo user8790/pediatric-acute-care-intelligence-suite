@@ -22,7 +22,7 @@ Implication for Version B:
 - Use `channels: [snowflake]`.
 - Pin Python 3.11 and Streamlit to a supported warehouse version.
 - Use only baseline Snowflake-channel packages in `environment.yml`.
-- Treat SimPy, Ciw, River, DoWhy, Mesa, and Cleanlab as optional adapters because they were not present in the checked Snowflake `linux-64` channel metadata on 2026-06-10.
+- Treat River, DoWhy, Mesa, and Cleanlab as optional research/showcase adapters because they were not present in the checked Snowflake `linux-64` channel metadata on 2026-06-10. The Snowflake Streamlit path does not require advanced discrete-event simulation packages.
 - Avoid external API calls, custom components, iframes, and external JavaScript in Streamlit apps. Load small aggregated marts or local sample CSVs only.
 
 ### Verified Snowflake Channel Baseline
@@ -50,8 +50,6 @@ Baseline packages found and suitable for this prototype:
 
 Pending or optional packages not found in the checked Snowflake channel metadata:
 
-- simpy
-- ciw
 - river
 - dowhy
 - mesa

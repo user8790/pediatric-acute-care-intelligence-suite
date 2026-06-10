@@ -1,0 +1,25 @@
+coefficient_name,symbol,definition,default_value,source,caveat
+arrival_rate_lambda,lambda,Arrivals per hour/day/service/site,4.2,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+service_rate_mu,mu,Completions per resource per time unit,0.26,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+servers_resources,c,"Beds, rooms, providers, or constrained resources",12.0,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+utilization,rho,lambda / (c * mu),0.89744,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+interarrival_variability,Ca2,Squared coefficient of variation for interarrival times,1.15,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+service_variability,Cs2,Squared coefficient of variation for service times,1.32,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+erlang_c_wait_probability,Erlang C,M/M/c wait probability,0.56106,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+erlang_b_blocking_probability,Erlang B,Loss-system blocking probability,0.1159,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+kingman_wait_hours,Kingman,G/G/1 wait approximation,8.49062,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+allen_cunneen_wait_hours,Allen-Cunneen,G/G/c wait approximation,1.47135,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+little_law,L=lambda W,System size relationship,9.7,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+discharge_completion_rate,delta_discharge,Hourly discharge completion coefficient,0.055,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+bed_turnaround_minutes,turnaround,EVS/bed clean turnaround,72.0,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+effective_staffed_bed_coefficient,effective_beds,Capacity after staffing constraints,0.91,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+isolation_constraint_factor,isolation,Respiratory/isolation bed constraint,0.96,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+step_down_constraint_factor,stepdown,PICU/NICU step-down constraint,0.93,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+respiratory_surge_multiplier,resp_surge,Respiratory activity demand multiplier,1.35,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+weather_smoke_multiplier,weather_smoke,Weather/AQHI/smoke demand multiplier,1.07,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+school_holiday_multiplier,school_holiday,School and holiday demand multiplier,1.05,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+no_show_probability,p_no_show,Appointment no-show probability,0.088,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+overbooking_coefficient,overbook,Guarded overbooking coefficient,0.09,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+diagnostic_dependency_delay,dx_delay,Median diagnostic dependency delay in days,14.0,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+protected_slot_coefficient,urgent_slots,Urgent-slot protection coefficient,0.16,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.
+virtual_care_conversion,virtual,Share of visits suitable for virtual conversion,0.27,synthetic v2 configuration,Demonstration coefficient; calibrate locally before operational use.

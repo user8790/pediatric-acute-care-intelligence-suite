@@ -1,4 +1,4 @@
-version: 0.1.0
+version: 2.0.0
 database: PEDIATRIC_AHA_DEMO
 schemas:
   raw_synth: PEDIATRIC_AHA_DEMO.RAW_SYNTH
@@ -8,9 +8,26 @@ schemas:
   model: PEDIATRIC_AHA_DEMO.MODEL
   config: PEDIATRIC_AHA_DEMO.CONFIG
 pattern:
-  raw_synth: Synthetic source-like tables.
-  curated: Canonical governed views.
-  mart: Aggregated app-query views.
-  model: Model outputs, registry, and monitoring tables.
-  config: Coefficients, scenarios, quality thresholds, and metadata.
-
+  raw_synth: Synthetic source-like tables for public demo and test data.
+  curated: Canonical governed views. Future real-data connection starts here.
+  mart: Aggregated app-query views for Streamlit and analyst review.
+  model: Model outputs, model registry, coefficient registry, and monitoring tables.
+  config: Scenario parameters, quality thresholds, and app metadata.
+v2_required_objects:
+  scenario_marts:
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_INPATIENT_SCENARIO
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_AMBULATORY_SCENARIO
+  forecast_marts:
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_INPATIENT_MISSION_CONTROL
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_INPATIENT_FLOW
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_INPATIENT_FORECAST
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_AMBULATORY_MISSION_CONTROL
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_AMBULATORY_ACCESS
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_AMBULATORY_FORECAST
+    - PEDIATRIC_AHA_DEMO.MART.MART_V2_DATA_QUALITY_STATUS
+  registry:
+    - PEDIATRIC_AHA_DEMO.MODEL.DIM_V2_MODEL_REGISTRY
+    - PEDIATRIC_AHA_DEMO.MODEL.DIM_V2_COEFFICIENT_REGISTRY
+  app:
+    - PEDIATRIC_AHA_DEMO.APP.SCENARIO_RUN_LOG
+future_real_data_rule: Apps query MART objects built from CURATED governed views; apps do not query raw PHI source tables.

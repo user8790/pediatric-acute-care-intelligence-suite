@@ -1,0 +1,58 @@
+{
+  "rows": [
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "site_name": "Alberta Children's-inspired",
+      "census": 141,
+      "physical_beds": 212,
+      "effective_beds": 195,
+      "ed_boarders": 0,
+      "predicted_discharges": 2,
+      "staffing_gap_pct": 0.05315,
+      "respiratory_multiplier": 0.9,
+      "occupancy_pct": 0.7230769231,
+      "picu_nicu_pressure": 0.87,
+      "prob_above_95": 0.02,
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "effective staffed capacity",
+      "top_driver_3": "discharge reliability"
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "site_name": "Provincial network",
+      "census": 66,
+      "physical_beds": 117,
+      "effective_beds": 107,
+      "ed_boarders": 1,
+      "predicted_discharges": 2,
+      "staffing_gap_pct": 0.0615875,
+      "respiratory_multiplier": 0.9,
+      "occupancy_pct": 0.6168224299,
+      "picu_nicu_pressure": 0.91,
+      "prob_above_95": 0.02,
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "effective staffed capacity",
+      "top_driver_3": "discharge reliability"
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "site_name": "Stollery-inspired",
+      "census": 140,
+      "physical_beds": 212,
+      "effective_beds": 191,
+      "ed_boarders": 1,
+      "predicted_discharges": 2,
+      "staffing_gap_pct": 0.0620125,
+      "respiratory_multiplier": 0.9,
+      "occupancy_pct": 0.7329842932,
+      "picu_nicu_pressure": 0.82,
+      "prob_above_95": 0.02,
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "effective staffed capacity",
+      "top_driver_3": "discharge reliability"
+    }
+  ]
+}

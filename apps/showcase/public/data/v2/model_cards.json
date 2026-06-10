@@ -1,0 +1,82 @@
+{
+  "rows": [
+    {
+      "model_id": "MODEL_INPT_OCC_V2",
+      "model_name": "Probabilistic occupancy forecast",
+      "version": "v2.0",
+      "prediction_horizon": "6-72 hours",
+      "intended_use": "Synthetic scenario planning and executive demonstration",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Synthetic validation only; not validated for clinical decision-making",
+      "metrics": "MAE, interval coverage",
+      "top_driver_method": "Permutation importance and coefficient decomposition",
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "caveat": "Future production use requires local temporal validation, subgroup calibration, and governance approval."
+    },
+    {
+      "model_id": "MODEL_INPT_DISCHARGE_V2",
+      "model_name": "Discharge by time-band probability",
+      "version": "v2.0",
+      "prediction_horizon": "same day",
+      "intended_use": "Synthetic scenario planning and executive demonstration",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Synthetic validation only; not validated for clinical decision-making",
+      "metrics": "Brier, calibration",
+      "top_driver_method": "Permutation importance and coefficient decomposition",
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "caveat": "Future production use requires local temporal validation, subgroup calibration, and governance approval."
+    },
+    {
+      "model_id": "MODEL_INPT_PICU_V2",
+      "model_name": "PICU/NICU pressure forecast",
+      "version": "v2.0",
+      "prediction_horizon": "6-72 hours",
+      "intended_use": "Synthetic scenario planning and executive demonstration",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Synthetic validation only; not validated for clinical decision-making",
+      "metrics": "MAE, threshold calibration",
+      "top_driver_method": "Permutation importance and coefficient decomposition",
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "caveat": "Future production use requires local temporal validation, subgroup calibration, and governance approval."
+    },
+    {
+      "model_id": "MODEL_AMB_BACKLOG_V2",
+      "model_name": "Ambulatory backlog forecast",
+      "version": "v2.0",
+      "prediction_horizon": "4-26 weeks",
+      "intended_use": "Synthetic scenario planning and executive demonstration",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Synthetic validation only; not validated for clinical decision-making",
+      "metrics": "MAE, pinball loss",
+      "top_driver_method": "Permutation importance and coefficient decomposition",
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "caveat": "Future production use requires local temporal validation, subgroup calibration, and governance approval."
+    },
+    {
+      "model_id": "MODEL_AMB_NOSHOW_V2",
+      "model_name": "No-show and late-cancel probability",
+      "version": "v2.0",
+      "prediction_horizon": "appointment date",
+      "intended_use": "Synthetic scenario planning and executive demonstration",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Synthetic validation only; not validated for clinical decision-making",
+      "metrics": "AUROC, Brier, subgroup calibration",
+      "top_driver_method": "Permutation importance and coefficient decomposition",
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "caveat": "Future production use requires local temporal validation, subgroup calibration, and governance approval."
+    },
+    {
+      "model_id": "MODEL_AMB_BREACH_V2",
+      "model_name": "Urgent breach risk",
+      "version": "v2.0",
+      "prediction_horizon": "1-12 weeks",
+      "intended_use": "Synthetic scenario planning and executive demonstration",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Synthetic validation only; not validated for clinical decision-making",
+      "metrics": "PR-AUC, calibration",
+      "top_driver_method": "Permutation importance and coefficient decomposition",
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "caveat": "Future production use requires local temporal validation, subgroup calibration, and governance approval."
+    }
+  ]
+}

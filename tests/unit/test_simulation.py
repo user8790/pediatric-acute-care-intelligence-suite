@@ -17,5 +17,4 @@ def test_clinic_backlog_reproducible():
 
 def test_optional_engine_status_shape():
     status = optional_engine_status()
-    assert {"simpy", "ciw", "mesa"}.issubset(status.keys())
-
+    assert {"mesa"}.issubset(status.keys())

@@ -22,10 +22,10 @@ class BedScenario:
 
 
 def optional_engine_status() -> dict[str, bool]:
-    """Detect optional simulation packages without making them required."""
+    """Detect showcase/research optional simulation packages without making them required."""
 
     status: dict[str, bool] = {}
-    for module_name in ("simpy", "ciw", "mesa"):
+    for module_name in ("mesa",):
         try:
             __import__(module_name)
             status[module_name] = True
@@ -141,4 +141,3 @@ def simulate_clinic_backlog(
         "clearance_week": clearance_week,
         "engine": "numpy_fallback",
     }
-

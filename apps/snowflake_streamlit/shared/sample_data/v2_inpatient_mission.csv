@@ -1,0 +1,4 @@
+site_id,site_name,census,physical_beds,effective_beds,ed_boarders,predicted_discharges,staffing_gap_pct,respiratory_multiplier,occupancy_pct,picu_nicu_pressure,prob_above_95,data_freshness,top_driver_1,top_driver_2,top_driver_3
+SITE_ACH_INSPIRED,Alberta Children's-inspired,141,212,195,0,2,0.05315,0.9,0.7230769230769231,0.87,0.02,2026-06-10T12:00:00-06:00,respiratory activity,effective staffed capacity,discharge reliability
+SITE_PROV_NETWORK,Provincial network,66,117,107,1,2,0.0615875,0.9,0.616822429906542,0.91,0.02,2026-06-10T12:00:00-06:00,respiratory activity,effective staffed capacity,discharge reliability
+SITE_STOLLERY_INSPIRED,Stollery-inspired,140,212,191,1,2,0.0620125,0.9,0.7329842931937173,0.82,0.02,2026-06-10T12:00:00-06:00,respiratory activity,effective staffed capacity,discharge reliability

@@ -1,0 +1,9 @@
+scenario_name,impact_score,effort_score,operational_risk_score,fairness_proxy_delta,final_backlog,backlog_p10,backlog_p90,clearance_weeks,urgent_breach_risk,slot_utilization,no_show_adjusted_capacity
+Current access plan,27,1,1,0.0,1236,982,1486,17,0.3,0.808,420
+Add clinic sessions,54,3,2,0.02,871,663,1003,11,0.202,0.89,488
+Rebalance new/follow-up slots,50,2,2,0.01,921,733,1109,13,0.224,0.872,473
+Guarded overbooking,52,3,3,-0.01,932,709,1073,12,0.217,0.878,478
+Reminder/navigation support,47,2,1,0.05,964,764,1156,13,0.233,0.864,466
+Protected urgent slots,43,3,2,0.04,1092,826,1250,14,0.252,0.848,453
+Diagnostic readiness improvement,54,4,2,0.03,805,616,932,10,0.188,0.902,498
+Outreach/regional clinic,54,5,3,0.08,839,678,1026,12,0.207,0.886,485

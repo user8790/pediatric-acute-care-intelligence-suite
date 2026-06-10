@@ -1,0 +1,46 @@
+{
+  "rows": [
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "waitlist_total": 124,
+      "waitlist_over_target": 35,
+      "median_wait_days": 5.0,
+      "p90_wait_days": 12.0,
+      "third_next_available_days": 4.5,
+      "urgent_breach_risk": 0.04375,
+      "demand_capacity_gap": -16,
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "top_driver_1": "referral demand",
+      "top_driver_2": "template capacity",
+      "top_driver_3": "no-show/late-cancel risk"
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "waitlist_total": 193,
+      "waitlist_over_target": 42,
+      "median_wait_days": 7.0,
+      "p90_wait_days": 14.5,
+      "third_next_available_days": 6.0,
+      "urgent_breach_risk": 0.045625,
+      "demand_capacity_gap": -7,
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "top_driver_1": "referral demand",
+      "top_driver_2": "template capacity",
+      "top_driver_3": "no-show/late-cancel risk"
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "waitlist_total": 21,
+      "waitlist_over_target": 3,
+      "median_wait_days": 5.0,
+      "p90_wait_days": 12.0,
+      "third_next_available_days": 4.0,
+      "urgent_breach_risk": 0.0215,
+      "demand_capacity_gap": 7,
+      "data_freshness": "2026-06-10T12:00:00-06:00",
+      "top_driver_1": "referral demand",
+      "top_driver_2": "template capacity",
+      "top_driver_3": "no-show/late-cancel risk"
+    }
+  ]
+}

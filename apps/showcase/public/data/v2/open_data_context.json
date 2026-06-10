@@ -1,0 +1,534 @@
+{
+  "rows": [
+    {
+      "week_start": "2025-06-16",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 9.2,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-06-23",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 7.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-06-30",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 5.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-07-07",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 3.5,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-07-14",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 1.6,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-07-21",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": -0.2,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-07-28",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": -2.0,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-08-04",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": -3.7,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-08-11",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": -5.2,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-08-18",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": -6.7,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-08-25",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": -7.9,
+      "school_in_session_proxy": false,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-09-01",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -8.9,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-09-08",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -9.8,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-09-15",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -10.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-09-22",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -10.8,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-09-29",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -11.0,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-10-06",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -10.9,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-10-13",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -10.7,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-10-20",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -10.1,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-10-27",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -9.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-11-03",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -8.5,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-11-10",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -7.3,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-11-17",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -6.0,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-11-24",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -4.6,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-12-01",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -2.9,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": true,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-12-08",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": -1.2,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": true,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-12-15",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 0.6,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": true,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-12-22",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 2.5,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": true,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2025-12-29",
+      "respiratory_activity_index": 11.61,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 4.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": true,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-01-05",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 6.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": true,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-01-12",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 8.3,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-01-19",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 10.1,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-01-26",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 11.9,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-02-02",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 13.6,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-02-09",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 15.2,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-02-16",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 16.6,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-02-23",
+      "respiratory_activity_index": 12.47,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 17.8,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-03-02",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 18.9,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-03-09",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 19.7,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-03-16",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 20.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-03-23",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 20.8,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-03-30",
+      "respiratory_activity_index": 9.89,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 21.0,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-04-06",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 20.9,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-04-13",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 20.7,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-04-20",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 20.2,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-04-27",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 3,
+      "mean_temperature_c_proxy": 19.5,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-05-04",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 18.5,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-05-11",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 17.4,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-05-18",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 16.1,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-05-25",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 14.6,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-06-01",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 13.0,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-06-08",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 11.3,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    },
+    {
+      "week_start": "2026-06-15",
+      "respiratory_activity_index": 7.74,
+      "aqhi_max_proxy": 6,
+      "mean_temperature_c_proxy": 9.5,
+      "school_in_session_proxy": true,
+      "holiday_week_proxy": false,
+      "population_context": "Statistics Canada pediatric age-band mapping placeholder",
+      "source_mode": "cached public-context fallback"
+    }
+  ]
+}

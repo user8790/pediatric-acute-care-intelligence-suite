@@ -1,0 +1,4 @@
+site_id,waitlist_total,waitlist_over_target,median_wait_days,p90_wait_days,third_next_available_days,urgent_breach_risk,demand_capacity_gap,data_freshness,top_driver_1,top_driver_2,top_driver_3
+SITE_ACH_INSPIRED,124,35,5.0,12.0,4.5,0.04375,-16,2026-06-10T12:00:00-06:00,referral demand,template capacity,no-show/late-cancel risk
+SITE_PROV_NETWORK,193,42,7.0,14.5,6.0,0.045625,-7,2026-06-10T12:00:00-06:00,referral demand,template capacity,no-show/late-cancel risk
+SITE_STOLLERY_INSPIRED,21,3,5.0,12.0,4.0,0.021500000000000002,7,2026-06-10T12:00:00-06:00,referral demand,template capacity,no-show/late-cancel risk

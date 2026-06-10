@@ -35,3 +35,23 @@ Date: 2026-06-10
 - Streamlit ambulatory demo: https://pediatric-acute-care-ambulatory.streamlit.app/
 
 HTTP smoke checks returned `200 OK` for all three deployed app URLs after publication.
+
+## v2 Expansion Outcomes
+
+- Created `docs/v2_gap_analysis_and_upgrade_plan.md` before implementation and treated the first pass as a foundation.
+- Refactored the showcase from a single large app file into pages, components, features, data contracts, and shared utilities.
+- Added v2 generated JSON assets and Streamlit CSV sample marts.
+- Upgraded showcase visuals with ECharts forecast ribbons, heatmaps, Sankey-style flow, scenario frontiers, sensitivity charts, and public-context trends.
+- Upgraded Streamlit inpatient and ambulatory apps to eight-tab v2 operational tools with Plotly charts, scenario grids, quality tabs, model/method tabs, and richer sidebar status.
+- Added Snowflake scripts `11_v2_scenario_marts.sql` and `12_v2_forecast_marts.sql`.
+- Removed advanced DES package references from the Streamlit/Snowflake path.
+- Expanded future real-data mapping and Snowflake transfer contracts around governed curated views.
+- Added v2 documentation, testing report, and Snowflake transfer checklist.
+
+## v2 Validation
+
+- `python packages/synthetic/generate_v2_showcase_data.py` passed.
+- `python -m pytest` passed with 28 tests.
+- `pnpm run build:showcase` passed.
+- Local Streamlit runtime smoke checks returned HTTP 200 for inpatient and ambulatory apps.
+- Local browser smoke check loaded the showcase without app console errors.

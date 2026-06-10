@@ -1,0 +1,196 @@
+{
+  "rows": [
+    {
+      "coefficient_name": "arrival_rate_lambda",
+      "symbol": "lambda",
+      "definition": "Arrivals per hour/day/service/site",
+      "default_value": 4.2,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "service_rate_mu",
+      "symbol": "mu",
+      "definition": "Completions per resource per time unit",
+      "default_value": 0.26,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "servers_resources",
+      "symbol": "c",
+      "definition": "Beds, rooms, providers, or constrained resources",
+      "default_value": 12.0,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "utilization",
+      "symbol": "rho",
+      "definition": "lambda / (c * mu)",
+      "default_value": 0.89744,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "interarrival_variability",
+      "symbol": "Ca2",
+      "definition": "Squared coefficient of variation for interarrival times",
+      "default_value": 1.15,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "service_variability",
+      "symbol": "Cs2",
+      "definition": "Squared coefficient of variation for service times",
+      "default_value": 1.32,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "erlang_c_wait_probability",
+      "symbol": "Erlang C",
+      "definition": "M/M/c wait probability",
+      "default_value": 0.56106,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "erlang_b_blocking_probability",
+      "symbol": "Erlang B",
+      "definition": "Loss-system blocking probability",
+      "default_value": 0.1159,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "kingman_wait_hours",
+      "symbol": "Kingman",
+      "definition": "G/G/1 wait approximation",
+      "default_value": 8.49062,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "allen_cunneen_wait_hours",
+      "symbol": "Allen-Cunneen",
+      "definition": "G/G/c wait approximation",
+      "default_value": 1.47135,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "little_law",
+      "symbol": "L=lambda W",
+      "definition": "System size relationship",
+      "default_value": 9.7,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "discharge_completion_rate",
+      "symbol": "delta_discharge",
+      "definition": "Hourly discharge completion coefficient",
+      "default_value": 0.055,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "bed_turnaround_minutes",
+      "symbol": "turnaround",
+      "definition": "EVS/bed clean turnaround",
+      "default_value": 72.0,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "effective_staffed_bed_coefficient",
+      "symbol": "effective_beds",
+      "definition": "Capacity after staffing constraints",
+      "default_value": 0.91,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "isolation_constraint_factor",
+      "symbol": "isolation",
+      "definition": "Respiratory/isolation bed constraint",
+      "default_value": 0.96,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "step_down_constraint_factor",
+      "symbol": "stepdown",
+      "definition": "PICU/NICU step-down constraint",
+      "default_value": 0.93,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "respiratory_surge_multiplier",
+      "symbol": "resp_surge",
+      "definition": "Respiratory activity demand multiplier",
+      "default_value": 1.35,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "weather_smoke_multiplier",
+      "symbol": "weather_smoke",
+      "definition": "Weather/AQHI/smoke demand multiplier",
+      "default_value": 1.07,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "school_holiday_multiplier",
+      "symbol": "school_holiday",
+      "definition": "School and holiday demand multiplier",
+      "default_value": 1.05,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "no_show_probability",
+      "symbol": "p_no_show",
+      "definition": "Appointment no-show probability",
+      "default_value": 0.088,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "overbooking_coefficient",
+      "symbol": "overbook",
+      "definition": "Guarded overbooking coefficient",
+      "default_value": 0.09,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "diagnostic_dependency_delay",
+      "symbol": "dx_delay",
+      "definition": "Median diagnostic dependency delay in days",
+      "default_value": 14.0,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "protected_slot_coefficient",
+      "symbol": "urgent_slots",
+      "definition": "Urgent-slot protection coefficient",
+      "default_value": 0.16,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    },
+    {
+      "coefficient_name": "virtual_care_conversion",
+      "symbol": "virtual",
+      "definition": "Share of visits suitable for virtual conversion",
+      "default_value": 0.27,
+      "source": "synthetic v2 configuration",
+      "caveat": "Demonstration coefficient; calibrate locally before operational use."
+    }
+  ]
+}

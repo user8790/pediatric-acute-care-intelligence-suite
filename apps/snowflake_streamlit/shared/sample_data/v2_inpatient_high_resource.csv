@@ -1,0 +1,7 @@
+site_id,service_line,high_resource_beds,occupied,step_down_ready_waiting,transfer_in_requests,ventilator_proxy_demand_synth,respiratory_surge_sensitivity
+SITE_STOLLERY_INSPIRED,PICU,20,16,3,3,8,1.401
+SITE_STOLLERY_INSPIRED,NICU,36,35,1,1,10,1.144
+SITE_ACH_INSPIRED,PICU,20,16,7,3,11,1.164
+SITE_ACH_INSPIRED,NICU,36,32,2,2,4,1.195
+SITE_PROV_NETWORK,PICU,20,19,2,5,5,1.199
+SITE_PROV_NETWORK,NICU,36,15,4,2,5,1.176

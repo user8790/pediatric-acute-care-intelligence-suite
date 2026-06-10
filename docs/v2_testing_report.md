@@ -12,6 +12,7 @@ Validated on Windows from `C:\Users\carrc\OneDrive\Documents\Presentation 1`.
 | Streamlit runtime smoke | local Streamlit HTTP checks on ports 8511 and 8512 | Passed |
 | Showcase build | `pnpm run build:showcase` | Passed |
 | Showcase browser smoke | local Vite dev server opened in browser | Passed; no app console errors |
+| Showcase Playwright e2e | `pnpm --dir apps/showcase test:e2e` | Passed, 6 tests across desktop/mobile Chromium |
 
 ## Notes
 
@@ -25,5 +26,6 @@ Validated on Windows from `C:\Users\carrc\OneDrive\Documents\Presentation 1`.
 python packages/synthetic/generate_v2_showcase_data.py
 python -m pytest
 pnpm run build:showcase
+pnpm --dir apps/showcase test:e2e
 python -m py_compile apps/snowflake_streamlit/inpatient/streamlit_app.py apps/snowflake_streamlit/ambulatory/streamlit_app.py apps/snowflake_streamlit/shared/lib/common.py
 ```

@@ -14,6 +14,6 @@
 
 1. Validate the v2 Streamlit apps in an actual Snowflake account.
 2. Add CI jobs for Python tests, data generation, SQL static checks, and showcase build.
-3. Add Playwright visual regression for the showcase pages.
+3. Expand Playwright into screenshot baseline comparison for the six public showcase pages.
 4. Expand Snowflake SQL synthetic data to populate all v2 marts directly instead of relying on derived placeholders.
 5. Add real-data readiness workshops around curated views, field contracts, privacy review, and local model validation.

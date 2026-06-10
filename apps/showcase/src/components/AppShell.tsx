@@ -16,13 +16,18 @@ import { HORIZONS, PERSONAS, SITES } from "../data/types";
 
 export type PageId = "overview" | "inpatient" | "ambulatory" | "simulation" | "methods" | "governance" | "walkthrough";
 
-export const PAGES: Array<{ id: PageId; label: string; icon: typeof Home }> = [
+type PageConfig = { id: PageId; label: string; icon: typeof Home };
+
+export const PUBLIC_PAGES: PageConfig[] = [
   { id: "overview", label: "Overview", icon: Home },
   { id: "inpatient", label: "Inpatient", icon: BedDouble },
   { id: "ambulatory", label: "Ambulatory", icon: CalendarClock },
   { id: "simulation", label: "Simulation", icon: SlidersHorizontal },
   { id: "methods", label: "Methods", icon: FlaskConical },
   { id: "governance", label: "Governance", icon: ShieldCheck },
+];
+
+export const INTERNAL_PAGES: PageConfig[] = [
   { id: "walkthrough", label: "Walkthrough", icon: Sparkles },
 ];
 
@@ -96,10 +101,19 @@ export function ControlBand({
   );
 }
 
-export function ProductNav({ activePage, setActivePage }: { activePage: PageId; setActivePage: (page: PageId) => void }) {
+export function ProductNav({
+  activePage,
+  setActivePage,
+  showInternal = false,
+}: {
+  activePage: PageId;
+  setActivePage: (page: PageId) => void;
+  showInternal?: boolean;
+}) {
+  const pages = showInternal ? [...PUBLIC_PAGES, ...INTERNAL_PAGES] : PUBLIC_PAGES;
   return (
     <nav className="tab-strip" aria-label="Product areas">
-      {PAGES.map((page) => {
+      {pages.map((page) => {
         const Icon = page.icon;
         return (
           <button key={page.id} className={activePage === page.id ? "active" : ""} onClick={() => setActivePage(page.id)} title={page.label}>

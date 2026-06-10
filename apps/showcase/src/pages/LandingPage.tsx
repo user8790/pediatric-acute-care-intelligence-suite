@@ -6,7 +6,17 @@ import type { AppContext, V2Data } from "../data/types";
 import { avgRows, formatInteger, formatPct, siteLabel, sumRows } from "../lib/format";
 import { horizonLens, roleLens } from "../lib/narrative";
 
-export function LandingPage({ data, context, goTo }: { data: V2Data; context: AppContext; goTo: (page: string) => void }) {
+export function LandingPage({
+  data,
+  context,
+  goTo,
+  showInternalWalkthrough = false,
+}: {
+  data: V2Data;
+  context: AppContext;
+  goTo: (page: string) => void;
+  showInternalWalkthrough?: boolean;
+}) {
   const inpatientCensus = sumRows(data.inpatientMission, "census");
   const inpatientEffective = Math.max(1, sumRows(data.inpatientMission, "effective_beds"));
   const waitlist = sumRows(data.ambulatoryMission, "waitlist_total");
@@ -32,10 +42,12 @@ export function LandingPage({ data, context, goTo }: { data: V2Data; context: Ap
               <CalendarClock size={18} />
               Ambulatory access
             </button>
-            <button onClick={() => goTo("walkthrough")}>
-              <Sparkles size={18} />
-              10-minute walkthrough
-            </button>
+            {showInternalWalkthrough && (
+              <button onClick={() => goTo("walkthrough")}>
+                <Sparkles size={18} />
+                10-minute walkthrough
+              </button>
+            )}
           </div>
         </div>
         <div className="network-schematic" aria-label="Provincial pediatric network schematic">

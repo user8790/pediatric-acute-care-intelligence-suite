@@ -1,0 +1,5 @@
+simulation_run_id,scenario_name,synthetic_demo
+SIM_AMB_001,Current access plan,True
+SIM_AMB_002,Add clinics/sessions,True
+SIM_AMB_003,Guarded overbooking,True
+SIM_AMB_004,Reduce triage turnaround,True

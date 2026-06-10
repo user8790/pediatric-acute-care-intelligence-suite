@@ -1,0 +1,4 @@
+equity_geo_proxy_id,distance_band,travel_burden_index
+GEO_URBAN,urban_0_30km,1
+GEO_REGIONAL,regional_30_150km,2
+GEO_REMOTE,remote_150km_plus,3

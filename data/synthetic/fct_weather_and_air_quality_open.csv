@@ -1,0 +1,18 @@
+open_weather_id,week_start_date,region,mean_temperature_c,aqhi_max,source_name,synthetic_context_fallback
+OPEN_WEATHER_202601,2026-01-05,Alberta pediatric corridor proxy,6.2,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202602,2026-01-12,Alberta pediatric corridor proxy,7.9,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202603,2026-01-19,Alberta pediatric corridor proxy,9.5,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202604,2026-01-26,Alberta pediatric corridor proxy,11.1,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202605,2026-02-02,Alberta pediatric corridor proxy,12.5,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202606,2026-02-09,Alberta pediatric corridor proxy,13.9,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202607,2026-02-16,Alberta pediatric corridor proxy,15.1,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202608,2026-02-23,Alberta pediatric corridor proxy,16.2,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202609,2026-03-02,Alberta pediatric corridor proxy,17.1,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202610,2026-03-09,Alberta pediatric corridor proxy,17.9,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202611,2026-03-16,Alberta pediatric corridor proxy,18.5,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202612,2026-03-23,Alberta pediatric corridor proxy,18.8,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202613,2026-03-30,Alberta pediatric corridor proxy,19.0,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202614,2026-04-06,Alberta pediatric corridor proxy,19.0,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202615,2026-04-13,Alberta pediatric corridor proxy,18.7,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202616,2026-04-20,Alberta pediatric corridor proxy,18.3,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True
+OPEN_WEATHER_202617,2026-04-27,Alberta pediatric corridor proxy,17.7,3,Fallback snapshot inspired by ECCC GeoMet/AQHI fields,True

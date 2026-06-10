@@ -1,0 +1,8 @@
+age_band_id,age_band
+AGE_01,neonate
+AGE_02,infant
+AGE_03,toddler
+AGE_04,preschool
+AGE_05,school_age
+AGE_06,adolescent
+AGE_07,young_adult_transition

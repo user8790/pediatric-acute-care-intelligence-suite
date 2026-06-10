@@ -1,0 +1,4 @@
+occupancy_snapshot_id,site_id,census,physical_beds,staffed_beds,effective_beds,ed_boarders,predicted_discharges,discharge_confidence,staffing_gap_pct,occupancy_pct,snapshot_ts,synthetic_demo
+SNAP_001,SITE_ACH_INSPIRED,132,178,172,157,3,4,0.7376666666666667,0.0633,0.8407643312101911,2026-04-30T23:00:00,True
+SNAP_002,SITE_PROV_NETWORK,56,80,74,67,7,2,0.753,0.0654,0.835820895522388,2026-04-30T23:00:00,True
+SNAP_003,SITE_STOLLERY_INSPIRED,143,178,173,158,10,2,0.6893333333333334,0.05631666666666666,0.9050632911392406,2026-04-30T23:00:00,True

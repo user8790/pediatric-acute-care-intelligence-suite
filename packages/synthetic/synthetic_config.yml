@@ -1,0 +1,18 @@
+seed: 20260610
+start_date: "2026-01-01"
+days: 120
+synthetic_mode: true
+privacy:
+  generate_direct_identifiers: false
+  patient_display_level: aggregate_default
+  small_cell_threshold: 6
+seasonality:
+  winter_respiratory_peak_months: [1, 2, 11, 12]
+  school_calendar_effect: synthetic_proxy
+  holiday_effect: synthetic_proxy
+data_quality_imperfections:
+  missingness_rate: 0.015
+  late_arriving_rate: 0.025
+  duplicate_referral_rate: 0.01
+  inconsistent_timestamp_rate: 0.004
+

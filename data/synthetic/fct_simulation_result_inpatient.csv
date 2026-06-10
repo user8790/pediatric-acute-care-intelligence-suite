@@ -1,0 +1,5 @@
+simulation_result_id,scenario_name,boarder_hours_mean,boarder_hours_p10,boarder_hours_p90,p95_occupancy_mean,synthetic_demo
+SIM_INPT_001,Current state baseline,1247.2,714.1,1893.8,1.26,True
+SIM_INPT_002,Respiratory surge,4854.6,3978.3,5504.1,1.802,True
+SIM_INPT_003,Open surge beds,1693.1,1111.7,2430.2,1.307,True
+SIM_INPT_004,Increase morning discharges,1447.0,908.4,2055.6,1.295,True

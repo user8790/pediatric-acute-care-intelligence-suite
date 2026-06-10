@@ -1,0 +1,11 @@
+diagnosis_group_id,diagnosis_group
+DG_01,general_pediatrics
+DG_02,surgery
+DG_03,PICU
+DG_04,NICU
+DG_05,cardiology
+DG_06,oncology
+DG_07,neurology
+DG_08,respiratory
+DG_09,mental_health
+DG_10,rehabilitation_complex_care

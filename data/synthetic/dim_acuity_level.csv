@@ -1,0 +1,5 @@
+acuity_level_id,acuity_level
+ACU_LOW,low
+ACU_MOD,moderate
+ACU_HIGH,high
+ACU_CRIT,critical

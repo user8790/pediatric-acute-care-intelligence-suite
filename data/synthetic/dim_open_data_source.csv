@@ -1,0 +1,5 @@
+open_data_source_id,source_name
+OPEN_RESP_CA,PHAC FluWatch+
+OPEN_RESP_AB,Alberta respiratory virus dashboard
+OPEN_WEATHER_ECCC,ECCC GeoMet and AQHI
+OPEN_STATCAN,Statistics Canada WDS

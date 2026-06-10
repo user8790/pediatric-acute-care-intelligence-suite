@@ -1,0 +1,4 @@
+packages:
+  - apps/showcase
+allowBuilds:
+  esbuild: true

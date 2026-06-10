@@ -1,0 +1,5 @@
+simulation_run_id,scenario_name,synthetic_demo
+SIM_INPT_001,Current state baseline,True
+SIM_INPT_002,Respiratory surge,True
+SIM_INPT_003,Open surge beds,True
+SIM_INPT_004,Increase morning discharges,True

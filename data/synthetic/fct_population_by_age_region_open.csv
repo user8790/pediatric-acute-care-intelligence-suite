@@ -1,0 +1,22 @@
+open_population_id,site_id,age_band,population_proxy,source_name,synthetic_context_fallback
+OPEN_POP_SITE_STOLLERY_INSPIRED_neonate,SITE_STOLLERY_INSPIRED,neonate,15250,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_STOLLERY_INSPIRED_infant,SITE_STOLLERY_INSPIRED,infant,14500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_STOLLERY_INSPIRED_toddler,SITE_STOLLERY_INSPIRED,toddler,15250,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_STOLLERY_INSPIRED_preschool,SITE_STOLLERY_INSPIRED,preschool,16750,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_STOLLERY_INSPIRED_school_age,SITE_STOLLERY_INSPIRED,school_age,17500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_STOLLERY_INSPIRED_adolescent,SITE_STOLLERY_INSPIRED,adolescent,17500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_STOLLERY_INSPIRED_young_adult_transition,SITE_STOLLERY_INSPIRED,young_adult_transition,26500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_ACH_INSPIRED_neonate,SITE_ACH_INSPIRED,neonate,15250,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_ACH_INSPIRED_infant,SITE_ACH_INSPIRED,infant,14500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_ACH_INSPIRED_toddler,SITE_ACH_INSPIRED,toddler,15250,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_ACH_INSPIRED_preschool,SITE_ACH_INSPIRED,preschool,16750,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_ACH_INSPIRED_school_age,SITE_ACH_INSPIRED,school_age,17500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_ACH_INSPIRED_adolescent,SITE_ACH_INSPIRED,adolescent,17500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_ACH_INSPIRED_young_adult_transition,SITE_ACH_INSPIRED,young_adult_transition,26500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_PROV_NETWORK_neonate,SITE_PROV_NETWORK,neonate,15250,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_PROV_NETWORK_infant,SITE_PROV_NETWORK,infant,14500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_PROV_NETWORK_toddler,SITE_PROV_NETWORK,toddler,15250,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_PROV_NETWORK_preschool,SITE_PROV_NETWORK,preschool,16750,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_PROV_NETWORK_school_age,SITE_PROV_NETWORK,school_age,17500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_PROV_NETWORK_adolescent,SITE_PROV_NETWORK,adolescent,17500,Fallback population proxy for Statistics Canada WDS mapping,True
+OPEN_POP_SITE_PROV_NETWORK_young_adult_transition,SITE_PROV_NETWORK,young_adult_transition,26500,Fallback population proxy for Statistics Canada WDS mapping,True

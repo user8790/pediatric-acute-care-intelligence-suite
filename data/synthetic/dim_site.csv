@@ -1,0 +1,4 @@
+site_id,site_name,zone,latitude,longitude
+SITE_STOLLERY_INSPIRED,Stollery-inspired pediatric site,Edmonton zone proxy,53.52,-113.52
+SITE_ACH_INSPIRED,Alberta Children's-inspired pediatric site,Calgary zone proxy,51.06,-114.13
+SITE_PROV_NETWORK,Provincial pediatric network proxy,Provincial network,52.5,-113.5

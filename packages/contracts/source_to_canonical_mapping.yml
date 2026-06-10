@@ -1,0 +1,177 @@
+version: 0.1.0
+principle: Future real data must arrive through curated, governed Snowflake views only.
+placeholders:
+  VW_ADT_EVENTS:
+    maps_to: FCT_ADT_EVENT
+    fields:
+      - canonical_field: adt_event_id
+        expected_type: string
+        nullable: false
+        derivation_logic: hashed or surrogate event key from governed source
+        privacy_sensitivity: indirect identifier if patient-level
+        aggregation_level: event
+        validation_checks: primary key uniqueness, valid event type
+        notes: do not expose direct encounter identifiers in app marts
+      - canonical_field: event_ts
+        expected_type: timestamp
+        nullable: false
+        derivation_logic: source ADT event timestamp rounded where appropriate
+        privacy_sensitivity: operational timestamp
+        aggregation_level: event
+        validation_checks: not future dated, ordered by encounter
+        notes: future marts should aggregate before display
+  VW_INPATIENT_ENCOUNTERS:
+    maps_to: FCT_INPATIENT_ENCOUNTER
+    fields:
+      - canonical_field: encounter_synth_or_surrogate_id
+        expected_type: string
+        nullable: false
+        derivation_logic: governed surrogate key
+        privacy_sensitivity: indirect identifier
+        aggregation_level: encounter
+        validation_checks: no MRN or health number
+        notes: do not display by default
+  VW_BED_STATUS:
+    maps_to: FCT_BED_STATUS_HOURLY
+    fields:
+      - canonical_field: unit_id
+        expected_type: string
+        nullable: false
+        derivation_logic: curated unit mapping
+        privacy_sensitivity: operational
+        aggregation_level: unit-hour
+        validation_checks: valid site/unit mapping
+        notes: display only aggregate bed state
+  VW_ED_VISITS:
+    maps_to: FCT_ED_TO_INPATIENT_FLOW
+    fields:
+      - canonical_field: decision_to_admit_ts
+        expected_type: timestamp
+        nullable: true
+        derivation_logic: curated ED milestone
+        privacy_sensitivity: operational timestamp
+        aggregation_level: cohort
+        validation_checks: timestamp order, non-negative intervals
+        notes: aggregate before dashboard
+  VW_OR_CASES:
+    maps_to: FCT_OR_CASE
+    fields:
+      - canonical_field: procedure_group_id
+        expected_type: string
+        nullable: true
+        derivation_logic: grouped procedure taxonomy
+        privacy_sensitivity: clinical category
+        aggregation_level: case or day
+        validation_checks: valid procedure group
+        notes: avoid free-text procedure display
+  VW_DISCHARGE_MILESTONES:
+    maps_to: FCT_DISCHARGE_READINESS
+    fields:
+      - canonical_field: discharge_ready_ts
+        expected_type: timestamp
+        nullable: true
+        derivation_logic: curated discharge milestone
+        privacy_sensitivity: operational timestamp
+        aggregation_level: cohort
+        validation_checks: after admission, before discharge
+        notes: barrier categories should be standardized
+  VW_REFERRALS:
+    maps_to: FCT_REFERRAL
+    fields:
+      - canonical_field: referral_id
+        expected_type: string
+        nullable: false
+        derivation_logic: governed surrogate referral key
+        privacy_sensitivity: indirect identifier
+        aggregation_level: referral
+        validation_checks: no direct identifiers, duplicate rules
+        notes: app marts aggregate by program/week/urgency
+  VW_APPOINTMENTS:
+    maps_to: FCT_APPOINTMENT
+    fields:
+      - canonical_field: appointment_week
+        expected_type: date
+        nullable: false
+        derivation_logic: appointment date truncated to week for marts
+        privacy_sensitivity: operational date
+        aggregation_level: week
+        validation_checks: valid status transitions
+        notes: hide patient-level schedule by default
+  VW_WAITLIST:
+    maps_to: FCT_WAITLIST_SNAPSHOT
+    fields:
+      - canonical_field: waitlist_total
+        expected_type: integer
+        nullable: false
+        derivation_logic: active referrals on snapshot date
+        privacy_sensitivity: aggregate
+        aggregation_level: program-week
+        validation_checks: non-negative, small-cell suppression
+        notes: preserve urgency and age band only as aggregated fields
+  VW_CLINIC_TEMPLATES:
+    maps_to: FCT_CLINIC_TEMPLATE_CAPACITY
+    fields:
+      - canonical_field: slots_available
+        expected_type: integer
+        nullable: false
+        derivation_logic: template slots by program/week
+        privacy_sensitivity: operational
+        aggregation_level: clinic-week
+        validation_checks: non-negative
+        notes: join room/provider/nurse constraints in curated layer
+  VW_PROVIDER_AVAILABILITY:
+    maps_to: FCT_PROVIDER_AVAILABILITY_SYNTH
+    fields:
+      - canonical_field: available_sessions
+        expected_type: number
+        nullable: false
+        derivation_logic: curated provider session availability
+        privacy_sensitivity: staff operational
+        aggregation_level: provider-group-week
+        validation_checks: no individual staff names in app marts
+        notes: use provider group rather than named provider where possible
+  VW_STAFFING:
+    maps_to: FCT_STAFFING_GAP_SYNTH
+    fields:
+      - canonical_field: staffing_gap_pct
+        expected_type: number
+        nullable: false
+        derivation_logic: required minus scheduled staffing divided by required
+        privacy_sensitivity: staff operational
+        aggregation_level: unit-shift
+        validation_checks: between 0 and 1
+        notes: skill mix should be grouped
+  VW_OPEN_RESPIRATORY:
+    maps_to: FCT_RESPIRATORY_VIRUS_ACTIVITY_OPEN
+    fields:
+      - canonical_field: week_start_date
+        expected_type: date
+        nullable: false
+        derivation_logic: public surveillance week
+        privacy_sensitivity: public aggregate
+        aggregation_level: region-week
+        validation_checks: source freshness
+        notes: public context only
+  VW_OPEN_WEATHER:
+    maps_to: FCT_WEATHER_AND_AIR_QUALITY_OPEN
+    fields:
+      - canonical_field: aqhi_max
+        expected_type: number
+        nullable: true
+        derivation_logic: public AQHI max by region/week
+        privacy_sensitivity: public aggregate
+        aggregation_level: region-week
+        validation_checks: source freshness
+        notes: ecological context only
+  VW_OPEN_POPULATION:
+    maps_to: FCT_POPULATION_BY_AGE_REGION_OPEN
+    fields:
+      - canonical_field: population
+        expected_type: integer
+        nullable: false
+        derivation_logic: public aggregate population by age band and geography
+        privacy_sensitivity: public aggregate
+        aggregation_level: age-band-region
+        validation_checks: non-negative
+        notes: apply current geography definitions
+

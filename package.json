@@ -1,0 +1,21 @@
+{
+  "name": "pediatric-acute-care-intelligence-suite",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Synthetic pediatric acute care operations intelligence prototype.",
+  "scripts": {
+    "dev:showcase": "pnpm --dir apps/showcase dev",
+    "build:showcase": "pnpm --dir apps/showcase build",
+    "test:py": "python -m pytest",
+    "generate:data": "python packages/synthetic/generate_synthetic_data.py"
+  },
+  "workspaces": [
+    "apps/showcase"
+  ],
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "packageManager": "pnpm@11.0.8"
+}

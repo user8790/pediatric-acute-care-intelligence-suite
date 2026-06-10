@@ -1,0 +1,16 @@
+version: 0.1.0
+database: PEDIATRIC_AHA_DEMO
+schemas:
+  raw_synth: PEDIATRIC_AHA_DEMO.RAW_SYNTH
+  curated: PEDIATRIC_AHA_DEMO.CURATED
+  mart: PEDIATRIC_AHA_DEMO.MART
+  app: PEDIATRIC_AHA_DEMO.APP
+  model: PEDIATRIC_AHA_DEMO.MODEL
+  config: PEDIATRIC_AHA_DEMO.CONFIG
+pattern:
+  raw_synth: Synthetic source-like tables.
+  curated: Canonical governed views.
+  mart: Aggregated app-query views.
+  model: Model outputs, registry, and monitoring tables.
+  config: Coefficients, scenarios, quality thresholds, and metadata.
+

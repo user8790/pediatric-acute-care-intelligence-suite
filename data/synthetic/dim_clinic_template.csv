@@ -1,0 +1,17 @@
+clinic_template_id,program,template_type,new_visit_share
+TEMPLATE_RESP_balanced,respiratory,balanced,0.42
+TEMPLATE_RESP_access_recovery,respiratory,access_recovery,0.55
+TEMPLATE_CARD_balanced,cardiology,balanced,0.42
+TEMPLATE_CARD_access_recovery,cardiology,access_recovery,0.55
+TEMPLATE_NEUR_balanced,neurology,balanced,0.42
+TEMPLATE_NEUR_access_recovery,neurology,access_recovery,0.55
+TEMPLATE_SURG_balanced,surgery_followup,balanced,0.42
+TEMPLATE_SURG_access_recovery,surgery_followup,access_recovery,0.55
+TEMPLATE_ONCO_balanced,oncology_survivorship,balanced,0.42
+TEMPLATE_ONCO_access_recovery,oncology_survivorship,access_recovery,0.55
+TEMPLATE_COMP_balanced,complex_care,balanced,0.42
+TEMPLATE_COMP_access_recovery,complex_care,access_recovery,0.55
+TEMPLATE_MENT_balanced,mental_health,balanced,0.42
+TEMPLATE_MENT_access_recovery,mental_health,access_recovery,0.55
+TEMPLATE_DIAG_balanced,diagnostic_procedures,balanced,0.42
+TEMPLATE_DIAG_access_recovery,diagnostic_procedures,access_recovery,0.55

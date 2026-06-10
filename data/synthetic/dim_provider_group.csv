@@ -1,0 +1,4 @@
+provider_group_id,provider_group
+PG_PHYS,physician group synthetic
+PG_NP,nurse practitioner group synthetic
+PG_AH,allied health group synthetic

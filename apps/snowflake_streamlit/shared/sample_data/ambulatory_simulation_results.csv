@@ -1,0 +1,5 @@
+simulation_result_id,scenario_name,final_backlog,clearance_week,mean_utilization,breach_probability_proxy,synthetic_demo
+SIM_AMB_001,Current access plan,1039,999,0.909,0.95,True
+SIM_AMB_002,Add clinics/sessions,624,999,0.913,0.846,True
+SIM_AMB_003,Guarded overbooking,845,999,0.906,0.95,True
+SIM_AMB_004,Reduce triage turnaround,819,999,0.915,0.95,True

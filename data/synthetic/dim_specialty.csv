@@ -1,0 +1,9 @@
+specialty_id,specialty
+SPEC_01,respiratory
+SPEC_02,cardiology
+SPEC_03,neurology
+SPEC_04,surgery_followup
+SPEC_05,oncology_survivorship
+SPEC_06,complex_care
+SPEC_07,mental_health
+SPEC_08,diagnostic_procedures

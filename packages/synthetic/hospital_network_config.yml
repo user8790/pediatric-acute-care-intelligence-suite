@@ -1,0 +1,33 @@
+sites:
+  - site_id: SITE_STOLLERY_INSPIRED
+    site_name: Stollery-inspired pediatric site
+    zone: Edmonton zone proxy
+    physical_beds: 235
+  - site_id: SITE_ACH_INSPIRED
+    site_name: Alberta Children's-inspired pediatric site
+    zone: Calgary zone proxy
+    physical_beds: 190
+  - site_id: SITE_PROV_NETWORK
+    site_name: Provincial pediatric network proxy
+    zone: Provincial network
+    physical_beds: 80
+unit_templates:
+  - unit_type: General pediatrics
+    service_line: general_pediatrics
+    beds: 42
+  - unit_type: Respiratory cohort
+    service_line: respiratory
+    beds: 28
+  - unit_type: Surgery
+    service_line: surgery
+    beds: 34
+  - unit_type: PICU
+    service_line: PICU
+    beds: 20
+  - unit_type: NICU
+    service_line: NICU
+    beds: 36
+  - unit_type: Mental health
+    service_line: mental_health
+    beds: 18
+

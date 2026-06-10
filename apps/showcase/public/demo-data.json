@@ -1,0 +1,3950 @@
+{
+  "metadata": {
+    "appVersion": "0.1.0",
+    "generatedAt": "2026-06-10T19:28:43.920327+00:00",
+    "mode": "Synthetic demonstration data",
+    "clinicalUse": "Not validated for clinical decision-making"
+  },
+  "inpatientKpis": [
+    {
+      "label": "Occupancy",
+      "value": 86.1,
+      "unit": "%",
+      "trend": "+3.8"
+    },
+    {
+      "label": "Effective beds",
+      "value": 382,
+      "unit": "beds",
+      "trend": "-7"
+    },
+    {
+      "label": "ED boarders",
+      "value": 20,
+      "unit": "patients",
+      "trend": "+5"
+    },
+    {
+      "label": "Discharge confidence",
+      "value": 72.7,
+      "unit": "%",
+      "trend": "-4.2"
+    }
+  ],
+  "ambulatoryKpis": [
+    {
+      "label": "Waitlist",
+      "value": 2866,
+      "unit": "referrals",
+      "trend": "+6.4"
+    },
+    {
+      "label": "Median wait",
+      "value": 40,
+      "unit": "days",
+      "trend": "+2"
+    },
+    {
+      "label": "Third next available",
+      "value": 30,
+      "unit": "days",
+      "trend": "+3"
+    },
+    {
+      "label": "No-show risk",
+      "value": 7.7,
+      "unit": "%",
+      "trend": "-0.7"
+    }
+  ],
+  "siteSnapshots": [
+    {
+      "occupancy_snapshot_id": "SNAP_001",
+      "site_id": "SITE_ACH_INSPIRED",
+      "census": 132,
+      "physical_beds": 178,
+      "staffed_beds": 172,
+      "effective_beds": 157,
+      "ed_boarders": 3,
+      "predicted_discharges": 4,
+      "discharge_confidence": 0.7377,
+      "staffing_gap_pct": 0.0633,
+      "occupancy_pct": 0.8408,
+      "snapshot_ts": "2026-04-30T23:00:00",
+      "synthetic_demo": true
+    },
+    {
+      "occupancy_snapshot_id": "SNAP_002",
+      "site_id": "SITE_PROV_NETWORK",
+      "census": 56,
+      "physical_beds": 80,
+      "staffed_beds": 74,
+      "effective_beds": 67,
+      "ed_boarders": 7,
+      "predicted_discharges": 2,
+      "discharge_confidence": 0.753,
+      "staffing_gap_pct": 0.0654,
+      "occupancy_pct": 0.8358,
+      "snapshot_ts": "2026-04-30T23:00:00",
+      "synthetic_demo": true
+    },
+    {
+      "occupancy_snapshot_id": "SNAP_003",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "census": 143,
+      "physical_beds": 178,
+      "staffed_beds": 173,
+      "effective_beds": 158,
+      "ed_boarders": 10,
+      "predicted_discharges": 2,
+      "discharge_confidence": 0.6893,
+      "staffing_gap_pct": 0.0563,
+      "occupancy_pct": 0.9051,
+      "snapshot_ts": "2026-04-30T23:00:00",
+      "synthetic_demo": true
+    }
+  ],
+  "inpatientForecast": [
+    {
+      "model_prediction_id": "PRED_INPT_SITE_ACH_INSPIRED_6",
+      "site_id": "SITE_ACH_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 6,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8656,
+      "p10": 0.7856,
+      "p90": 0.9656,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_ACH_INSPIRED_12",
+      "site_id": "SITE_ACH_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 12,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8735,
+      "p10": 0.7935,
+      "p90": 0.9735,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_ACH_INSPIRED_24",
+      "site_id": "SITE_ACH_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 24,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8818,
+      "p10": 0.8018,
+      "p90": 0.9818,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_ACH_INSPIRED_48",
+      "site_id": "SITE_ACH_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 48,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8904,
+      "p10": 0.8104,
+      "p90": 0.9904,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_ACH_INSPIRED_72",
+      "site_id": "SITE_ACH_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 72,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8955,
+      "p10": 0.8155,
+      "p90": 0.9955,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_PROV_NETWORK_6",
+      "site_id": "SITE_PROV_NETWORK",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 6,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8606,
+      "p10": 0.7806,
+      "p90": 0.9606,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_PROV_NETWORK_12",
+      "site_id": "SITE_PROV_NETWORK",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 12,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8685,
+      "p10": 0.7885,
+      "p90": 0.9685,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_PROV_NETWORK_24",
+      "site_id": "SITE_PROV_NETWORK",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 24,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8769,
+      "p10": 0.7969,
+      "p90": 0.9769,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_PROV_NETWORK_48",
+      "site_id": "SITE_PROV_NETWORK",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 48,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8854,
+      "p10": 0.8054,
+      "p90": 0.9854,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_PROV_NETWORK_72",
+      "site_id": "SITE_PROV_NETWORK",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 72,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.8905,
+      "p10": 0.8105,
+      "p90": 0.9905,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_STOLLERY_INSPIRED_6",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 6,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.9343,
+      "p10": 0.8543,
+      "p90": 1.0343,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_STOLLERY_INSPIRED_12",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 12,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.9435,
+      "p10": 0.8635,
+      "p90": 1.0435,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_STOLLERY_INSPIRED_24",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 24,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.9533,
+      "p10": 0.8733,
+      "p90": 1.0533,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_STOLLERY_INSPIRED_48",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 48,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.9634,
+      "p10": 0.8834,
+      "p90": 1.0634,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    },
+    {
+      "model_prediction_id": "PRED_INPT_SITE_STOLLERY_INSPIRED_72",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "model_id": "MODEL_INPT_OCC",
+      "prediction_horizon_hours": 72,
+      "metric_name": "occupancy_pct",
+      "prediction": 0.9694,
+      "p10": 0.8894,
+      "p90": 1.0694,
+      "top_driver_1": "respiratory activity",
+      "top_driver_2": "staffing gap",
+      "top_driver_3": "discharge confidence",
+      "validation_status": "synthetic demo only",
+      "synthetic_demo": true
+    }
+  ],
+  "unitPressure": [
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_id": "SITE_STOLLERY_INSPIRED_GEN",
+      "service_line": "general_pediatrics",
+      "occupancy_pct": 0.8684,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.0456
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_id": "SITE_STOLLERY_INSPIRED_RESP",
+      "service_line": "respiratory",
+      "occupancy_pct": 0.96,
+      "ed_boarders": 2,
+      "staffing_gap_pct": 0.059
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_id": "SITE_STOLLERY_INSPIRED_SURG",
+      "service_line": "surgery",
+      "occupancy_pct": 0.9333,
+      "ed_boarders": 2,
+      "staffing_gap_pct": 0.0524
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_id": "SITE_STOLLERY_INSPIRED_PICU",
+      "service_line": "PICU",
+      "occupancy_pct": 0.8333,
+      "ed_boarders": 1,
+      "staffing_gap_pct": 0.0616
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_id": "SITE_STOLLERY_INSPIRED_NICU",
+      "service_line": "NICU",
+      "occupancy_pct": 0.8485,
+      "ed_boarders": 1,
+      "staffing_gap_pct": 0.046
+    },
+    {
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_id": "SITE_STOLLERY_INSPIRED_MH",
+      "service_line": "mental_health",
+      "occupancy_pct": 1.0714,
+      "ed_boarders": 4,
+      "staffing_gap_pct": 0.0733
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_id": "SITE_ACH_INSPIRED_GEN",
+      "service_line": "general_pediatrics",
+      "occupancy_pct": 0.8947,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.0419
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_id": "SITE_ACH_INSPIRED_RESP",
+      "service_line": "respiratory",
+      "occupancy_pct": 0.8,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.0717
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_id": "SITE_ACH_INSPIRED_SURG",
+      "service_line": "surgery",
+      "occupancy_pct": 0.7,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.1009
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_id": "SITE_ACH_INSPIRED_PICU",
+      "service_line": "PICU",
+      "occupancy_pct": 1.0,
+      "ed_boarders": 3,
+      "staffing_gap_pct": 0.0744
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_id": "SITE_ACH_INSPIRED_NICU",
+      "service_line": "NICU",
+      "occupancy_pct": 0.871,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.0474
+    },
+    {
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_id": "SITE_ACH_INSPIRED_MH",
+      "service_line": "mental_health",
+      "occupancy_pct": 0.8125,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.0435
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_GEN",
+      "service_line": "general_pediatrics",
+      "occupancy_pct": 0.6471,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.0774
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_RESP",
+      "service_line": "respiratory",
+      "occupancy_pct": 0.8182,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.0791
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_SURG",
+      "service_line": "surgery",
+      "occupancy_pct": 1.0,
+      "ed_boarders": 4,
+      "staffing_gap_pct": 0.0314
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_PICU",
+      "service_line": "PICU",
+      "occupancy_pct": 0.6667,
+      "ed_boarders": 0,
+      "staffing_gap_pct": 0.106
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_NICU",
+      "service_line": "NICU",
+      "occupancy_pct": 0.9231,
+      "ed_boarders": 1,
+      "staffing_gap_pct": 0.0349
+    },
+    {
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "service_line": "mental_health",
+      "occupancy_pct": 1.0,
+      "ed_boarders": 2,
+      "staffing_gap_pct": 0.0636
+    }
+  ],
+  "dischargeBarriers": [
+    {
+      "discharge_barrier_id": "BAR_SITE_STOLLERY_INSPIRED_MEDS",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "barrier_type": "meds",
+      "active_count": 12,
+      "median_age_hours": 30.0,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_STOLLERY_INSPIRED_TRANSPORT",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "barrier_type": "transport",
+      "active_count": 10,
+      "median_age_hours": 12.4,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_STOLLERY_INSPIRED_IMAGING",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "barrier_type": "imaging",
+      "active_count": 4,
+      "median_age_hours": 15.2,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_STOLLERY_INSPIRED_CONSULT",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "barrier_type": "consult",
+      "active_count": 6,
+      "median_age_hours": 25.1,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_STOLLERY_INSPIRED_FAMILY_READINESS",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "barrier_type": "family_readiness",
+      "active_count": 8,
+      "median_age_hours": 10.7,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_STOLLERY_INSPIRED_HOME_SUPPORTS",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "barrier_type": "home_supports",
+      "active_count": 6,
+      "median_age_hours": 11.5,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_STOLLERY_INSPIRED_EQUIPMENT",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "barrier_type": "equipment",
+      "active_count": 4,
+      "median_age_hours": 13.0,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_ACH_INSPIRED_MEDS",
+      "site_id": "SITE_ACH_INSPIRED",
+      "barrier_type": "meds",
+      "active_count": 6,
+      "median_age_hours": 16.9,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_ACH_INSPIRED_TRANSPORT",
+      "site_id": "SITE_ACH_INSPIRED",
+      "barrier_type": "transport",
+      "active_count": 9,
+      "median_age_hours": 9.4,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_ACH_INSPIRED_IMAGING",
+      "site_id": "SITE_ACH_INSPIRED",
+      "barrier_type": "imaging",
+      "active_count": 7,
+      "median_age_hours": 15.2,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_ACH_INSPIRED_CONSULT",
+      "site_id": "SITE_ACH_INSPIRED",
+      "barrier_type": "consult",
+      "active_count": 4,
+      "median_age_hours": 2.1,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_ACH_INSPIRED_FAMILY_READINESS",
+      "site_id": "SITE_ACH_INSPIRED",
+      "barrier_type": "family_readiness",
+      "active_count": 6,
+      "median_age_hours": 4.2,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_ACH_INSPIRED_HOME_SUPPORTS",
+      "site_id": "SITE_ACH_INSPIRED",
+      "barrier_type": "home_supports",
+      "active_count": 2,
+      "median_age_hours": 13.4,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_ACH_INSPIRED_EQUIPMENT",
+      "site_id": "SITE_ACH_INSPIRED",
+      "barrier_type": "equipment",
+      "active_count": 6,
+      "median_age_hours": 35.0,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_PROV_NETWORK_MEDS",
+      "site_id": "SITE_PROV_NETWORK",
+      "barrier_type": "meds",
+      "active_count": 9,
+      "median_age_hours": 11.8,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_PROV_NETWORK_TRANSPORT",
+      "site_id": "SITE_PROV_NETWORK",
+      "barrier_type": "transport",
+      "active_count": 9,
+      "median_age_hours": 4.2,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_PROV_NETWORK_IMAGING",
+      "site_id": "SITE_PROV_NETWORK",
+      "barrier_type": "imaging",
+      "active_count": 3,
+      "median_age_hours": 2.4,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_PROV_NETWORK_CONSULT",
+      "site_id": "SITE_PROV_NETWORK",
+      "barrier_type": "consult",
+      "active_count": 3,
+      "median_age_hours": 19.8,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_PROV_NETWORK_FAMILY_READINESS",
+      "site_id": "SITE_PROV_NETWORK",
+      "barrier_type": "family_readiness",
+      "active_count": 7,
+      "median_age_hours": 29.9,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_PROV_NETWORK_HOME_SUPPORTS",
+      "site_id": "SITE_PROV_NETWORK",
+      "barrier_type": "home_supports",
+      "active_count": 6,
+      "median_age_hours": 20.7,
+      "synthetic_demo": true
+    },
+    {
+      "discharge_barrier_id": "BAR_SITE_PROV_NETWORK_EQUIPMENT",
+      "site_id": "SITE_PROV_NETWORK",
+      "barrier_type": "equipment",
+      "active_count": 3,
+      "median_age_hours": 4.8,
+      "synthetic_demo": true
+    }
+  ],
+  "staffing": [
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042912",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T12:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 24.4,
+      "staffing_gap_pct": 0.1214,
+      "skill_mix_proxy": 0.9349,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042913",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T13:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 6.1,
+      "staffing_gap_pct": 0.038,
+      "skill_mix_proxy": 0.9238,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042914",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T14:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 18.3,
+      "staffing_gap_pct": 0.0756,
+      "skill_mix_proxy": 0.8519,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042915",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T15:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 24.4,
+      "staffing_gap_pct": 0.0229,
+      "skill_mix_proxy": 0.8376,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042916",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T16:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 27.4,
+      "staffing_gap_pct": 0.0529,
+      "skill_mix_proxy": 0.8464,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042917",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T17:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 27.4,
+      "staffing_gap_pct": 0.0202,
+      "skill_mix_proxy": 0.8411,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042918",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T18:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 21.3,
+      "staffing_gap_pct": 0.0902,
+      "skill_mix_proxy": 0.846,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042919",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T19:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 21.3,
+      "staffing_gap_pct": 0.0228,
+      "skill_mix_proxy": 0.9505,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042920",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T20:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 15.2,
+      "staffing_gap_pct": 0.0056,
+      "skill_mix_proxy": 0.8941,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042921",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T21:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 3.0,
+      "staffing_gap_pct": 0.0116,
+      "skill_mix_proxy": 0.8737,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042922",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T22:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 21.3,
+      "staffing_gap_pct": 0.0647,
+      "skill_mix_proxy": 0.7631,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026042923",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-29T23:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 12.2,
+      "staffing_gap_pct": 0.0584,
+      "skill_mix_proxy": 0.853,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043000",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T00:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 9.1,
+      "staffing_gap_pct": 0.0896,
+      "skill_mix_proxy": 0.8607,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043001",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T01:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 18.3,
+      "staffing_gap_pct": 0.0794,
+      "skill_mix_proxy": 0.9048,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043002",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T02:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 3.0,
+      "staffing_gap_pct": 0.0182,
+      "skill_mix_proxy": 0.8341,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043003",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T03:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 27.4,
+      "staffing_gap_pct": 0.0373,
+      "skill_mix_proxy": 0.8406,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043004",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T04:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 24.4,
+      "staffing_gap_pct": 0.0201,
+      "skill_mix_proxy": 0.814,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043005",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T05:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 12.2,
+      "staffing_gap_pct": 0.0352,
+      "skill_mix_proxy": 0.8338,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043006",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T06:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 12.2,
+      "staffing_gap_pct": 0.0775,
+      "skill_mix_proxy": 0.9705,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043007",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T07:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 27.4,
+      "staffing_gap_pct": 0.0797,
+      "skill_mix_proxy": 0.867,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043008",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T08:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 12.2,
+      "staffing_gap_pct": 0.0532,
+      "skill_mix_proxy": 0.8586,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043009",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T09:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 3.0,
+      "staffing_gap_pct": 0.0333,
+      "skill_mix_proxy": 0.8918,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043010",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T10:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 18.3,
+      "staffing_gap_pct": 0.0453,
+      "skill_mix_proxy": 0.8574,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043011",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T11:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 24.4,
+      "staffing_gap_pct": 0.1102,
+      "skill_mix_proxy": 0.9412,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043012",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T12:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 21.3,
+      "staffing_gap_pct": 0.0651,
+      "skill_mix_proxy": 0.949,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043013",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T13:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 21.3,
+      "staffing_gap_pct": 0.0513,
+      "skill_mix_proxy": 0.772,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043014",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T14:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 12.2,
+      "staffing_gap_pct": 0.0317,
+      "skill_mix_proxy": 0.9273,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043015",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T15:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 15.2,
+      "staffing_gap_pct": 0.077,
+      "skill_mix_proxy": 0.8263,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043016",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T16:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 15.2,
+      "staffing_gap_pct": 0.0535,
+      "skill_mix_proxy": 0.8314,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043017",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T17:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 12.2,
+      "staffing_gap_pct": 0.0259,
+      "skill_mix_proxy": 0.9758,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043018",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T18:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 12.2,
+      "staffing_gap_pct": 0.0702,
+      "skill_mix_proxy": 0.8289,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043019",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T19:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 27.4,
+      "staffing_gap_pct": 0.0594,
+      "skill_mix_proxy": 0.774,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043020",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T20:00:00",
+      "scheduled_staffing_hours": 14.0,
+      "required_staffing_hours": 15.2,
+      "staffing_gap_pct": 0.0533,
+      "skill_mix_proxy": 0.9761,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043021",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T21:00:00",
+      "scheduled_staffing_hours": 19.6,
+      "required_staffing_hours": 6.1,
+      "staffing_gap_pct": 0.0428,
+      "skill_mix_proxy": 0.7484,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043022",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T22:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 6.1,
+      "staffing_gap_pct": 0.04,
+      "skill_mix_proxy": 0.8775,
+      "synthetic_demo": true
+    },
+    {
+      "staffing_gap_id": "STFGAP_SITE_PROV_NETWORK_MH_2026043023",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "ts_hour": "2026-04-30T23:00:00",
+      "scheduled_staffing_hours": 16.8,
+      "required_staffing_hours": 18.3,
+      "staffing_gap_pct": 0.0636,
+      "skill_mix_proxy": 0.9993,
+      "synthetic_demo": true
+    }
+  ],
+  "safetySignals": [
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260401",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-01",
+      "deterioration_watch_count_synth": 2,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260402",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-02",
+      "deterioration_watch_count_synth": 4,
+      "sepsis_screen_signal_count_synth": 1,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260403",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-03",
+      "deterioration_watch_count_synth": 4,
+      "sepsis_screen_signal_count_synth": 2,
+      "medication_process_signal_count_synth": 3,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260404",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-04",
+      "deterioration_watch_count_synth": 4,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260405",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-05",
+      "deterioration_watch_count_synth": 3,
+      "sepsis_screen_signal_count_synth": 1,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260406",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-06",
+      "deterioration_watch_count_synth": 2,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260407",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-07",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260408",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-08",
+      "deterioration_watch_count_synth": 2,
+      "sepsis_screen_signal_count_synth": 2,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260409",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-09",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 3,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260410",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-10",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 1,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260411",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-11",
+      "deterioration_watch_count_synth": 3,
+      "sepsis_screen_signal_count_synth": 2,
+      "medication_process_signal_count_synth": 2,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260412",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-12",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260413",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-13",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 2,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260414",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-14",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 1,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260415",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-15",
+      "deterioration_watch_count_synth": 3,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260416",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-16",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 1,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260417",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-17",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260418",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-18",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260419",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-19",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260420",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-20",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260421",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-21",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260422",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-22",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260423",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-23",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 1,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260424",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-24",
+      "deterioration_watch_count_synth": 4,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260425",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-25",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260426",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-26",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260427",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-27",
+      "deterioration_watch_count_synth": 1,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260428",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-28",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260429",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-29",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 2,
+      "medication_process_signal_count_synth": 2,
+      "synthetic_demo": true
+    },
+    {
+      "safety_signal_id": "SAFE_SITE_PROV_NETWORK_MH_20260430",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_id": "SITE_PROV_NETWORK_MH",
+      "event_date": "2026-04-30",
+      "deterioration_watch_count_synth": 0,
+      "sepsis_screen_signal_count_synth": 0,
+      "medication_process_signal_count_synth": 0,
+      "synthetic_demo": true
+    }
+  ],
+  "ambulatoryAccess": [
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_respiratory_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "respiratory",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 262,
+      "waitlist_over_target": 188,
+      "median_wait_days": 79,
+      "p90_wait_days": 141,
+      "third_next_available_days": 59,
+      "urgent_breach_risk": 0.523,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_cardiology_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "cardiology",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 19,
+      "waitlist_over_target": 4,
+      "median_wait_days": 9,
+      "p90_wait_days": 16,
+      "third_next_available_days": 7,
+      "urgent_breach_risk": 0.031,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_neurology_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "neurology",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 74,
+      "waitlist_over_target": 33,
+      "median_wait_days": 24,
+      "p90_wait_days": 43,
+      "third_next_available_days": 18,
+      "urgent_breach_risk": 0.257,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_surgery_followup_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 147,
+      "waitlist_over_target": 72,
+      "median_wait_days": 45,
+      "p90_wait_days": 81,
+      "third_next_available_days": 34,
+      "urgent_breach_risk": 0.293,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_oncology_survivorship_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 70,
+      "waitlist_over_target": 23,
+      "median_wait_days": 22,
+      "p90_wait_days": 40,
+      "third_next_available_days": 17,
+      "urgent_breach_risk": 0.138,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_complex_care_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "complex_care",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 118,
+      "waitlist_over_target": 51,
+      "median_wait_days": 29,
+      "p90_wait_days": 52,
+      "third_next_available_days": 22,
+      "urgent_breach_risk": 0.233,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_mental_health_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "mental_health",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 190,
+      "waitlist_over_target": 87,
+      "median_wait_days": 44,
+      "p90_wait_days": 79,
+      "third_next_available_days": 33,
+      "urgent_breach_risk": 0.261,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_STOLLERY_INSPIRED_diagnostic_procedures_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 58,
+      "waitlist_over_target": 24,
+      "median_wait_days": 25,
+      "p90_wait_days": 45,
+      "third_next_available_days": 19,
+      "urgent_breach_risk": 0.221,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_respiratory_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "respiratory",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 137,
+      "waitlist_over_target": 63,
+      "median_wait_days": 40,
+      "p90_wait_days": 72,
+      "third_next_available_days": 30,
+      "urgent_breach_risk": 0.261,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_cardiology_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "cardiology",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 163,
+      "waitlist_over_target": 69,
+      "median_wait_days": 43,
+      "p90_wait_days": 76,
+      "third_next_available_days": 32,
+      "urgent_breach_risk": 0.228,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_neurology_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "neurology",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 20,
+      "waitlist_over_target": 4,
+      "median_wait_days": 10,
+      "p90_wait_days": 19,
+      "third_next_available_days": 8,
+      "urgent_breach_risk": 0.031,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_surgery_followup_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 136,
+      "waitlist_over_target": 65,
+      "median_wait_days": 52,
+      "p90_wait_days": 93,
+      "third_next_available_days": 39,
+      "urgent_breach_risk": 0.279,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_oncology_survivorship_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 89,
+      "waitlist_over_target": 36,
+      "median_wait_days": 33,
+      "p90_wait_days": 60,
+      "third_next_available_days": 25,
+      "urgent_breach_risk": 0.207,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_complex_care_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "complex_care",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 19,
+      "waitlist_over_target": 4,
+      "median_wait_days": 17,
+      "p90_wait_days": 31,
+      "third_next_available_days": 13,
+      "urgent_breach_risk": 0.05,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_mental_health_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "mental_health",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 203,
+      "waitlist_over_target": 137,
+      "median_wait_days": 74,
+      "p90_wait_days": 132,
+      "third_next_available_days": 55,
+      "urgent_breach_risk": 0.476,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_ACH_INSPIRED_diagnostic_procedures_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 145,
+      "waitlist_over_target": 70,
+      "median_wait_days": 49,
+      "p90_wait_days": 88,
+      "third_next_available_days": 37,
+      "urgent_breach_risk": 0.289,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_respiratory_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "respiratory",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 184,
+      "waitlist_over_target": 115,
+      "median_wait_days": 71,
+      "p90_wait_days": 127,
+      "third_next_available_days": 53,
+      "urgent_breach_risk": 0.428,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_cardiology_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "cardiology",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 187,
+      "waitlist_over_target": 108,
+      "median_wait_days": 72,
+      "p90_wait_days": 129,
+      "third_next_available_days": 54,
+      "urgent_breach_risk": 0.382,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_neurology_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "neurology",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 119,
+      "waitlist_over_target": 49,
+      "median_wait_days": 41,
+      "p90_wait_days": 74,
+      "third_next_available_days": 31,
+      "urgent_breach_risk": 0.214,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_surgery_followup_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 186,
+      "waitlist_over_target": 87,
+      "median_wait_days": 48,
+      "p90_wait_days": 86,
+      "third_next_available_days": 36,
+      "urgent_breach_risk": 0.268,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_oncology_survivorship_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 31,
+      "waitlist_over_target": 8,
+      "median_wait_days": 8,
+      "p90_wait_days": 14,
+      "third_next_available_days": 6,
+      "urgent_breach_risk": 0.077,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_complex_care_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 206,
+      "waitlist_over_target": 147,
+      "median_wait_days": 85,
+      "p90_wait_days": 151,
+      "third_next_available_days": 63,
+      "urgent_breach_risk": 0.518,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_mental_health_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 103,
+      "waitlist_over_target": 37,
+      "median_wait_days": 32,
+      "p90_wait_days": 57,
+      "third_next_available_days": 24,
+      "urgent_breach_risk": 0.162,
+      "synthetic_demo": true
+    },
+    {
+      "waitlist_snapshot_id": "WAIT_SITE_PROV_NETWORK_diagnostic_procedures_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-27",
+      "waitlist_total": 0,
+      "waitlist_over_target": 0,
+      "median_wait_days": 6,
+      "p90_wait_days": 12,
+      "third_next_available_days": 5,
+      "urgent_breach_risk": 0.0,
+      "synthetic_demo": true
+    }
+  ],
+  "clinicUtilization": [
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_respiratory_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "respiratory",
+      "week_start_date": "2026-04-27",
+      "slots_available": 27,
+      "slots_booked": 28,
+      "completed_visits": 25,
+      "no_show_rate": 0.063,
+      "late_cancel_rate": 0.028,
+      "virtual_share": 0.232,
+      "new_visit_share": 0.539,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_cardiology_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "cardiology",
+      "week_start_date": "2026-04-27",
+      "slots_available": 36,
+      "slots_booked": 38,
+      "completed_visits": 33,
+      "no_show_rate": 0.076,
+      "late_cancel_rate": 0.017,
+      "virtual_share": 0.261,
+      "new_visit_share": 0.439,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_neurology_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "neurology",
+      "week_start_date": "2026-04-27",
+      "slots_available": 18,
+      "slots_booked": 19,
+      "completed_visits": 16,
+      "no_show_rate": 0.102,
+      "late_cancel_rate": 0.03,
+      "virtual_share": 0.241,
+      "new_visit_share": 0.465,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_surgery_followup_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-27",
+      "slots_available": 28,
+      "slots_booked": 28,
+      "completed_visits": 27,
+      "no_show_rate": 0.03,
+      "late_cancel_rate": 0.047,
+      "virtual_share": 0.277,
+      "new_visit_share": 0.411,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_oncology_survivorship_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-27",
+      "slots_available": 27,
+      "slots_booked": 28,
+      "completed_visits": 25,
+      "no_show_rate": 0.072,
+      "late_cancel_rate": 0.039,
+      "virtual_share": 0.234,
+      "new_visit_share": 0.413,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_complex_care_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "complex_care",
+      "week_start_date": "2026-04-27",
+      "slots_available": 28,
+      "slots_booked": 30,
+      "completed_visits": 26,
+      "no_show_rate": 0.074,
+      "late_cancel_rate": 0.058,
+      "virtual_share": 0.151,
+      "new_visit_share": 0.406,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_mental_health_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "mental_health",
+      "week_start_date": "2026-04-27",
+      "slots_available": 41,
+      "slots_booked": 45,
+      "completed_visits": 31,
+      "no_show_rate": 0.246,
+      "late_cancel_rate": 0.021,
+      "virtual_share": 0.315,
+      "new_visit_share": 0.433,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_STOLLERY_INSPIRED_diagnostic_procedures_016",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-27",
+      "slots_available": 18,
+      "slots_booked": 20,
+      "completed_visits": 16,
+      "no_show_rate": 0.138,
+      "late_cancel_rate": 0.015,
+      "virtual_share": 0.045,
+      "new_visit_share": 0.507,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_respiratory_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "respiratory",
+      "week_start_date": "2026-04-27",
+      "slots_available": 29,
+      "slots_booked": 32,
+      "completed_visits": 25,
+      "no_show_rate": 0.148,
+      "late_cancel_rate": 0.031,
+      "virtual_share": 0.132,
+      "new_visit_share": 0.457,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_cardiology_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "cardiology",
+      "week_start_date": "2026-04-27",
+      "slots_available": 37,
+      "slots_booked": 38,
+      "completed_visits": 35,
+      "no_show_rate": 0.043,
+      "late_cancel_rate": 0.066,
+      "virtual_share": 0.189,
+      "new_visit_share": 0.367,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_neurology_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "neurology",
+      "week_start_date": "2026-04-27",
+      "slots_available": 26,
+      "slots_booked": 27,
+      "completed_visits": 25,
+      "no_show_rate": 0.052,
+      "late_cancel_rate": 0.015,
+      "virtual_share": 0.191,
+      "new_visit_share": 0.391,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_surgery_followup_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-27",
+      "slots_available": 28,
+      "slots_booked": 29,
+      "completed_visits": 26,
+      "no_show_rate": 0.065,
+      "late_cancel_rate": 0.02,
+      "virtual_share": 0.179,
+      "new_visit_share": 0.397,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_oncology_survivorship_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-27",
+      "slots_available": 26,
+      "slots_booked": 27,
+      "completed_visits": 24,
+      "no_show_rate": 0.071,
+      "late_cancel_rate": 0.085,
+      "virtual_share": 0.136,
+      "new_visit_share": 0.553,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_complex_care_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "complex_care",
+      "week_start_date": "2026-04-27",
+      "slots_available": 30,
+      "slots_booked": 31,
+      "completed_visits": 28,
+      "no_show_rate": 0.065,
+      "late_cancel_rate": 0.052,
+      "virtual_share": 0.222,
+      "new_visit_share": 0.457,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_mental_health_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "mental_health",
+      "week_start_date": "2026-04-27",
+      "slots_available": 25,
+      "slots_booked": 27,
+      "completed_visits": 23,
+      "no_show_rate": 0.096,
+      "late_cancel_rate": 0.09,
+      "virtual_share": 0.234,
+      "new_visit_share": 0.432,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_ACH_INSPIRED_diagnostic_procedures_016",
+      "site_id": "SITE_ACH_INSPIRED",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-27",
+      "slots_available": 26,
+      "slots_booked": 27,
+      "completed_visits": 25,
+      "no_show_rate": 0.043,
+      "late_cancel_rate": 0.026,
+      "virtual_share": 0.081,
+      "new_visit_share": 0.383,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_respiratory_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "respiratory",
+      "week_start_date": "2026-04-27",
+      "slots_available": 24,
+      "slots_booked": 25,
+      "completed_visits": 22,
+      "no_show_rate": 0.065,
+      "late_cancel_rate": 0.01,
+      "virtual_share": 0.152,
+      "new_visit_share": 0.316,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_cardiology_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "cardiology",
+      "week_start_date": "2026-04-27",
+      "slots_available": 26,
+      "slots_booked": 27,
+      "completed_visits": 25,
+      "no_show_rate": 0.043,
+      "late_cancel_rate": 0.057,
+      "virtual_share": 0.167,
+      "new_visit_share": 0.499,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_neurology_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "neurology",
+      "week_start_date": "2026-04-27",
+      "slots_available": 28,
+      "slots_booked": 29,
+      "completed_visits": 27,
+      "no_show_rate": 0.038,
+      "late_cancel_rate": 0.02,
+      "virtual_share": 0.288,
+      "new_visit_share": 0.471,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_surgery_followup_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-27",
+      "slots_available": 40,
+      "slots_booked": 43,
+      "completed_visits": 37,
+      "no_show_rate": 0.075,
+      "late_cancel_rate": 0.048,
+      "virtual_share": 0.187,
+      "new_visit_share": 0.324,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_oncology_survivorship_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-27",
+      "slots_available": 31,
+      "slots_booked": 32,
+      "completed_visits": 30,
+      "no_show_rate": 0.046,
+      "late_cancel_rate": 0.065,
+      "virtual_share": 0.244,
+      "new_visit_share": 0.479,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_complex_care_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-04-27",
+      "slots_available": 22,
+      "slots_booked": 23,
+      "completed_visits": 20,
+      "no_show_rate": 0.077,
+      "late_cancel_rate": 0.045,
+      "virtual_share": 0.171,
+      "new_visit_share": 0.444,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_mental_health_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-04-27",
+      "slots_available": 34,
+      "slots_booked": 37,
+      "completed_visits": 31,
+      "no_show_rate": 0.089,
+      "late_cancel_rate": 0.008,
+      "virtual_share": 0.286,
+      "new_visit_share": 0.377,
+      "synthetic_demo": true
+    },
+    {
+      "clinic_slot_id": "SLOT_SITE_PROV_NETWORK_diagnostic_procedures_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-27",
+      "slots_available": 27,
+      "slots_booked": 27,
+      "completed_visits": 26,
+      "no_show_rate": 0.027,
+      "late_cancel_rate": 0.057,
+      "virtual_share": 0.039,
+      "new_visit_share": 0.308,
+      "synthetic_demo": true
+    }
+  ],
+  "referralTrend": [
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_005",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-02-09",
+      "new_referrals": 32,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.9,
+      "referral_completeness_pct": 0.908,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_006",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-02-16",
+      "new_referrals": 30,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 3.3,
+      "referral_completeness_pct": 0.889,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_007",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-02-23",
+      "new_referrals": 19,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 2.0,
+      "referral_completeness_pct": 0.876,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_008",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-03-02",
+      "new_referrals": 21,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.6,
+      "referral_completeness_pct": 0.865,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_009",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-03-09",
+      "new_referrals": 32,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 0.5,
+      "referral_completeness_pct": 0.925,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_010",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-03-16",
+      "new_referrals": 21,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 3.7,
+      "referral_completeness_pct": 0.869,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_011",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-03-23",
+      "new_referrals": 31,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.1,
+      "referral_completeness_pct": 0.916,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_012",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-03-30",
+      "new_referrals": 29,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 0.3,
+      "referral_completeness_pct": 0.89,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_013",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-06",
+      "new_referrals": 26,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.5,
+      "referral_completeness_pct": 0.973,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_014",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-13",
+      "new_referrals": 17,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 3.2,
+      "referral_completeness_pct": 0.892,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_015",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-20",
+      "new_referrals": 17,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 3.8,
+      "referral_completeness_pct": 0.904,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_surgery_followup_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "surgery_followup",
+      "week_start_date": "2026-04-27",
+      "new_referrals": 37,
+      "urgent_referrals": 8,
+      "triage_turnaround_median_days": 0.5,
+      "referral_completeness_pct": 0.864,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_000",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-01-05",
+      "new_referrals": 30,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 3.4,
+      "referral_completeness_pct": 0.99,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_001",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-01-12",
+      "new_referrals": 16,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.5,
+      "referral_completeness_pct": 0.849,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_002",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-01-19",
+      "new_referrals": 20,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 1.7,
+      "referral_completeness_pct": 0.942,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_003",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-01-26",
+      "new_referrals": 27,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 2.5,
+      "referral_completeness_pct": 0.903,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_004",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-02-02",
+      "new_referrals": 22,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 2.1,
+      "referral_completeness_pct": 0.956,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_005",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-02-09",
+      "new_referrals": 19,
+      "urgent_referrals": 7,
+      "triage_turnaround_median_days": 1.6,
+      "referral_completeness_pct": 0.987,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_006",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-02-16",
+      "new_referrals": 14,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 4.3,
+      "referral_completeness_pct": 0.939,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_007",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-02-23",
+      "new_referrals": 16,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 0.5,
+      "referral_completeness_pct": 0.915,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_008",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-03-02",
+      "new_referrals": 14,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 0.7,
+      "referral_completeness_pct": 0.926,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_009",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-03-09",
+      "new_referrals": 30,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 2.3,
+      "referral_completeness_pct": 0.949,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_010",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-03-16",
+      "new_referrals": 25,
+      "urgent_referrals": 5,
+      "triage_turnaround_median_days": 2.0,
+      "referral_completeness_pct": 0.896,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_011",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-03-23",
+      "new_referrals": 29,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 6.1,
+      "referral_completeness_pct": 0.907,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_012",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-03-30",
+      "new_referrals": 23,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 2.9,
+      "referral_completeness_pct": 0.861,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_013",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-06",
+      "new_referrals": 11,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 3.2,
+      "referral_completeness_pct": 0.927,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_014",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-13",
+      "new_referrals": 23,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 2.2,
+      "referral_completeness_pct": 0.99,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_015",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-20",
+      "new_referrals": 29,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 2.7,
+      "referral_completeness_pct": 0.935,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_oncology_survivorship_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "oncology_survivorship",
+      "week_start_date": "2026-04-27",
+      "new_referrals": 17,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 6.3,
+      "referral_completeness_pct": 0.948,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_000",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-01-05",
+      "new_referrals": 20,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.2,
+      "referral_completeness_pct": 0.873,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_001",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-01-12",
+      "new_referrals": 28,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 0.4,
+      "referral_completeness_pct": 0.848,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_002",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-01-19",
+      "new_referrals": 25,
+      "urgent_referrals": 7,
+      "triage_turnaround_median_days": 4.9,
+      "referral_completeness_pct": 0.873,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_003",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-01-26",
+      "new_referrals": 23,
+      "urgent_referrals": 7,
+      "triage_turnaround_median_days": 1.1,
+      "referral_completeness_pct": 0.949,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_004",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-02-02",
+      "new_referrals": 23,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 2.8,
+      "referral_completeness_pct": 0.914,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_005",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-02-09",
+      "new_referrals": 20,
+      "urgent_referrals": 5,
+      "triage_turnaround_median_days": 1.2,
+      "referral_completeness_pct": 0.886,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_006",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-02-16",
+      "new_referrals": 17,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 0.2,
+      "referral_completeness_pct": 0.943,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_007",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-02-23",
+      "new_referrals": 27,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 2.1,
+      "referral_completeness_pct": 0.897,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_008",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-03-02",
+      "new_referrals": 18,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.1,
+      "referral_completeness_pct": 0.911,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_009",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-03-09",
+      "new_referrals": 18,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.6,
+      "referral_completeness_pct": 0.881,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_010",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-03-16",
+      "new_referrals": 21,
+      "urgent_referrals": 5,
+      "triage_turnaround_median_days": 2.4,
+      "referral_completeness_pct": 0.926,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_011",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-03-23",
+      "new_referrals": 24,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 0.7,
+      "referral_completeness_pct": 0.932,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_012",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-03-30",
+      "new_referrals": 21,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.0,
+      "referral_completeness_pct": 0.869,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_013",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-04-06",
+      "new_referrals": 18,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 4.5,
+      "referral_completeness_pct": 0.905,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_014",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-04-13",
+      "new_referrals": 24,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 3.1,
+      "referral_completeness_pct": 0.868,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_015",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-04-20",
+      "new_referrals": 18,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 1.0,
+      "referral_completeness_pct": 0.928,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_complex_care_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "complex_care",
+      "week_start_date": "2026-04-27",
+      "new_referrals": 24,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.5,
+      "referral_completeness_pct": 0.891,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_000",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-01-05",
+      "new_referrals": 26,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 0.7,
+      "referral_completeness_pct": 0.94,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_001",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-01-12",
+      "new_referrals": 21,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.9,
+      "referral_completeness_pct": 0.95,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_002",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-01-19",
+      "new_referrals": 20,
+      "urgent_referrals": 7,
+      "triage_turnaround_median_days": 2.7,
+      "referral_completeness_pct": 0.927,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_003",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-01-26",
+      "new_referrals": 18,
+      "urgent_referrals": 7,
+      "triage_turnaround_median_days": 0.6,
+      "referral_completeness_pct": 0.937,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_004",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-02-02",
+      "new_referrals": 23,
+      "urgent_referrals": 5,
+      "triage_turnaround_median_days": 2.1,
+      "referral_completeness_pct": 0.934,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_005",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-02-09",
+      "new_referrals": 12,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 1.9,
+      "referral_completeness_pct": 0.888,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_006",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-02-16",
+      "new_referrals": 21,
+      "urgent_referrals": 0,
+      "triage_turnaround_median_days": 1.7,
+      "referral_completeness_pct": 0.883,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_007",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-02-23",
+      "new_referrals": 21,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.4,
+      "referral_completeness_pct": 0.925,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_008",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-03-02",
+      "new_referrals": 12,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 3.9,
+      "referral_completeness_pct": 0.888,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_009",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-03-09",
+      "new_referrals": 14,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 5.7,
+      "referral_completeness_pct": 0.92,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_010",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-03-16",
+      "new_referrals": 23,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 6.9,
+      "referral_completeness_pct": 0.891,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_011",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-03-23",
+      "new_referrals": 32,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 0.9,
+      "referral_completeness_pct": 0.894,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_012",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-03-30",
+      "new_referrals": 20,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 3.2,
+      "referral_completeness_pct": 0.932,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_013",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-04-06",
+      "new_referrals": 13,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 0.5,
+      "referral_completeness_pct": 0.883,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_014",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-04-13",
+      "new_referrals": 31,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 1.7,
+      "referral_completeness_pct": 0.883,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_015",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-04-20",
+      "new_referrals": 17,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 3.4,
+      "referral_completeness_pct": 0.884,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_mental_health_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "mental_health",
+      "week_start_date": "2026-04-27",
+      "new_referrals": 24,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.0,
+      "referral_completeness_pct": 0.865,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_000",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-01-05",
+      "new_referrals": 17,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 2.4,
+      "referral_completeness_pct": 0.895,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_001",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-01-12",
+      "new_referrals": 17,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.0,
+      "referral_completeness_pct": 0.883,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_002",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-01-19",
+      "new_referrals": 23,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 1.1,
+      "referral_completeness_pct": 0.878,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_003",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-01-26",
+      "new_referrals": 18,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 0.9,
+      "referral_completeness_pct": 0.953,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_004",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-02-02",
+      "new_referrals": 25,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 2.1,
+      "referral_completeness_pct": 0.893,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_005",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-02-09",
+      "new_referrals": 21,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 5.3,
+      "referral_completeness_pct": 0.802,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_006",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-02-16",
+      "new_referrals": 16,
+      "urgent_referrals": 1,
+      "triage_turnaround_median_days": 2.2,
+      "referral_completeness_pct": 0.977,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_007",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-02-23",
+      "new_referrals": 24,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 0.6,
+      "referral_completeness_pct": 0.929,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_008",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-03-02",
+      "new_referrals": 20,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 3.3,
+      "referral_completeness_pct": 0.864,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_009",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-03-09",
+      "new_referrals": 20,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 2.8,
+      "referral_completeness_pct": 0.906,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_010",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-03-16",
+      "new_referrals": 24,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 1.7,
+      "referral_completeness_pct": 0.903,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_011",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-03-23",
+      "new_referrals": 23,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 1.0,
+      "referral_completeness_pct": 0.966,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_012",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-03-30",
+      "new_referrals": 22,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 1.5,
+      "referral_completeness_pct": 0.935,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_013",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-06",
+      "new_referrals": 18,
+      "urgent_referrals": 3,
+      "triage_turnaround_median_days": 3.6,
+      "referral_completeness_pct": 0.955,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_014",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-13",
+      "new_referrals": 21,
+      "urgent_referrals": 4,
+      "triage_turnaround_median_days": 1.9,
+      "referral_completeness_pct": 0.828,
+      "duplicate_referral_count_synth": 1,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_015",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-20",
+      "new_referrals": 24,
+      "urgent_referrals": 2,
+      "triage_turnaround_median_days": 0.0,
+      "referral_completeness_pct": 0.922,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    },
+    {
+      "referral_id": "REF_SITE_PROV_NETWORK_diagnostic_procedures_016",
+      "site_id": "SITE_PROV_NETWORK",
+      "program": "diagnostic_procedures",
+      "week_start_date": "2026-04-27",
+      "new_referrals": 24,
+      "urgent_referrals": 6,
+      "triage_turnaround_median_days": 3.4,
+      "referral_completeness_pct": 0.887,
+      "duplicate_referral_count_synth": 0,
+      "synthetic_demo": true
+    }
+  ],
+  "simulationInpatient": [
+    {
+      "simulation_result_id": "SIM_INPT_001",
+      "scenario_name": "Current state baseline",
+      "boarder_hours_mean": 1247.2,
+      "boarder_hours_p10": 714.1,
+      "boarder_hours_p90": 1893.8,
+      "p95_occupancy_mean": 1.26,
+      "synthetic_demo": true
+    },
+    {
+      "simulation_result_id": "SIM_INPT_002",
+      "scenario_name": "Respiratory surge",
+      "boarder_hours_mean": 4854.6,
+      "boarder_hours_p10": 3978.3,
+      "boarder_hours_p90": 5504.1,
+      "p95_occupancy_mean": 1.802,
+      "synthetic_demo": true
+    },
+    {
+      "simulation_result_id": "SIM_INPT_003",
+      "scenario_name": "Open surge beds",
+      "boarder_hours_mean": 1693.1,
+      "boarder_hours_p10": 1111.7,
+      "boarder_hours_p90": 2430.2,
+      "p95_occupancy_mean": 1.307,
+      "synthetic_demo": true
+    },
+    {
+      "simulation_result_id": "SIM_INPT_004",
+      "scenario_name": "Increase morning discharges",
+      "boarder_hours_mean": 1447.0,
+      "boarder_hours_p10": 908.4,
+      "boarder_hours_p90": 2055.6,
+      "p95_occupancy_mean": 1.295,
+      "synthetic_demo": true
+    }
+  ],
+  "simulationAmbulatory": [
+    {
+      "simulation_result_id": "SIM_AMB_001",
+      "scenario_name": "Current access plan",
+      "final_backlog": 1039,
+      "clearance_week": 999,
+      "mean_utilization": 0.909,
+      "breach_probability_proxy": 0.95,
+      "synthetic_demo": true
+    },
+    {
+      "simulation_result_id": "SIM_AMB_002",
+      "scenario_name": "Add clinics/sessions",
+      "final_backlog": 624,
+      "clearance_week": 999,
+      "mean_utilization": 0.913,
+      "breach_probability_proxy": 0.846,
+      "synthetic_demo": true
+    },
+    {
+      "simulation_result_id": "SIM_AMB_003",
+      "scenario_name": "Guarded overbooking",
+      "final_backlog": 845,
+      "clearance_week": 999,
+      "mean_utilization": 0.906,
+      "breach_probability_proxy": 0.95,
+      "synthetic_demo": true
+    },
+    {
+      "simulation_result_id": "SIM_AMB_004",
+      "scenario_name": "Reduce triage turnaround",
+      "final_backlog": 819,
+      "clearance_week": 999,
+      "mean_utilization": 0.915,
+      "breach_probability_proxy": 0.95,
+      "synthetic_demo": true
+    }
+  ],
+  "quality": [
+    {
+      "table_name": "DIM_DATE",
+      "check": "date_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_DATE",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_TIME_BLOCK",
+      "check": "time_block_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_TIME_BLOCK",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SITE",
+      "check": "site_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SITE",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_ZONE_OR_REGION",
+      "check": "zone_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_ZONE_OR_REGION",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_UNIT",
+      "check": "unit_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_UNIT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_BED",
+      "check": "bed_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_BED",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SERVICE_LINE",
+      "check": "service_line_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SERVICE_LINE",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SPECIALTY",
+      "check": "specialty_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SPECIALTY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_PROVIDER_GROUP",
+      "check": "provider_group_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_PROVIDER_GROUP",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_CLINIC",
+      "check": "clinic_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_CLINIC",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_CLINIC_TEMPLATE",
+      "check": "clinic_template_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_CLINIC_TEMPLATE",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_DIAGNOSIS_GROUP",
+      "check": "diagnosis_group_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_DIAGNOSIS_GROUP",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_PROCEDURE_GROUP",
+      "check": "procedure_group_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_PROCEDURE_GROUP",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_ACUITY_LEVEL",
+      "check": "acuity_level_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_ACUITY_LEVEL",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_AGE_BAND",
+      "check": "age_band_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_AGE_BAND",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_EQUITY_GEO_PROXY",
+      "check": "equity_geo_proxy_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_EQUITY_GEO_PROXY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_OPEN_DATA_SOURCE",
+      "check": "open_data_source_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_OPEN_DATA_SOURCE",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SCENARIO",
+      "check": "scenario_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_SCENARIO",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_MODEL",
+      "check": "model_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_MODEL",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_METRIC",
+      "check": "metric_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "DIM_METRIC",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_CENSUS_HOURLY",
+      "check": "census_hour_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_CENSUS_HOURLY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_STATUS_HOURLY",
+      "check": "bed_status_hour_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_STATUS_HOURLY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_OCCUPANCY_SNAPSHOT",
+      "check": "occupancy_snapshot_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_OCCUPANCY_SNAPSHOT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_MODEL_PREDICTION_INPATIENT",
+      "check": "model_prediction_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_MODEL_PREDICTION_INPATIENT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_STAFFING_GAP_SYNTH",
+      "check": "staffing_gap_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_STAFFING_GAP_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_STAFFING_ROSTER_SYNTH",
+      "check": "staffing_roster_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_STAFFING_ROSTER_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WORKLOAD_ACUITY_SYNTH",
+      "check": "workload_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WORKLOAD_ACUITY_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SAFETY_SIGNAL_SYNTH",
+      "check": "safety_signal_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SAFETY_SIGNAL_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_DISCHARGE_BARRIER",
+      "check": "discharge_barrier_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_DISCHARGE_BARRIER",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WAITLIST_SNAPSHOT",
+      "check": "waitlist_snapshot_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WAITLIST_SNAPSHOT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_REFERRAL",
+      "check": "referral_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_REFERRAL",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_REFERRAL_TRIAGE",
+      "check": "referral_triage_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_REFERRAL_TRIAGE",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_CLINIC_SLOT",
+      "check": "clinic_slot_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_CLINIC_SLOT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_CLINIC_TEMPLATE_CAPACITY",
+      "check": "clinic_template_capacity_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_CLINIC_TEMPLATE_CAPACITY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_APPOINTMENT",
+      "check": "appointment_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_APPOINTMENT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_MODEL_PREDICTION_AMBULATORY",
+      "check": "model_prediction_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_MODEL_PREDICTION_AMBULATORY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_NO_SHOW_OR_LATE_CANCEL_SYNTH",
+      "check": "no_show_late_cancel_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_NO_SHOW_OR_LATE_CANCEL_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_RESPIRATORY_VIRUS_ACTIVITY_OPEN",
+      "check": "open_resp_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_RESPIRATORY_VIRUS_ACTIVITY_OPEN",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WEATHER_AND_AIR_QUALITY_OPEN",
+      "check": "open_weather_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WEATHER_AND_AIR_QUALITY_OPEN",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_POPULATION_BY_AGE_REGION_OPEN",
+      "check": "open_population_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_POPULATION_BY_AGE_REGION_OPEN",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SCHOOL_CALENDAR_OR_HOLIDAY_OPEN",
+      "check": "open_calendar_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SCHOOL_CALENDAR_OR_HOLIDAY_OPEN",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_COMMUNITY_DEMAND_PROXY_OPEN",
+      "check": "open_resp_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_COMMUNITY_DEMAND_PROXY_OPEN",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PUBLIC_HEALTH_ALERT_OR_SEASONAL_EVENT_OPEN",
+      "check": "open_resp_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PUBLIC_HEALTH_ALERT_OR_SEASONAL_EVENT_OPEN",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RUN_INPATIENT",
+      "check": "simulation_run_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RUN_INPATIENT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RESULT_INPATIENT",
+      "check": "simulation_result_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RESULT_INPATIENT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RUN_AMBULATORY",
+      "check": "simulation_run_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RUN_AMBULATORY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RESULT_AMBULATORY",
+      "check": "simulation_result_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_SIMULATION_RESULT_AMBULATORY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_ADT_EVENT",
+      "check": "fct_adt_event_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_ADT_EVENT",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_INPATIENT_ENCOUNTER",
+      "check": "fct_inpatient_encounter_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_INPATIENT_ENCOUNTER",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_ED_TO_INPATIENT_FLOW",
+      "check": "fct_ed_to_inpatient_flow_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_ED_TO_INPATIENT_FLOW",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_OR_CASE",
+      "check": "fct_or_case_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_OR_CASE",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PACU_AND_PROCEDURAL_RECOVERY",
+      "check": "fct_pacu_and_procedural_recovery_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PACU_AND_PROCEDURAL_RECOVERY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_TRANSFER_REQUEST",
+      "check": "fct_transfer_request_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_TRANSFER_REQUEST",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_DISCHARGE_READINESS",
+      "check": "fct_discharge_readiness_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_DISCHARGE_READINESS",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_LENGTH_OF_STAY",
+      "check": "fct_length_of_stay_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_LENGTH_OF_STAY",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_LAB_ORDER_TURNAROUND_SYNTH",
+      "check": "fct_lab_order_turnaround_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_LAB_ORDER_TURNAROUND_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_IMAGING_TURNAROUND_SYNTH",
+      "check": "fct_imaging_turnaround_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_IMAGING_TURNAROUND_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PHARMACY_DISCHARGE_MED_SYNTH",
+      "check": "fct_pharmacy_discharge_med_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PHARMACY_DISCHARGE_MED_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_TRANSPORT_OR_PORTERING_SYNTH",
+      "check": "fct_transport_or_portering_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_TRANSPORT_OR_PORTERING_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_READMISSION_SYNTH",
+      "check": "fct_readmission_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_READMISSION_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PROVIDER_AVAILABILITY_SYNTH",
+      "check": "fct_provider_availability_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PROVIDER_AVAILABILITY_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_OVERDUE_FOLLOWUP_SYNTH",
+      "check": "fct_overdue_followup_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_OVERDUE_FOLLOWUP_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_DIAGNOSTIC_QUEUE_SYNTH",
+      "check": "fct_diagnostic_queue_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_DIAGNOSTIC_QUEUE_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PROCEDURE_QUEUE_SYNTH",
+      "check": "fct_procedure_queue_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_PROCEDURE_QUEUE_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_VIRTUAL_CARE_SYNTH",
+      "check": "fct_virtual_care_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_VIRTUAL_CARE_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_POST_DISCHARGE_FOLLOWUP_SYNTH",
+      "check": "fct_post_discharge_followup_synth_id_unique",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_POST_DISCHARGE_FOLLOWUP_SYNTH",
+      "check": "no_direct_identifiers",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_CENSUS_HOURLY",
+      "check": "census_non_negative",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_CENSUS_HOURLY",
+      "check": "physical_beds_non_negative",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_CENSUS_HOURLY",
+      "check": "staffed_beds_non_negative",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_BED_CENSUS_HOURLY",
+      "check": "effective_beds_non_negative",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WAITLIST_SNAPSHOT",
+      "check": "waitlist_total_non_negative",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WAITLIST_SNAPSHOT",
+      "check": "median_wait_days_non_negative",
+      "passed": true,
+      "failed_rows": 0
+    },
+    {
+      "table_name": "FCT_WAITLIST_SNAPSHOT",
+      "check": "p90_wait_days_non_negative",
+      "passed": true,
+      "failed_rows": 0
+    }
+  ],
+  "modelCards": [
+    {
+      "model_id": "MODEL_INPT_OCC",
+      "model_name": "probabilistic occupancy forecast",
+      "version": "0.1.0",
+      "owner": "Synthetic prototype analytics team",
+      "intended_use": "Scenario planning and executive demonstration",
+      "prediction_horizon": "6-72 hours",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Not validated for clinical decision-making",
+      "caveat": "Use for demonstration only. Future production use requires local validation.",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "model_id": "MODEL_DISCHARGE",
+      "model_name": "discharge by time-band probability",
+      "version": "0.1.0",
+      "owner": "Synthetic prototype analytics team",
+      "intended_use": "Scenario planning and executive demonstration",
+      "prediction_horizon": "same day",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Not validated for clinical decision-making",
+      "caveat": "Use for demonstration only. Future production use requires local validation.",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "model_id": "MODEL_AMB_BACKLOG",
+      "model_name": "ambulatory backlog forecast",
+      "version": "0.1.0",
+      "owner": "Synthetic prototype analytics team",
+      "intended_use": "Scenario planning and executive demonstration",
+      "prediction_horizon": "1-26 weeks",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Not validated for clinical decision-making",
+      "caveat": "Use for demonstration only. Future production use requires local validation.",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "model_id": "MODEL_NOSHOW",
+      "model_name": "no-show late-cancel risk",
+      "version": "0.1.0",
+      "owner": "Synthetic prototype analytics team",
+      "intended_use": "Scenario planning and executive demonstration",
+      "prediction_horizon": "appointment date",
+      "training_data": "Deterministic synthetic pediatric operations data",
+      "validation_status": "Not validated for clinical decision-making",
+      "caveat": "Use for demonstration only. Future production use requires local validation.",
+      "last_reviewed": "2026-06-10"
+    }
+  ],
+  "inpatientOptions": [
+    {
+      "option": "Maintain current escalation posture",
+      "expected_effect": "Current forecast remains inside synthetic risk thresholds.",
+      "watch": "Respiratory activity and staffing freshness."
+    }
+  ],
+  "ambulatoryOptions": [
+    {
+      "option": "Add pooled clinic sessions",
+      "expected_effect": "Creates backlog clearance capacity across providers and sites.",
+      "watch": "Room, nurse, allied-health, and diagnostic readiness constraints."
+    },
+    {
+      "option": "Rebalance new/follow-up templates",
+      "expected_effect": "Improves first-appointment access without hiding follow-up debt.",
+      "watch": "Condition-specific surveillance intervals."
+    },
+    {
+      "option": "Protect urgent slots",
+      "expected_effect": "Reduces breach probability for time-sensitive referrals.",
+      "watch": "Routine queue aging may worsen without added capacity."
+    }
+  ]
+}

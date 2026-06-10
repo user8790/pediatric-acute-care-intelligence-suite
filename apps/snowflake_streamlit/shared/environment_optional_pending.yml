@@ -1,0 +1,17 @@
+name: pediatric-aha-optional-pending
+channels:
+  - snowflake
+dependencies:
+  - python=3.11
+  - streamlit=1.52.2
+  - pandas=2.3.*
+  - numpy=2.3.*
+  # Pending packages below were not present in checked Snowflake channel metadata on 2026-06-10.
+  # Include only if approved and available in the target account/runtime.
+  - simpy>=4.1
+  - ciw>=3.2
+  - river
+  - dowhy
+  - mesa
+  - cleanlab>2.9
+

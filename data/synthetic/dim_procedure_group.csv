@@ -1,0 +1,4 @@
+procedure_group_id,procedure_group
+PROC_DAY,day procedure synthetic
+PROC_INPATIENT,inpatient procedure synthetic
+PROC_DIAGNOSTIC,diagnostic procedure synthetic

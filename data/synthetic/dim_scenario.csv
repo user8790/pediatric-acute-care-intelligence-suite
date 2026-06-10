@@ -1,0 +1,6 @@
+scenario_id,scenario_name
+SCN_BASE,Current state baseline
+SCN_RESP_SURGE,Respiratory surge
+SCN_SURGE_BEDS,Open surge beds
+SCN_ADD_CLINIC,Add ambulatory clinic sessions
+SCN_OVERBOOK,Guarded overbooking

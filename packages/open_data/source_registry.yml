@@ -1,0 +1,35 @@
+last_checked: "2026-06-10"
+sources:
+  - source_id: OPEN_RESP_CA
+    name: Public Health Agency of Canada FluWatch+ respiratory virus surveillance
+    url: https://health-infobase.canada.ca/respiratory-virus-surveillance/
+    owner: Public Health Agency of Canada
+    licence_terms_summary: Public Government of Canada health surveillance dashboard; confirm current terms before production reuse.
+    refresh_frequency: Weekly report with downloadable data updates as published.
+    intended_use: Respiratory surge context and synthetic demand multipliers.
+    limitations: Surveillance summaries are not real-time hospital demand feeds and may be revised.
+  - source_id: OPEN_RESP_AB
+    name: Government of Alberta respiratory virus dashboard
+    url: https://www.alberta.ca/stats/dashboard/respiratory-virus-dashboard.htm
+    owner: Government of Alberta
+    licence_terms_summary: Public Alberta dashboard; confirm current open-government terms before production reuse.
+    refresh_frequency: Reported twice weekly on the checked page.
+    intended_use: Alberta respiratory context for scenario calibration.
+    limitations: Public dashboard context only; not patient-level or facility operations data.
+  - source_id: OPEN_WEATHER_ECCC
+    name: ECCC MSC GeoMet and AQHI
+    url: https://api.weather.gc.ca/openapi
+    owner: Environment and Climate Change Canada
+    licence_terms_summary: Public MSC open-data services; confirm licence terms before production reuse.
+    refresh_frequency: Varies by collection.
+    intended_use: Weather, smoke, and air-quality context for demand and travel scenarios.
+    limitations: Ecological context only; not patient-level risk.
+  - source_id: OPEN_STATCAN
+    name: Statistics Canada Web Data Service
+    url: https://www.statcan.gc.ca/en/developers
+    owner: Statistics Canada
+    licence_terms_summary: Official API access to aggregate Statistics Canada data and metadata.
+    refresh_frequency: Released each business day where applicable.
+    intended_use: Aggregated pediatric age-band and geography denominators.
+    limitations: Geography and cell-size controls still required for production use.
+

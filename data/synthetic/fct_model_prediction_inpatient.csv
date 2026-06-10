@@ -1,0 +1,16 @@
+model_prediction_id,site_id,model_id,prediction_horizon_hours,metric_name,prediction,p10,p90,top_driver_1,top_driver_2,top_driver_3,validation_status,synthetic_demo
+PRED_INPT_SITE_ACH_INSPIRED_6,SITE_ACH_INSPIRED,MODEL_INPT_OCC,6,occupancy_pct,0.8656,0.7856,0.9656,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_ACH_INSPIRED_12,SITE_ACH_INSPIRED,MODEL_INPT_OCC,12,occupancy_pct,0.8735,0.7935,0.9735,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_ACH_INSPIRED_24,SITE_ACH_INSPIRED,MODEL_INPT_OCC,24,occupancy_pct,0.8818,0.8018,0.9818,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_ACH_INSPIRED_48,SITE_ACH_INSPIRED,MODEL_INPT_OCC,48,occupancy_pct,0.8904,0.8104,0.9904,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_ACH_INSPIRED_72,SITE_ACH_INSPIRED,MODEL_INPT_OCC,72,occupancy_pct,0.8955,0.8155,0.9955,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_PROV_NETWORK_6,SITE_PROV_NETWORK,MODEL_INPT_OCC,6,occupancy_pct,0.8606,0.7806,0.9606,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_PROV_NETWORK_12,SITE_PROV_NETWORK,MODEL_INPT_OCC,12,occupancy_pct,0.8685,0.7885,0.9685,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_PROV_NETWORK_24,SITE_PROV_NETWORK,MODEL_INPT_OCC,24,occupancy_pct,0.8769,0.7969,0.9769,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_PROV_NETWORK_48,SITE_PROV_NETWORK,MODEL_INPT_OCC,48,occupancy_pct,0.8854,0.8054,0.9854,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_PROV_NETWORK_72,SITE_PROV_NETWORK,MODEL_INPT_OCC,72,occupancy_pct,0.8905,0.8105,0.9905,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_STOLLERY_INSPIRED_6,SITE_STOLLERY_INSPIRED,MODEL_INPT_OCC,6,occupancy_pct,0.9343,0.8543,1.0343,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_STOLLERY_INSPIRED_12,SITE_STOLLERY_INSPIRED,MODEL_INPT_OCC,12,occupancy_pct,0.9435,0.8635,1.0435,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_STOLLERY_INSPIRED_24,SITE_STOLLERY_INSPIRED,MODEL_INPT_OCC,24,occupancy_pct,0.9533,0.8733,1.0533,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_STOLLERY_INSPIRED_48,SITE_STOLLERY_INSPIRED,MODEL_INPT_OCC,48,occupancy_pct,0.9634,0.8834,1.0634,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True
+PRED_INPT_SITE_STOLLERY_INSPIRED_72,SITE_STOLLERY_INSPIRED,MODEL_INPT_OCC,72,occupancy_pct,0.9694,0.8894,1.0694,respiratory activity,staffing gap,discharge confidence,synthetic demo only,True

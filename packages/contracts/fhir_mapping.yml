@@ -1,0 +1,27 @@
+version: 0.1.0
+note: Illustrative mapping only; no real FHIR server is used by this prototype.
+mappings:
+  Encounter:
+    canonical_targets: [FCT_INPATIENT_ENCOUNTER, FCT_ADT_EVENT, FCT_ED_TO_INPATIENT_FLOW]
+    fields:
+      status: encounter_status
+      class: care_setting
+      period.start: admission_ts
+      period.end: discharge_ts
+  Location:
+    canonical_targets: [DIM_SITE, DIM_UNIT, DIM_BED]
+    fields:
+      identifier: governed_location_key
+      type: unit_or_bed_type
+  Appointment:
+    canonical_targets: [FCT_APPOINTMENT, FCT_CLINIC_SLOT]
+    fields:
+      status: appointment_status
+      start: appointment_start_ts
+      serviceType: program
+  ServiceRequest:
+    canonical_targets: [FCT_REFERRAL, FCT_REFERRAL_TRIAGE]
+    fields:
+      authoredOn: referral_received_ts
+      priority: triage_urgency
+

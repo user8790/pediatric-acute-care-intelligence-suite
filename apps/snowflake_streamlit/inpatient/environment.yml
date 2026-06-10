@@ -1,0 +1,16 @@
+name: pediatric-aha-inpatient
+channels:
+  - snowflake
+dependencies:
+  - python=3.11
+  - streamlit=1.52.2
+  - snowflake-snowpark-python=1.51.*
+  - pandas=2.3.*
+  - numpy=2.3.*
+  - scipy=1.*
+  - scikit-learn=1.*
+  - statsmodels=0.14.*
+  - altair=5.*
+  - plotly=6.*
+  - pyyaml=6.*
+

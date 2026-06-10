@@ -13,9 +13,13 @@ Deploy two apps from the same GitHub repository:
 
 The apps use committed synthetic sample data and do not require Snowflake credentials. The Snowflake-transferable apps remain under `apps/snowflake_streamlit` with Snowflake-channel `environment.yml` files for Snowsight.
 
+Current published demo URLs:
+
+- Inpatient: https://pediatric-acute-care-inpatient.streamlit.app/
+- Ambulatory: https://pediatric-acute-care-ambulatory.streamlit.app/
+
 ## Notes
 
 - Do not commit Streamlit secrets.
 - If connecting to Snowflake in a future Streamlit Cloud deployment, add secrets through the Streamlit Cloud app settings.
 - These Community Cloud deployments are demonstration/sample-mode deployments, not the Snowsight warehouse-runtime deployment.
-

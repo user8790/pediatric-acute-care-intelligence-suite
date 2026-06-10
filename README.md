@@ -64,6 +64,12 @@ pnpm run build:showcase
 
 Output directory: `apps/showcase/dist`.
 
+Published apps:
+
+- Showcase: https://pediatric-acute-care-intelligence-s.vercel.app/
+- Streamlit inpatient: https://pediatric-acute-care-inpatient.streamlit.app/
+- Streamlit ambulatory: https://pediatric-acute-care-ambulatory.streamlit.app/
+
 ## Safety Boundary
 
 - All hospital, patient-flow, staffing, safety, and clinic records are synthetic.

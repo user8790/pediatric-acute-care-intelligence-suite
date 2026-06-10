@@ -13,3 +13,5 @@ coverage/
 !.env.example
 data/synthetic/*.tmp
 apps/showcase/dist/
+
+.vercel

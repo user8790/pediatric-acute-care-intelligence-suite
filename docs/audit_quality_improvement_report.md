@@ -27,3 +27,11 @@ Date: 2026-06-10
 - Clinical/safety indicators remain synthetic demonstrations and require clinical validation before any operational use.
 - Streamlit Community Cloud publishing may require a browser login if the user is not already authenticated.
 
+## Published Artifacts
+
+- GitHub repository: https://github.com/user8790/pediatric-acute-care-intelligence-suite
+- Vercel showcase: https://pediatric-acute-care-intelligence-s.vercel.app/
+- Streamlit inpatient demo: https://pediatric-acute-care-inpatient.streamlit.app/
+- Streamlit ambulatory demo: https://pediatric-acute-care-ambulatory.streamlit.app/
+
+HTTP smoke checks returned `200 OK` for all three deployed app URLs after publication.

@@ -1,0 +1,4 @@
+decision_id,related_id,decision,reviewer_role,created_at
+GOV-DEC-001,INPT_OCCUPANCY_FORECAST,approved for demo,analytics governance,2026-06-11T08:30:00-07:00
+GOV-DEC-002,PICU_NICU_PRESSURE,approved with warning label,operations sponsor,2026-06-11T08:30:00-07:00
+GOV-DEC-003,SEPSIS_SURVEILLANCE_SIGNAL,synthetic-only hold,clinical safety reviewer,2026-06-11T08:30:00-07:00

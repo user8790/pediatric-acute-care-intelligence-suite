@@ -15,9 +15,9 @@ GROUP BY site_id;
 CREATE OR REPLACE VIEW MART.V3_INPATIENT_UNIT_PRESSURE AS
 SELECT site_id, unit_or_program AS unit_name, metric_name, metric_value, payload_json, synthetic_demo_flag
 FROM RAW_SYNTH.V3_OPERATIONAL_SIGNAL
-WHERE source_id IN ('SRC_UNIT_CENSUS', 'SRC_ED_BOARDING');
+WHERE source_id IN ('SRC_SYNTH_UNIT_CENSUS_HOURLY', 'SRC_SYNTH_ED_VISITS');
 
 CREATE OR REPLACE VIEW MART.V3_AMBULATORY_ACCESS AS
 SELECT site_id, unit_or_program AS program, metric_name, metric_value, payload_json, synthetic_demo_flag
 FROM RAW_SYNTH.V3_OPERATIONAL_SIGNAL
-WHERE source_id = 'SRC_REFERRAL';
+WHERE source_id = 'SRC_SYNTH_REFERRALS';

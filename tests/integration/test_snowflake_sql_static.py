@@ -68,10 +68,16 @@ def test_v3_sql_contains_required_objects():
         "V3_SOURCE_REGISTRY",
         "V3_DIRECT_LINK_VALIDATION",
         "V3_METRIC_REGISTRY",
+        "V3_COEFFICIENT_REGISTRY",
+        "V3_WARNING_LOGIC_REGISTRY",
         "V3_MODEL_REGISTRY",
+        "V3_VALIDATION_DRIFT",
         "V3_PANEL_LINEAGE",
         "V3_GATEKEEPER_ISSUE",
         "V3_GATEKEEPER_DECISION",
+        "V3_GOVERNANCE_APPROVAL",
+        "V3_RELEASE_ROLLBACK",
+        "V3_DATA_QUALITY_RULE",
         "SCENARIO_RUN_LOG",
         "USER_ANNOTATION",
         "WARNING_ACKNOWLEDGEMENT",
@@ -82,6 +88,10 @@ def test_v3_sql_contains_required_objects():
         "PANEL_FEEDBACK",
         "HUDDLE_REVIEW_EVENT",
         "LEARNING_SYSTEM_OUTCOME_REVIEW",
+        "related_metric_id",
+        "related_model_id",
+        "related_panel_id",
+        "related_scenario_id",
     ]
     for object_name in required:
         assert object_name in combined

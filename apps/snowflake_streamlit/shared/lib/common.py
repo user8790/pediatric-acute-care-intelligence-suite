@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +14,18 @@ import streamlit as st
 APP_VERSION = "v3.0"
 SYNTHETIC_NOTICE = "Synthetic demonstration data. Not validated for clinical decision-making."
 SNOWFLAKE_SAFE_PACKAGES = ("river", "dowhy", "mesa", "cleanlab")
+LEARNING_WRITEBACK_TABLES = {
+    "APP.USER_ANNOTATION",
+    "APP.WARNING_ACKNOWLEDGEMENT",
+    "APP.METRIC_ISSUE_FLAG",
+    "APP.MODEL_REVIEW_NOTE",
+    "APP.GOVERNANCE_DECISION",
+    "APP.VALIDATION_REVIEW",
+    "APP.PANEL_FEEDBACK",
+    "APP.HUDDLE_REVIEW_EVENT",
+    "APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+    "APP.SCENARIO_RUN_LOG",
+}
 
 
 @dataclass
@@ -108,36 +122,57 @@ def first_present_column(data: pd.DataFrame, candidates: list[str]) -> str | Non
 
 
 def try_store_scenario(table_name: str, payload: dict[str, Any]) -> str:
+    normalized = normalize_scenario_payload(payload)
+    if table_name not in {"APP.SCENARIO_RUN_LOG", "PEDIATRIC_AHA_DEMO.APP.SCENARIO_RUN_LOG"}:
+        st.session_state.setdefault("scenario_runs", []).append(normalized)
+        return f"Unsupported scenario table {table_name}; stored in session state instead."
     session = get_snowpark_session()
     if session is None:
-        st.session_state.setdefault("scenario_runs", []).append(payload)
+        st.session_state.setdefault("scenario_runs", []).append(normalized)
         return "Stored in Streamlit session state for local/sample mode."
-    columns = ", ".join(payload.keys())
-    values = ", ".join([repr(str(v)) for v in payload.values()])
     try:
-        session.sql(f"INSERT INTO {table_name} ({columns}) SELECT {values}").collect()
+        session.create_dataframe([normalized]).write.mode("append").save_as_table(table_name)
         return f"Stored in {table_name}."
     except Exception as exc:  # pragma: no cover - depends on Snowflake privileges
-        st.session_state.setdefault("scenario_runs", []).append(payload)
+        st.session_state.setdefault("scenario_runs", []).append(normalized)
         return f"Snowflake write unavailable; stored in session state. Details: {exc}"
 
 
-def _sql_literal(value: Any) -> str:
-    if value is None:
-        return "NULL"
-    text = str(value).replace("'", "''")
-    return f"'{text}'"
+def normalize_scenario_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    if "event_id" in payload and "event_type" in payload:
+        return payload
+    scenario_id = str(payload.get("scenario_id") or payload.get("scenario_name") or "scenario_run")
+    return {
+        "event_id": f"SCN-{datetime.now(UTC).strftime('%Y%m%d%H%M%S%f')}",
+        "event_type": "scenario_run",
+        "created_at": datetime.now(UTC).isoformat(),
+        "created_by": "synthetic_snowflake_user",
+        "app_area": str(payload.get("app") or "Scenario Simulation Lab"),
+        "site_id": str(payload.get("site") or "SITE_PROV_NETWORK"),
+        "unit_or_program": str(payload.get("program") or payload.get("unit_or_program") or "Network"),
+        "related_ids": scenario_id,
+        "related_metric_id": "",
+        "related_model_id": "",
+        "related_panel_id": "PANEL_SCENARIO_LAB",
+        "related_scenario_id": scenario_id,
+        "status": "submitted",
+        "severity": "low",
+        "note": f"Synthetic scenario run captured for {scenario_id}.",
+        "payload_json": json.dumps({"synthetic_demo": True, "scenario_payload": payload}, default=str),
+        "synthetic_demo_flag": True,
+    }
 
 
 def try_store_learning_event(table_name: str, payload: dict[str, Any]) -> str:
+    if table_name not in LEARNING_WRITEBACK_TABLES:
+        st.session_state.setdefault("learning_events", []).append(payload)
+        return f"Unsupported writeback table {table_name}; stored in session state instead."
     session = get_snowpark_session()
     if session is None:
         st.session_state.setdefault("learning_events", []).append(payload)
         return "Stored in Streamlit session state for local/sample mode."
-    columns = ", ".join(payload.keys())
-    values = ", ".join(_sql_literal(value) for value in payload.values())
     try:
-        session.sql(f"INSERT INTO {table_name} ({columns}) SELECT {values}").collect()
+        session.create_dataframe([payload]).write.mode("append").save_as_table(table_name)
         return f"Stored in {table_name}."
     except Exception as exc:  # pragma: no cover - depends on Snowflake privileges
         st.session_state.setdefault("learning_events", []).append(payload)

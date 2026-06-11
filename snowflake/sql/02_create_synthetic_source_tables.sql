@@ -14,6 +14,8 @@ CREATE SCHEMA IF NOT EXISTS OPEN_DATA;
 CREATE OR REPLACE TABLE GOVERNANCE.V3_SOURCE_REGISTRY (
   source_id STRING,
   curated_view STRING,
+  source_view_name STRING,
+  source_domain STRING,
   grain STRING,
   fields STRING,
   field_types STRING,

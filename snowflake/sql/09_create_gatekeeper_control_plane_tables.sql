@@ -35,3 +35,28 @@ CREATE OR REPLACE TABLE GOVERNANCE.V3_GATEKEEPER_DECISION (
   payload_json VARIANT,
   synthetic_demo_flag BOOLEAN
 );
+
+CREATE OR REPLACE TABLE GOVERNANCE.V3_GOVERNANCE_APPROVAL (
+  decision_id STRING,
+  related_id STRING,
+  decision STRING,
+  reviewer_role STRING,
+  created_at TIMESTAMP_NTZ,
+  payload_json VARIANT,
+  synthetic_demo_flag BOOLEAN
+);
+
+CREATE OR REPLACE TABLE GOVERNANCE.V3_RELEASE_ROLLBACK (
+  release_id STRING,
+  asset_id STRING,
+  panel_id STRING,
+  release_status STRING,
+  version STRING,
+  canary_scope STRING,
+  rollback_trigger STRING,
+  rollback_action STRING,
+  owner STRING,
+  approved_at TIMESTAMP_NTZ,
+  caveat STRING,
+  synthetic_demo_flag BOOLEAN
+);

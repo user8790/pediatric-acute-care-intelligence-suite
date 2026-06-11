@@ -93,7 +93,10 @@ function SourceReadinessTable({ rows, limit = 8 }: { rows: DataRow[]; limit?: nu
         <tbody>
           {rows.slice(0, limit).map((row) => (
             <tr key={stringValue(row, "source_id")}>
-              <td>{stringValue(row, "source_id")}</td>
+              <td>
+                <strong>{stringValue(row, "source_view_name", stringValue(row, "source_id"))}</strong>
+                <span className="table-subtext">{stringValue(row, "source_domain", stringValue(row, "source_id"))}</span>
+              </td>
               <td>
                 <ReadinessBadge value={row.overall_readiness} />
               </td>
@@ -218,6 +221,7 @@ function readinessCounts(rows: DataRow[]): ReadinessCounts {
       const status = statusTone(row.overall_readiness ?? row.readiness_status ?? row.governance_status);
       if (status === "ready") counts.ready += 1;
       else if (status === "high") counts.high += 1;
+      else if (stringValue(row, "overall_readiness") === "not_mapped") counts.high += 1;
       else counts.review += 1;
       return counts;
     },
@@ -394,6 +398,10 @@ export function FrontierAmbulatoryPage({ data }: { data: V3Data; context: AppCon
 
 export function PredictiveAssetsPage({ data }: { data: V3Data }) {
   const signalRows = data.predictiveAssets.signals;
+  const [selectedAssetId, setSelectedAssetId] = useState(stringValue(data.modelRegistry[0], "asset_id"));
+  const selectedAsset = data.modelRegistry.find((row) => stringValue(row, "asset_id") === selectedAssetId) ?? data.modelRegistry[0];
+  const selectedEvidence = data.predictiveAssets.evidenceTrails.filter((row) => stringValue(row, "asset_id") === selectedAssetId);
+  const selectedValidation = data.gatekeeper.validationDrift.find((row) => stringValue(row, "asset_id") === selectedAssetId);
   return (
     <section className="dashboard-grid">
       <Panel span="wide" eyebrow="Clinical Surveillance / Predictive Asset Layer" title="Modelled outputs remain governed, labelled, and reversible" icon={<BrainCircuit size={22} />}>
@@ -406,7 +414,40 @@ export function PredictiveAssetsPage({ data }: { data: V3Data }) {
         <WarningList rows={signalRows} />
       </Panel>
       <Panel span="xlarge" eyebrow="Evidence overlay" title="Trace warnings to review evidence and caveats" icon={<GitBranch size={22} />}>
-        <RegistryTable rows={data.predictiveAssets.evidenceTrails} columns={["trail_id", "asset_id", "evidence_step", "detail"]} limit={8} />
+        <label className="field-stack">
+          Asset
+          <select value={selectedAssetId} onChange={(event) => setSelectedAssetId(event.target.value)}>
+            {data.modelRegistry.map((row) => (
+              <option key={stringValue(row, "asset_id")} value={stringValue(row, "asset_id")}>
+                {stringValue(row, "name")} ({stringValue(row, "asset_id")})
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="model-evidence-card">
+          <strong>{stringValue(selectedAsset, "name")}</strong>
+          <p>{stringValue(selectedAsset, "intended_use")}</p>
+          <dl>
+            <div>
+              <dt>Calibration</dt>
+              <dd>{stringValue(selectedValidation, "calibration_status", stringValue(selectedAsset, "calibration_status"))}</dd>
+            </div>
+            <div>
+              <dt>Drift</dt>
+              <dd>{stringValue(selectedValidation, "drift_status", stringValue(selectedAsset, "drift_status"))}</dd>
+            </div>
+            <div>
+              <dt>Alert burden</dt>
+              <dd>{stringValue(selectedValidation, "alert_burden", stringValue(selectedAsset, "alert_burden"))}</dd>
+            </div>
+            <div>
+              <dt>Release gate</dt>
+              <dd>{stringValue(selectedValidation, "release_gate", stringValue(selectedAsset, "governance_status"))}</dd>
+            </div>
+          </dl>
+          <em>{stringValue(selectedAsset, "not_intended_use")}</em>
+        </div>
+        <RegistryTable rows={selectedEvidence.length ? selectedEvidence : data.predictiveAssets.evidenceTrails} columns={["trail_id", "asset_id", "evidence_step", "detail"]} limit={8} />
       </Panel>
       <Panel span="normal" eyebrow="Safety boundary" title="No clinical decisioning" icon={<FileCheck2 size={22} />}>
         <InsightPanel
@@ -530,6 +571,21 @@ export function GatekeeperControlPlanePage({ data }: { data: V3Data }) {
       <Panel span="normal" eyebrow="Decision ledger" title="Recent governance decisions" icon={<CheckCircle2 size={22} />}>
         <RegistryTable rows={data.gatekeeper.approvals} columns={["decision_id", "related_id", "decision", "reviewer_role"]} limit={5} />
       </Panel>
+      <Panel span="xlarge" eyebrow="Warning registry" title="Thresholds, acknowledgement, and rollback controls" icon={<AlertTriangle size={22} />}>
+        <RegistryTable rows={data.gatekeeper.warningLogic} columns={["warning_id", "asset_id", "metric_id", "threshold", "severity", "status"]} limit={10} />
+      </Panel>
+      <Panel span="normal" eyebrow="Coefficient registry" title="Synthetic parameters requiring review" icon={<ListChecks size={22} />}>
+        <RegistryTable rows={data.gatekeeper.coefficients} columns={["coefficient_id", "coefficient_name", "applies_to", "value", "review_status"]} limit={8} />
+      </Panel>
+      <Panel span="xlarge" eyebrow="Data quality rules" title="Contract checks behind the readiness stoplight" icon={<FileCheck2 size={22} />}>
+        <RegistryTable rows={data.gatekeeper.dataQualityRules} columns={["check_id", "source_id", "rule_name", "severity", "status", "failed_rows"]} limit={10} />
+      </Panel>
+      <Panel span="normal" eyebrow="Validation and drift" title="Model release gates" icon={<BrainCircuit size={22} />}>
+        <RegistryTable rows={data.gatekeeper.validationDrift} columns={["asset_id", "primary_metric", "primary_metric_value", "drift_status", "release_gate"]} limit={8} />
+      </Panel>
+      <Panel span="wide" eyebrow="Release and rollback" title="Every modelled asset has a reversible path" icon={<Workflow size={22} />}>
+        <RegistryTable rows={data.gatekeeper.releaseRollback} columns={["release_id", "asset_id", "release_status", "canary_scope", "rollback_trigger"]} limit={10} />
+      </Panel>
     </section>
   );
 }
@@ -603,8 +659,8 @@ export function FutureWiringPage({ data }: { data: V3Data }) {
       <Panel span="normal" eyebrow="Direct-link stoplight" title="Source validation checks" icon={<FileCheck2 size={22} />}>
         <SourceReadinessTable rows={data.directLinkValidation} limit={6} />
       </Panel>
-      <Panel span="wide" eyebrow="Curated-view registry" title="Connect Care-realistic synthetic wiring placeholders" icon={<DatabaseZap size={22} />}>
-        <RegistryTable rows={data.sourceRegistry} columns={["source_id", "curated_view", "grain", "cadence", "classification", "future_mapping_placeholder"]} limit={24} />
+      <Panel span="wide" eyebrow="Curated-view registry" title={`${data.sourceRegistry.length} Connect Care-realistic synthetic wiring placeholders`} icon={<DatabaseZap size={22} />}>
+        <RegistryTable rows={data.sourceRegistry} columns={["source_view_name", "curated_view", "source_domain", "grain", "cadence", "classification"]} limit={80} />
       </Panel>
     </section>
   );

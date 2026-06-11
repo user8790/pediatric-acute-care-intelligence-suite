@@ -13,6 +13,21 @@ CREATE OR REPLACE TABLE QUALITY.V3_DATA_QUALITY_CHECK (
   synthetic_demo_flag BOOLEAN
 );
 
+CREATE OR REPLACE TABLE GOVERNANCE.V3_DATA_QUALITY_RULE (
+  check_id STRING,
+  source_id STRING,
+  rule_name STRING,
+  rule_type STRING,
+  severity STRING,
+  threshold STRING,
+  status STRING,
+  failed_rows NUMBER,
+  last_run_at TIMESTAMP_NTZ,
+  owner STRING,
+  caveat STRING,
+  synthetic_demo_flag BOOLEAN
+);
+
 CREATE OR REPLACE VIEW QUALITY.V3_SMALL_CELL_SUPPRESSION_REVIEW AS
 SELECT source_id, small_cell_suppression, overall_readiness, caveat
 FROM GOVERNANCE.V3_DIRECT_LINK_VALIDATION

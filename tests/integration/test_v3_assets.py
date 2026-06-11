@@ -53,6 +53,82 @@ REQUIRED_WRITEBACK_TABLES = {
     "APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
 }
 
+REQUIRED_SOURCE_VIEWS = {
+    "VW_SYNTH_ADT_EVENTS",
+    "VW_SYNTH_INPATIENT_ENCOUNTERS",
+    "VW_SYNTH_ED_VISITS",
+    "VW_SYNTH_BED_STATUS",
+    "VW_SYNTH_UNIT_CENSUS_HOURLY",
+    "VW_SYNTH_TRANSFER_REQUESTS",
+    "VW_SYNTH_PATIENT_CLASS_STATUS",
+    "VW_SYNTH_LEVEL_OF_CARE",
+    "VW_SYNTH_ISOLATION_STATUS",
+    "VW_SYNTH_ORDERS",
+    "VW_SYNTH_LAB_RESULTS",
+    "VW_SYNTH_IMAGING_ORDERS",
+    "VW_SYNTH_MEDICATION_ORDERS",
+    "VW_SYNTH_MAR_ADMINISTRATION",
+    "VW_SYNTH_RESPIRATORY_SUPPORT",
+    "VW_SYNTH_VITAL_SIGNS_AGG",
+    "VW_SYNTH_CLINICAL_SCORES",
+    "VW_SYNTH_SEPSIS_SCREENING",
+    "VW_SYNTH_ALERT_EVENTS",
+    "VW_SYNTH_CARE_PLAN_MILESTONES",
+    "VW_SYNTH_DISCHARGE_MILESTONES",
+    "VW_SYNTH_DISCHARGE_BARRIERS",
+    "VW_SYNTH_PHARMACY_DISCHARGE_MED_STATUS",
+    "VW_SYNTH_HOME_SUPPORT_STATUS",
+    "VW_SYNTH_EQUIPMENT_STATUS",
+    "VW_SYNTH_TRANSPORT_STATUS",
+    "VW_SYNTH_FAMILY_READINESS_PROXY",
+    "VW_SYNTH_OR_CASES",
+    "VW_SYNTH_PACU_EVENTS",
+    "VW_SYNTH_PROCEDURE_SCHEDULE",
+    "VW_SYNTH_PROCEDURE_CANCELLATIONS",
+    "VW_SYNTH_POST_OP_BED_DEMAND",
+    "VW_SYNTH_REFERRALS",
+    "VW_SYNTH_REFERRAL_TRIAGE",
+    "VW_SYNTH_WAITLIST_SNAPSHOTS",
+    "VW_SYNTH_APPOINTMENTS",
+    "VW_SYNTH_CLINIC_SLOTS",
+    "VW_SYNTH_CLINIC_TEMPLATES",
+    "VW_SYNTH_PROVIDER_AVAILABILITY",
+    "VW_SYNTH_NO_SHOW_LATE_CANCEL",
+    "VW_SYNTH_OVERDUE_FOLLOWUP",
+    "VW_SYNTH_DIAGNOSTIC_READINESS",
+    "VW_SYNTH_VIRTUAL_CARE_SUITABILITY",
+    "VW_SYNTH_OUTREACH_CLINIC_CAPACITY",
+    "VW_SYNTH_STAFFING_ROSTER",
+    "VW_SYNTH_STAFFING_GAPS",
+    "VW_SYNTH_WORKLOAD_ACUITY",
+    "VW_SYNTH_SKILL_MIX",
+    "VW_SYNTH_FLOAT_POOL_AVAILABILITY",
+    "VW_SYNTH_SAFETY_EVENTS_AGG",
+    "VW_SYNTH_READMISSION_REVISIT",
+    "VW_SYNTH_DOT_PHRASE_OR_DOC_COMPLETENESS_PROXY",
+    "VW_SYNTH_DATA_QUALITY_EVENTS",
+    "VW_OPEN_RESPIRATORY_ACTIVITY",
+    "VW_OPEN_WEATHER_AQHI",
+    "VW_OPEN_POPULATION_DEMOGRAPHICS",
+    "VW_OPEN_CALENDAR_HOLIDAY_SCHOOL",
+    "VW_OPEN_COMMUNITY_DEMAND_PROXY",
+    "VW_MODEL_FEATURE_STORE_SUMMARY",
+    "VW_MODEL_PREDICTIONS",
+    "VW_MODEL_VALIDATION_RESULTS",
+    "VW_MODEL_DRIFT_RESULTS",
+    "VW_MODEL_CARD_REGISTRY",
+    "VW_METRIC_REGISTRY",
+    "VW_WARNING_LOGIC_REGISTRY",
+    "VW_PANEL_REGISTRY",
+    "VW_COEFFICIENT_REGISTRY",
+    "VW_DIRECT_LINKAGE_VALIDATION",
+    "VW_LEARNING_SYSTEM_EVENTS",
+    "VW_SCENARIO_RUNS",
+    "VW_SCENARIO_RESULTS",
+    "VW_USER_ANNOTATIONS",
+    "VW_GOVERNANCE_APPROVALS",
+}
+
 REQUIRED_DOCS = [
     "docs/v3_product_vision.md",
     "docs/v3_frontier_platform_architecture.md",
@@ -68,6 +144,7 @@ REQUIRED_DOCS = [
     "docs/v3_streamlit_user_guide.md",
     "docs/v3_testing_report.md",
     "docs/v3_known_limitations_and_next_steps.md",
+    "docs/v3_tooling_and_package_register.md",
 ]
 
 
@@ -85,12 +162,14 @@ def test_v3_json_assets_exist_and_are_non_empty():
 def test_v3_source_and_readiness_contract():
     sources = load_json("source_registry.json")["rows"]
     readiness = load_json("direct_link_validation.json")["rows"]
-    assert len(sources) >= 20
+    assert len(sources) >= len(REQUIRED_SOURCE_VIEWS)
     assert len(readiness) == len(sources)
-    source_ids = {row["source_id"] for row in sources}
-    assert {"SRC_UNIT_CENSUS", "SRC_REFERRAL", "SRC_MODEL_OUTPUT", "SRC_LEARNING_MEMORY"}.issubset(source_ids)
+    source_views = {row["source_view_name"] for row in sources}
+    assert REQUIRED_SOURCE_VIEWS.issubset(source_views)
     required_readiness = {
         "source_view_present",
+        "source_view_name",
+        "source_domain",
         "field_populated",
         "freshness",
         "row_count",
@@ -99,9 +178,11 @@ def test_v3_source_and_readiness_contract():
         "metric_definition_approved",
         "small_cell_suppression",
         "overall_readiness",
+        "stoplight",
     }
     for row in readiness:
         assert required_readiness.issubset(row)
+    assert {"green", "yellow", "gray"}.issubset({row["stoplight"] for row in readiness})
 
 
 def test_v3_metric_panel_classification_layers_present():
@@ -159,6 +240,10 @@ def test_v3_learning_system_writeback_shape():
         "site_id",
         "unit_or_program",
         "related_ids",
+        "related_metric_id",
+        "related_model_id",
+        "related_panel_id",
+        "related_scenario_id",
         "status",
         "severity",
         "note",
@@ -167,6 +252,23 @@ def test_v3_learning_system_writeback_shape():
     }
     for event in memory["events"]:
         assert required_event_fields.issubset(event)
+
+
+def test_v3_gatekeeper_has_expanded_registries():
+    gatekeeper = load_json("gatekeeper_control_plane.json")
+    for key in [
+        "controlPlane",
+        "dependencyEdges",
+        "issues",
+        "approvals",
+        "warningLogic",
+        "coefficients",
+        "dataQualityRules",
+        "validationDrift",
+        "releaseRollback",
+    ]:
+        assert key in gatekeeper
+        assert gatekeeper[key], key
 
 
 def test_v3_assets_do_not_contain_direct_identifiers():

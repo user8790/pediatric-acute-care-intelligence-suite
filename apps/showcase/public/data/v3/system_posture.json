@@ -48,8 +48,8 @@
     },
     {
       "label": "Readiness overlay",
-      "value": "17 ready / 3 review",
-      "detail": "Diagnostic dependency, transfers, and weather/AQHI need source-owner review.",
+      "value": "63 green / 7 yellow / 3 gray",
+      "detail": "Full v3 source catalog is wired with explicit owner-review and not-yet-mapped states.",
       "tone": "watch"
     },
     {
@@ -64,7 +64,7 @@
       "driver": "Respiratory activity",
       "change": "+7.2%",
       "contribution": 34,
-      "evidence": "OPEN_DATA.VW_SYNTH_RESPIRATORY_ACTIVITY rose above seasonal baseline."
+      "evidence": "OPEN_DATA.VW_OPEN_RESPIRATORY_ACTIVITY rose above seasonal baseline."
     },
     {
       "driver": "Effective staffed beds",

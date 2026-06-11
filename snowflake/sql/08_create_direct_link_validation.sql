@@ -3,6 +3,9 @@ USE DATABASE PEDIATRIC_AHA_DEMO;
 
 CREATE OR REPLACE TABLE GOVERNANCE.V3_DIRECT_LINK_VALIDATION (
   source_id STRING,
+  source_view_name STRING,
+  curated_view STRING,
+  source_domain STRING,
   source_view_present STRING,
   field_populated STRING,
   freshness STRING,
@@ -12,6 +15,7 @@ CREATE OR REPLACE TABLE GOVERNANCE.V3_DIRECT_LINK_VALIDATION (
   metric_definition_approved STRING,
   small_cell_suppression STRING,
   overall_readiness STRING,
+  stoplight STRING,
   freshness_minutes NUMBER,
   row_count_value NUMBER,
   owner STRING,
@@ -22,8 +26,11 @@ CREATE OR REPLACE TABLE GOVERNANCE.V3_DIRECT_LINK_VALIDATION (
 CREATE OR REPLACE VIEW GOVERNANCE.V3_DIRECT_LINK_STOPLIGHT AS
 SELECT
   source_id,
+  source_view_name,
+  curated_view,
+  source_domain,
   overall_readiness,
-  IFF(overall_readiness = 'ready', 'green', IFF(overall_readiness = 'blocked', 'red', 'amber')) AS stoplight,
+  IFF(overall_readiness = 'ready', 'green', IFF(overall_readiness = 'not_mapped', 'gray', 'yellow')) AS stoplight,
   freshness,
   row_count,
   metric_definition_approved,

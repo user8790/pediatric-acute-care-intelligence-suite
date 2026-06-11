@@ -128,6 +128,11 @@ export const fallbackV3Data: V3Data = {
     dependencyEdges: [],
     issues: [],
     approvals: [],
+    warningLogic: [],
+    coefficients: [],
+    dataQualityRules: [],
+    validationDrift: [],
+    releaseRollback: [],
   },
   learningMemory: {
     events: [],

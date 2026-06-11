@@ -87,6 +87,11 @@ export type V3Data = {
     dependencyEdges: DataRow[];
     issues: DataRow[];
     approvals: DataRow[];
+    warningLogic: DataRow[];
+    coefficients: DataRow[];
+    dataQualityRules: DataRow[];
+    validationDrift: DataRow[];
+    releaseRollback: DataRow[];
   };
   learningMemory: {
     events: DataRow[];

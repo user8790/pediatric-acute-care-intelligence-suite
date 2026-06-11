@@ -964,6 +964,14 @@ dd {
   overflow-wrap: anywhere;
 }
 
+.table-subtext {
+  display: block;
+  margin-top: 3px;
+  color: #66727b;
+  font-size: 0.76rem;
+  line-height: 1.25;
+}
+
 .model-card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -999,6 +1007,46 @@ dd {
 
 .model-card dl div {
   grid-template-columns: 80px minmax(0, 1fr);
+}
+
+.model-evidence-card {
+  display: grid;
+  gap: 9px;
+  margin: 12px 0;
+  border: 1px solid #dce6eb;
+  border-radius: 8px;
+  padding: 13px;
+  background: #fbfcfd;
+}
+
+.model-evidence-card p,
+.model-evidence-card dl,
+.model-evidence-card em {
+  margin: 0;
+}
+
+.model-evidence-card dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.model-evidence-card dl div {
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 9px;
+}
+
+.model-evidence-card dt {
+  color: #66727b;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.model-evidence-card dd {
+  margin: 4px 0 0;
+  color: #26323b;
 }
 
 .warning-card > div:first-child {

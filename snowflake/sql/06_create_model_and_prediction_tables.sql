@@ -48,3 +48,20 @@ CREATE OR REPLACE TABLE MODEL.V3_PREDICTION_OUTPUT (
   explanation_json VARIANT,
   synthetic_demo_flag BOOLEAN
 );
+
+CREATE OR REPLACE TABLE MODEL.V3_VALIDATION_DRIFT (
+  asset_id STRING,
+  validation_run_id STRING,
+  primary_metric STRING,
+  primary_metric_value FLOAT,
+  calibration_status STRING,
+  subgroup_review STRING,
+  drift_score FLOAT,
+  drift_status STRING,
+  alert_burden STRING,
+  release_gate STRING,
+  reviewer STRING,
+  last_run_at TIMESTAMP_NTZ,
+  caveat STRING,
+  synthetic_demo_flag BOOLEAN
+);

@@ -14,7 +14,7 @@ import {
   Sparkles,
   Workflow,
 } from "lucide-react";
-import type { AppContext, Metadata } from "../data/types";
+import type { AppContext, ControlOptions, Metadata } from "../data/types";
 import { HORIZONS, PERSONAS, SITES } from "../data/types";
 
 export type PageId =
@@ -60,7 +60,7 @@ export function AppHeader({ metadata, isLoading }: { metadata: Metadata; isLoadi
       <div className="status-stack">
         <span className="status-pill">{metadata.mode}</span>
         <span className="status-pill quiet">{metadata.clinicalUse}</span>
-        {isLoading && <span className="status-pill loading">Loading v3 assets</span>}
+        {isLoading && <span className="status-pill loading">Loading v5 assets</span>}
       </div>
     </header>
   );
@@ -70,10 +70,12 @@ export function ControlBand({
   context,
   setContext,
   generatedAt,
+  controlOptions,
 }: {
   context: AppContext;
   setContext: (context: AppContext) => void;
   generatedAt: string;
+  controlOptions: ControlOptions;
 }) {
   return (
     <section className="control-band" aria-label="Product controls">
@@ -100,6 +102,49 @@ export function ControlBand({
         <select value={context.horizon} onChange={(event) => setContext({ ...context, horizon: event.target.value })}>
           {HORIZONS.map((horizon) => (
             <option key={horizon}>{horizon}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Service
+        <select
+          value={context.service}
+          onChange={(event) => setContext({ ...context, service: event.target.value, unit: "All units" })}
+        >
+          {controlOptions.services.map((service) => (
+            <option key={service.value} value={service.value}>
+              {service.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Unit
+        <select value={context.unit} onChange={(event) => setContext({ ...context, unit: event.target.value })}>
+          {controlOptions.units.map((unit) => (
+            <option key={unit.value} value={unit.value}>
+              {unit.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Program
+        <select value={context.program} onChange={(event) => setContext({ ...context, program: event.target.value })}>
+          {controlOptions.programs.map((program) => (
+            <option key={program.value} value={program.value}>
+              {program.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Scenario
+        <select value={context.scenario} onChange={(event) => setContext({ ...context, scenario: event.target.value })}>
+          {controlOptions.scenarios.map((scenario) => (
+            <option key={scenario.value} value={scenario.value}>
+              {scenario.label}
+            </option>
           ))}
         </select>
       </label>
@@ -149,7 +194,7 @@ export function ProductFooter() {
     <footer>
       Synthetic demonstration data only. Not connected to real hospital systems. Not validated for clinical decision-making. Future production use requires local governance, validation, and curated governed views.
       <span>
-        <FileText size={15} /> v3 frontier operating-layer prototype
+        <FileText size={15} /> v5 command-centre prototype
       </span>
     </footer>
   );

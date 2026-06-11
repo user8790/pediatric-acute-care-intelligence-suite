@@ -1,0 +1,1180 @@
+{
+  "controlPlane": [
+    {
+      "area": "Direct source readiness",
+      "ready": 68,
+      "review": 11,
+      "blocked": 3,
+      "mode": "executive lite"
+    },
+    {
+      "area": "Metric definitions",
+      "ready": 11,
+      "review": 6,
+      "blocked": 0,
+      "mode": "technical deep"
+    },
+    {
+      "area": "Model cards",
+      "ready": 10,
+      "review": 5,
+      "blocked": 0,
+      "mode": "technical deep"
+    },
+    {
+      "area": "Warning logic",
+      "ready": 4,
+      "review": 4,
+      "blocked": 2,
+      "mode": "executive lite"
+    },
+    {
+      "area": "Coefficient registry",
+      "ready": 5,
+      "review": 4,
+      "blocked": 1,
+      "mode": "technical deep"
+    },
+    {
+      "area": "Data quality rules",
+      "ready": 5,
+      "review": 5,
+      "blocked": 0,
+      "mode": "technical deep"
+    },
+    {
+      "area": "Validation and drift",
+      "ready": 12,
+      "review": 0,
+      "blocked": 3,
+      "mode": "technical deep"
+    },
+    {
+      "area": "Learning writebacks",
+      "ready": 10,
+      "review": 0,
+      "blocked": 0,
+      "mode": "technical deep"
+    }
+  ],
+  "dependencyEdges": [
+    {
+      "from": "SRC_SYNTH_ADT_EVENTS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_INPATIENT_ENCOUNTERS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_ED_VISITS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_BED_STATUS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_UNIT_CENSUS_HOURLY",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_TRANSFER_REQUESTS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_PATIENT_CLASS_STATUS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_LEVEL_OF_CARE",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_ISOLATION_STATUS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_ORDERS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_LAB_RESULTS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_IMAGING_ORDERS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_MEDICATION_ORDERS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_MAR_ADMINISTRATION",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_RESPIRATORY_SUPPORT",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_VITAL_SIGNS_AGG",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_CLINICAL_SCORES",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_SEPSIS_SCREENING",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_ALERT_EVENTS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_SYNTH_CARE_PLAN_MILESTONES",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "INPT_OCCUPANCY_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "ED_BOARDING_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "DISCHARGE_BY_TIME_BAND",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "PICU_NICU_PRESSURE",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "OR_CANCELLATION_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "AMB_REFERRAL_DEMAND_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "AMB_BACKLOG_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "NO_SHOW_LATE_CANCEL_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "URGENT_WAITLIST_BREACH_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "DIAGNOSTIC_READINESS_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "PEDIATRIC_EARLY_WARNING_SIGNAL",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "RARE_DISEASE_CASE_FINDING_SIGNAL",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "READMISSION_REVISIT_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "LONG_STAY_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "WARN-RULE-001",
+      "to": "PANEL_INPATIENT_COMMAND",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-002",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-003",
+      "to": "PANEL_INPATIENT_COMMAND",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-004",
+      "to": "PANEL_INPATIENT_COMMAND",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-005",
+      "to": "PANEL_AMBULATORY_COMMAND",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-006",
+      "to": "PANEL_AMBULATORY_COMMAND",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-007",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-008",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-009",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "controls warning display"
+    },
+    {
+      "from": "WARN-RULE-010",
+      "to": "PANEL_AMBULATORY_COMMAND",
+      "relationship": "controls warning display"
+    }
+  ],
+  "issues": [
+    {
+      "issue_id": "ISSUE-001",
+      "severity": "medium",
+      "related_id": "SRC_SYNTH_DIAGNOSTIC_READINESS",
+      "status": "open",
+      "note": "Definition owner must approve diagnostic readiness denominator."
+    },
+    {
+      "issue_id": "ISSUE-002",
+      "severity": "high",
+      "related_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "status": "review queued",
+      "note": "Alert-burden review required before public warning display."
+    },
+    {
+      "issue_id": "ISSUE-003",
+      "severity": "medium",
+      "related_id": "NO_SHOW_LATE_CANCEL_RISK",
+      "status": "guardrail review",
+      "note": "Equity and travel-burden guardrail needs signoff before scenario promotion."
+    },
+    {
+      "issue_id": "ISSUE-004",
+      "severity": "medium",
+      "related_id": "SRC_MODEL_DRIFT_RESULTS",
+      "status": "open",
+      "note": "Latest drift result must be present for every active model before alert promotion."
+    }
+  ],
+  "approvals": [
+    {
+      "decision_id": "GOV-DEC-001",
+      "related_id": "INPT_OCCUPANCY_FORECAST",
+      "decision": "approved for demo",
+      "reviewer_role": "analytics governance",
+      "created_at": "2026-06-11T08:30:00-07:00"
+    },
+    {
+      "decision_id": "GOV-DEC-002",
+      "related_id": "PICU_NICU_PRESSURE",
+      "decision": "approved with warning label",
+      "reviewer_role": "operations sponsor",
+      "created_at": "2026-06-11T08:30:00-07:00"
+    },
+    {
+      "decision_id": "GOV-DEC-003",
+      "related_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "decision": "synthetic-only hold",
+      "reviewer_role": "clinical safety reviewer",
+      "created_at": "2026-06-11T08:30:00-07:00"
+    }
+  ],
+  "warningLogic": [
+    {
+      "warning_id": "WARN-RULE-001",
+      "asset_id": "INPT_OCCUPANCY_FORECAST",
+      "metric_id": "METRIC_OCCUPANCY",
+      "panel_id": "PANEL_INPATIENT_COMMAND",
+      "condition": "prob_above_95 >= 0.55 and ED boarders increasing",
+      "threshold": "0.55",
+      "severity": "high",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 4,
+      "rollback_flag": false,
+      "owner": "Synthetic analytics governance",
+      "status": "approved",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-002",
+      "asset_id": "PICU_NICU_PRESSURE",
+      "metric_id": "METRIC_PICU_NICU_PRESSURE",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "condition": "pressure_score >= 0.70 or transfer requests open > 6h",
+      "threshold": "0.70",
+      "severity": "high",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 3,
+      "rollback_flag": false,
+      "owner": "Synthetic analytics governance",
+      "status": "approved",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-003",
+      "asset_id": "DISCHARGE_BY_TIME_BAND",
+      "metric_id": "METRIC_DISCHARGE_RELIABILITY",
+      "panel_id": "PANEL_INPATIENT_COMMAND",
+      "condition": "same-day discharge probability < 0.62 by 11:00",
+      "threshold": "0.62",
+      "severity": "medium",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 6,
+      "rollback_flag": true,
+      "owner": "Synthetic analytics governance",
+      "status": "review",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-004",
+      "asset_id": "OR_CANCELLATION_RISK",
+      "metric_id": "METRIC_OR_CANCELLATION_RISK",
+      "panel_id": "PANEL_INPATIENT_COMMAND",
+      "condition": "post-op bed demand exceeds staffed bed buffer",
+      "threshold": "4 beds",
+      "severity": "medium",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 5,
+      "rollback_flag": false,
+      "owner": "Synthetic analytics governance",
+      "status": "approved",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-005",
+      "asset_id": "URGENT_WAITLIST_BREACH_RISK",
+      "metric_id": "METRIC_WAITLIST_PRESSURE",
+      "panel_id": "PANEL_AMBULATORY_COMMAND",
+      "condition": "urgent breach probability >= 0.35 for two snapshots",
+      "threshold": "0.35",
+      "severity": "medium",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 7,
+      "rollback_flag": false,
+      "owner": "Synthetic analytics governance",
+      "status": "approved",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-006",
+      "asset_id": "DIAGNOSTIC_READINESS_RISK",
+      "metric_id": "METRIC_DIAGNOSTIC_READINESS",
+      "panel_id": "PANEL_AMBULATORY_COMMAND",
+      "condition": "missing prerequisite rate >= 0.22",
+      "threshold": "0.22",
+      "severity": "medium",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 5,
+      "rollback_flag": true,
+      "owner": "Synthetic analytics governance",
+      "status": "review",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-007",
+      "asset_id": "PEDIATRIC_EARLY_WARNING_SIGNAL",
+      "metric_id": "METRIC_SURVEILLANCE_WARNING",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "condition": "aggregate synthetic surveillance score above governed threshold",
+      "threshold": "0.70",
+      "severity": "medium",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 2,
+      "rollback_flag": true,
+      "owner": "Synthetic analytics governance",
+      "status": "review",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-008",
+      "asset_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "metric_id": "METRIC_SURVEILLANCE_WARNING",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "condition": "synthetic sepsis signal exceeds threshold and alert burden cap",
+      "threshold": "0.62",
+      "severity": "high",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 1,
+      "rollback_flag": true,
+      "owner": "Synthetic analytics governance",
+      "status": "hold",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-009",
+      "asset_id": "RARE_DISEASE_CASE_FINDING_SIGNAL",
+      "metric_id": "METRIC_SURVEILLANCE_WARNING",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "condition": "candidate signal visible only when small-cell suppression passes",
+      "threshold": "suppressed",
+      "severity": "low",
+      "acknowledgement_required": false,
+      "alert_burden_cap_per_week": 0,
+      "rollback_flag": true,
+      "owner": "Synthetic analytics governance",
+      "status": "hold",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    },
+    {
+      "warning_id": "WARN-RULE-010",
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK",
+      "metric_id": "METRIC_NO_SHOW_GUARDRAIL",
+      "panel_id": "PANEL_AMBULATORY_COMMAND",
+      "condition": "guarded overbook proposal exceeds equity/travel guardrail",
+      "threshold": "0.08",
+      "severity": "medium",
+      "acknowledgement_required": true,
+      "alert_burden_cap_per_week": 8,
+      "rollback_flag": true,
+      "owner": "Synthetic analytics governance",
+      "status": "review",
+      "caveat": "Synthetic warning logic only; not validated for clinical decision-making."
+    }
+  ],
+  "coefficients": [
+    {
+      "coefficient_id": "COEF-BED-001",
+      "coefficient_name": "Staffing factor",
+      "applies_to": "METRIC_EFFECTIVE_STAFFED_BEDS",
+      "value": 0.82,
+      "unit": "multiplier",
+      "lower_bound": 0.65,
+      "upper_bound": 1.0,
+      "owner": "Synthetic metric governance",
+      "review_status": "approved",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-BED-002",
+      "coefficient_name": "Isolation constraint",
+      "applies_to": "METRIC_EFFECTIVE_STAFFED_BEDS",
+      "value": 0.93,
+      "unit": "multiplier",
+      "lower_bound": 0.75,
+      "upper_bound": 1.0,
+      "owner": "Synthetic metric governance",
+      "review_status": "approved",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-FLOW-001",
+      "coefficient_name": "Boarder hour penalty",
+      "applies_to": "METRIC_ED_BOARDING",
+      "value": 1.25,
+      "unit": "weighted hour",
+      "lower_bound": 0.8,
+      "upper_bound": 1.8,
+      "owner": "Synthetic metric governance",
+      "review_status": "approved",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-FLOW-002",
+      "coefficient_name": "Pharmacy barrier ageing",
+      "applies_to": "METRIC_DISCHARGE_RELIABILITY",
+      "value": 0.18,
+      "unit": "probability decrement",
+      "lower_bound": 0.05,
+      "upper_bound": 0.35,
+      "owner": "Synthetic metric governance",
+      "review_status": "review",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-CC-001",
+      "coefficient_name": "PICU transfer demand",
+      "applies_to": "METRIC_PICU_NICU_PRESSURE",
+      "value": 0.34,
+      "unit": "pressure weight",
+      "lower_bound": 0.1,
+      "upper_bound": 0.6,
+      "owner": "Synthetic metric governance",
+      "review_status": "review",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-AMB-001",
+      "coefficient_name": "Urgent referral weight",
+      "applies_to": "METRIC_WAITLIST_PRESSURE",
+      "value": 2.4,
+      "unit": "priority weight",
+      "lower_bound": 1.5,
+      "upper_bound": 3.5,
+      "owner": "Synthetic metric governance",
+      "review_status": "approved",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-AMB-002",
+      "coefficient_name": "Diagnostic dependency gap",
+      "applies_to": "METRIC_DIAGNOSTIC_READINESS",
+      "value": 0.29,
+      "unit": "risk weight",
+      "lower_bound": 0.1,
+      "upper_bound": 0.5,
+      "owner": "Synthetic metric governance",
+      "review_status": "review",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-AMB-003",
+      "coefficient_name": "No-show guardrail",
+      "applies_to": "METRIC_NO_SHOW_GUARDRAIL",
+      "value": 0.08,
+      "unit": "maximum overbook share",
+      "lower_bound": 0.0,
+      "upper_bound": 0.12,
+      "owner": "Synthetic metric governance",
+      "review_status": "review",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-SIM-001",
+      "coefficient_name": "Respiratory surge elasticity",
+      "applies_to": "SCENARIO_SIMULATION",
+      "value": 0.41,
+      "unit": "scenario weight",
+      "lower_bound": 0.2,
+      "upper_bound": 0.7,
+      "owner": "Synthetic metric governance",
+      "review_status": "approved",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    },
+    {
+      "coefficient_id": "COEF-SAFE-001",
+      "coefficient_name": "Synthetic surveillance cap",
+      "applies_to": "METRIC_SURVEILLANCE_WARNING",
+      "value": 2.0,
+      "unit": "warnings per week",
+      "lower_bound": 0.0,
+      "upper_bound": 4.0,
+      "owner": "Synthetic metric governance",
+      "review_status": "hold",
+      "reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Coefficient values are synthetic and require local validation before production use."
+    }
+  ],
+  "dataQualityRules": [
+    {
+      "check_id": "DQ-001",
+      "source_id": "SRC_SYNTH_UNIT_CENSUS_HOURLY",
+      "rule_name": "hourly census completeness",
+      "rule_type": "freshness",
+      "severity": "high",
+      "threshold": ">= 95% expected unit-hours",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-002",
+      "source_id": "SRC_SYNTH_BED_STATUS",
+      "rule_name": "bed status legal values",
+      "rule_type": "domain",
+      "severity": "high",
+      "threshold": "no unknown bed_status",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-003",
+      "source_id": "SRC_SYNTH_ADT_EVENTS",
+      "rule_name": "movement timestamp sequence",
+      "rule_type": "timestamp",
+      "severity": "high",
+      "threshold": "destination after source event",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-004",
+      "source_id": "SRC_SYNTH_TRANSFER_REQUESTS",
+      "rule_name": "transfer request status chronology",
+      "rule_type": "timestamp",
+      "severity": "medium",
+      "threshold": "status_ts not before request_ts",
+      "status": "review",
+      "failed_rows": 11,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-005",
+      "source_id": "SRC_SYNTH_DIAGNOSTIC_READINESS",
+      "rule_name": "dependency denominator approval",
+      "rule_type": "definition",
+      "severity": "medium",
+      "threshold": "owner-approved denominator",
+      "status": "review",
+      "failed_rows": 7,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-006",
+      "source_id": "SRC_SYNTH_SEPSIS_SCREENING",
+      "rule_name": "small cell suppression",
+      "rule_type": "privacy",
+      "severity": "high",
+      "threshold": "counts below threshold suppressed",
+      "status": "review",
+      "failed_rows": 2,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-007",
+      "source_id": "SRC_OPEN_WEATHER_AQHI",
+      "rule_name": "public release freshness",
+      "rule_type": "freshness",
+      "severity": "low",
+      "threshold": "<= 24h lag",
+      "status": "review",
+      "failed_rows": 1,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-008",
+      "source_id": "SRC_MODEL_DRIFT_RESULTS",
+      "rule_name": "latest drift result present",
+      "rule_type": "governance",
+      "severity": "medium",
+      "threshold": "active models checked daily",
+      "status": "review",
+      "failed_rows": 5,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-009",
+      "source_id": "SRC_WARNING_LOGIC_REGISTRY",
+      "rule_name": "warning rollback field",
+      "rule_type": "contract",
+      "severity": "medium",
+      "threshold": "rollback action populated",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    },
+    {
+      "check_id": "DQ-010",
+      "source_id": "SRC_LEARNING_SYSTEM_EVENTS",
+      "rule_name": "writeback audit fields",
+      "rule_type": "contract",
+      "severity": "medium",
+      "threshold": "created_by and related ids populated",
+      "status": "pass",
+      "failed_rows": 0,
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "owner": "Synthetic data quality steward",
+      "caveat": "Synthetic data-quality check; production checks must be approved by source owner."
+    }
+  ],
+  "validationDrift": [
+    {
+      "asset_id": "INPT_OCCUPANCY_FORECAST",
+      "validation_run_id": "VAL-DRIFT-001",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.071,
+      "calibration_status": "review required",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.08,
+      "drift_status": "watch",
+      "alert_burden": "3 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "hold",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "ED_BOARDING_FORECAST",
+      "validation_run_id": "VAL-DRIFT-002",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.084,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.12,
+      "drift_status": "stable",
+      "alert_burden": "4 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "DISCHARGE_BY_TIME_BAND",
+      "validation_run_id": "VAL-DRIFT-003",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.097,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.16,
+      "drift_status": "stable",
+      "alert_burden": "5 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "PICU_NICU_PRESSURE",
+      "validation_run_id": "VAL-DRIFT-004",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.11,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.2,
+      "drift_status": "stable",
+      "alert_burden": "6 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "OR_CANCELLATION_RISK",
+      "validation_run_id": "VAL-DRIFT-005",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.123,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.24,
+      "drift_status": "watch",
+      "alert_burden": "7 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "AMB_REFERRAL_DEMAND_FORECAST",
+      "validation_run_id": "VAL-DRIFT-006",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.136,
+      "calibration_status": "review required",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.08,
+      "drift_status": "stable",
+      "alert_burden": "8 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "hold",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "AMB_BACKLOG_FORECAST",
+      "validation_run_id": "VAL-DRIFT-007",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.071,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.12,
+      "drift_status": "stable",
+      "alert_burden": "3 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK",
+      "validation_run_id": "VAL-DRIFT-008",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.084,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.16,
+      "drift_status": "stable",
+      "alert_burden": "4 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "URGENT_WAITLIST_BREACH_RISK",
+      "validation_run_id": "VAL-DRIFT-009",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.097,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.2,
+      "drift_status": "watch",
+      "alert_burden": "5 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "DIAGNOSTIC_READINESS_RISK",
+      "validation_run_id": "VAL-DRIFT-010",
+      "primary_metric": "MAPE",
+      "primary_metric_value": 0.11,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.24,
+      "drift_status": "stable",
+      "alert_burden": "6 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "PEDIATRIC_EARLY_WARNING_SIGNAL",
+      "validation_run_id": "VAL-DRIFT-011",
+      "primary_metric": "synthetic precision",
+      "primary_metric_value": 0.123,
+      "calibration_status": "review required",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.08,
+      "drift_status": "stable",
+      "alert_burden": "7 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "hold",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "validation_run_id": "VAL-DRIFT-012",
+      "primary_metric": "synthetic precision",
+      "primary_metric_value": 0.136,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.12,
+      "drift_status": "stable",
+      "alert_burden": "8 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "RARE_DISEASE_CASE_FINDING_SIGNAL",
+      "validation_run_id": "VAL-DRIFT-013",
+      "primary_metric": "synthetic precision",
+      "primary_metric_value": 0.071,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.16,
+      "drift_status": "watch",
+      "alert_burden": "3 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "READMISSION_REVISIT_RISK",
+      "validation_run_id": "VAL-DRIFT-014",
+      "primary_metric": "synthetic precision",
+      "primary_metric_value": 0.084,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.2,
+      "drift_status": "stable",
+      "alert_burden": "4 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    },
+    {
+      "asset_id": "LONG_STAY_RISK",
+      "validation_run_id": "VAL-DRIFT-015",
+      "primary_metric": "synthetic precision",
+      "primary_metric_value": 0.097,
+      "calibration_status": "synthetic-calibrated",
+      "subgroup_review": "reviewed across site, age-band, program, priority, and season proxies",
+      "drift_score": 0.24,
+      "drift_status": "stable",
+      "alert_burden": "5 expected aggregate warnings/week in synthetic replay",
+      "release_gate": "pass with caveat",
+      "reviewer": "Synthetic model risk reviewer",
+      "last_run_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic validation and drift evidence; not validated for clinical decision-making."
+    }
+  ],
+  "releaseRollback": [
+    {
+      "release_id": "REL-001",
+      "asset_id": "INPT_OCCUPANCY_FORECAST",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.1",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-002",
+      "asset_id": "ED_BOARDING_FORECAST",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.2",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-003",
+      "asset_id": "DISCHARGE_BY_TIME_BAND",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "hold",
+      "version": "v3.0.3",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-004",
+      "asset_id": "PICU_NICU_PRESSURE",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.4",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-005",
+      "asset_id": "OR_CANCELLATION_RISK",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.5",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-006",
+      "asset_id": "AMB_REFERRAL_DEMAND_FORECAST",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.6",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-007",
+      "asset_id": "AMB_BACKLOG_FORECAST",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.7",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-008",
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.8",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-009",
+      "asset_id": "URGENT_WAITLIST_BREACH_RISK",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "approved for demo",
+      "version": "v3.0.9",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-010",
+      "asset_id": "DIAGNOSTIC_READINESS_RISK",
+      "panel_id": "PANEL_SYSTEM_POSTURE",
+      "release_status": "hold",
+      "version": "v3.0.10",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-011",
+      "asset_id": "PEDIATRIC_EARLY_WARNING_SIGNAL",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "release_status": "hold",
+      "version": "v3.0.11",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-012",
+      "asset_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "release_status": "hold",
+      "version": "v3.0.12",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-013",
+      "asset_id": "RARE_DISEASE_CASE_FINDING_SIGNAL",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "release_status": "hold",
+      "version": "v3.0.13",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-014",
+      "asset_id": "READMISSION_REVISIT_RISK",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "release_status": "hold",
+      "version": "v3.0.14",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    },
+    {
+      "release_id": "REL-015",
+      "asset_id": "LONG_STAY_RISK",
+      "panel_id": "PANEL_PREDICTIVE_ASSETS",
+      "release_status": "hold",
+      "version": "v3.0.15",
+      "canary_scope": "single synthetic site and aggregate replay",
+      "rollback_trigger": "drift watch, alert burden breach, reviewer rejection, or source readiness regression",
+      "rollback_action": "Disable asset flag in CONFIG.MODEL_DEPLOYMENT_REGISTRY and remove panel warning widgets.",
+      "owner": "Synthetic analytics product owner",
+      "approved_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Release and rollback registry is synthetic demonstration data only."
+    }
+  ]
+}

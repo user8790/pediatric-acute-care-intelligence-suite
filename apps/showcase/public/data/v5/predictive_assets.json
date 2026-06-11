@@ -1,0 +1,74 @@
+{
+  "signals": [
+    {
+      "signal_id": "SIG-PEWS-001",
+      "asset_id": "PEDIATRIC_EARLY_WARNING_SIGNAL",
+      "unit_or_program": "Respiratory",
+      "score": 0.76,
+      "threshold": 0.7,
+      "severity": "medium",
+      "readiness": "review",
+      "classification": "modelled"
+    },
+    {
+      "signal_id": "SIG-SEPSIS-001",
+      "asset_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "unit_or_program": "PICU",
+      "score": 0.64,
+      "threshold": 0.62,
+      "severity": "high",
+      "readiness": "review",
+      "classification": "modelled"
+    },
+    {
+      "signal_id": "SIG-RARE-001",
+      "asset_id": "RARE_DISEASE_CASE_FINDING_SIGNAL",
+      "unit_or_program": "Complex care",
+      "score": 0.58,
+      "threshold": 0.55,
+      "severity": "low",
+      "readiness": "synthetic only",
+      "classification": "modelled"
+    },
+    {
+      "signal_id": "SIG-READMIT-001",
+      "asset_id": "READMISSION_REVISIT_RISK",
+      "unit_or_program": "General pediatrics",
+      "score": 0.31,
+      "threshold": 0.28,
+      "severity": "medium",
+      "readiness": "review",
+      "classification": "modelled"
+    },
+    {
+      "signal_id": "SIG-LONGSTAY-001",
+      "asset_id": "LONG_STAY_RISK",
+      "unit_or_program": "Surgery",
+      "score": 0.44,
+      "threshold": 0.4,
+      "severity": "medium",
+      "readiness": "review",
+      "classification": "modelled"
+    }
+  ],
+  "evidenceTrails": [
+    {
+      "trail_id": "EVID-SEPSIS-001",
+      "asset_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "evidence_step": "Governed threshold crossed",
+      "detail": "Aggregate synthetic signal rose above threshold; display warning label and require acknowledgement."
+    },
+    {
+      "trail_id": "EVID-SEPSIS-001",
+      "asset_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "evidence_step": "False positive review",
+      "detail": "Synthetic replay shows 2 high-burden weeks; threshold review is queued."
+    },
+    {
+      "trail_id": "EVID-RARE-001",
+      "asset_id": "RARE_DISEASE_CASE_FINDING_SIGNAL",
+      "evidence_step": "Small-cell protection",
+      "detail": "Candidate counts are suppressed and displayed only as evidence-trail status."
+    }
+  ]
+}

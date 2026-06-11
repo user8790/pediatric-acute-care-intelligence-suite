@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fallbackV3Data } from "./fallbackV3Data";
 import type { Metadata, RowsPayload, V3Data } from "./types";
 
-const BASE = "/data/v3";
+const BASE = "/data/v5";
 
 async function fetchJson<T>(fileName: string, fallback: T): Promise<T> {
   try {
@@ -33,6 +33,7 @@ export async function loadV3Data(): Promise<V3Data> {
     gatekeeper,
     learningMemory,
     futureWiring,
+    commandCenter,
   ] = await Promise.all([
     fetchJson<Metadata>("metadata.json", fallbackV3Data.metadata),
     fetchJson<RowsPayload>("source_registry.json", { rows: fallbackV3Data.sourceRegistry }),
@@ -48,6 +49,7 @@ export async function loadV3Data(): Promise<V3Data> {
     fetchJson<V3Data["gatekeeper"]>("gatekeeper_control_plane.json", fallbackV3Data.gatekeeper),
     fetchJson<V3Data["learningMemory"]>("learning_system_memory.json", fallbackV3Data.learningMemory),
     fetchJson<V3Data["futureWiring"]>("future_real_data_wiring.json", fallbackV3Data.futureWiring),
+    fetchJson<V3Data["commandCenter"]>("command_center_context.json", fallbackV3Data.commandCenter),
   ]);
 
   return {
@@ -65,6 +67,7 @@ export async function loadV3Data(): Promise<V3Data> {
     gatekeeper,
     learningMemory,
     futureWiring,
+    commandCenter,
   };
 }
 

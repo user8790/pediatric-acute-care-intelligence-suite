@@ -3,17 +3,18 @@ import {
   Activity,
   AlertTriangle,
   ArrowRight,
+  BedDouble,
   BrainCircuit,
+  CalendarClock,
   CheckCircle2,
   DatabaseZap,
   DollarSign,
   FileCheck2,
-  Flag,
-  Gauge,
   GitBranch,
   History,
   Layers3,
   ListChecks,
+  MapPinned,
   Network,
   Plus,
   ShieldCheck,
@@ -23,13 +24,34 @@ import {
   Workflow,
   X,
 } from "lucide-react";
-import { InsightPanel, Panel, PostureCard } from "../components/Panel";
-import { ForecastRibbonChart, HorizontalBarChart, ScenarioFrontier, UnitPressureHeatmap } from "../components/ProductCharts";
+import { Panel, PostureCard } from "../components/Panel";
+import {
+  AccessCalendarHeatmap,
+  DischargeFunnel,
+  FlowSankey,
+  ForecastRibbonChart,
+  HorizontalBarChart,
+  OpenContextChart,
+  ScenarioFrontier,
+  SensitivityTornado,
+  UnitPressureHeatmap,
+  WorkloadMatrix,
+} from "../components/ProductCharts";
 import type { AppContext, DataRow, V3Data } from "../data/types";
-import { avgRows, formatInteger, formatPct, numberValue, siteLabel, stringValue, sumRows, titleCase } from "../lib/format";
+import { avgRows, formatCompact, formatInteger, formatPct, numberValue, siteLabel, stringValue, sumRows, titleCase } from "../lib/format";
 import type { PageId } from "../components/AppShell";
 
 type Tone = "neutral" | "watch" | "high" | "good";
+type DrawerState =
+  | { kind: "source"; id: string }
+  | { kind: "unit"; id: string }
+  | { kind: "program"; id: string }
+  | { kind: "model"; id: string }
+  | { kind: "metric"; id: string; row: DataRow }
+  | { kind: "site"; id: string; row?: DataRow }
+  | { kind: "warning"; id: string; row: DataRow }
+  | { kind: "scenario"; id: string; row?: DataRow }
+  | null;
 
 function kpiTone(value: unknown): Tone {
   const tone = String(value ?? "neutral");
@@ -60,6 +82,127 @@ function csvIds(value: unknown): string[] {
 
 function sourceReadiness(data: V3Data, sourceId: string): DataRow | undefined {
   return data.directLinkValidation.find((row) => stringValue(row, "source_id") === sourceId);
+}
+
+function openContextRows(data: V3Data): DataRow[] {
+  return data.commandCenter.openContext.length ? data.commandCenter.openContext : [];
+}
+
+function latestOpenContext(data: V3Data): DataRow | undefined {
+  const rows = openContextRows(data);
+  return rows[rows.length - 1];
+}
+
+function horizonFactor(horizon: string): number {
+  if (horizon.includes("6")) return 1.025;
+  if (horizon.includes("24")) return 1.055;
+  if (horizon.includes("72")) return 1.085;
+  if (horizon.includes("14")) return 1.12;
+  if (horizon.includes("26")) return 1.18;
+  return 1;
+}
+
+function serviceProgramLens(service: string): string | undefined {
+  const map: Record<string, string> = {
+    respiratory: "respiratory",
+    cardiology: "cardiology",
+    neurology: "neurology",
+    surgery: "surgery_follow_up",
+    oncology: "oncology_survivorship",
+    complex_care: "complex_care",
+    mental_health: "mental_health",
+    general_pediatrics: "post_discharge_follow_up",
+    short_stay: "post_discharge_follow_up",
+    procedural_recovery: "diagnostics",
+    picu: "complex_care",
+    nicu: "complex_care",
+  };
+  return map[service];
+}
+
+function filterUnits(data: V3Data, context: AppContext): DataRow[] {
+  return data.inpatient.unitDetails.filter((row) => {
+    const siteOk = context.site === "All sites" || stringValue(row, "site_id") === context.site;
+    const serviceOk = context.service === "All services" || stringValue(row, "service_id") === context.service;
+    const unitOk = context.unit === "All units" || stringValue(row, "unit_id") === context.unit;
+    return siteOk && serviceOk && unitOk;
+  });
+}
+
+function filterPrograms(data: V3Data, context: AppContext): DataRow[] {
+  const lens = context.program === "All programs" ? serviceProgramLens(context.service) : undefined;
+  return data.ambulatory.programDetails.filter((row) => {
+    const siteOk = context.site === "All sites" || stringValue(row, "site_id") === context.site;
+    const explicitProgramOk = context.program === "All programs" || stringValue(row, "program_id") === context.program;
+    const serviceLensOk = !lens || stringValue(row, "program_id") === lens;
+    return siteOk && explicitProgramOk && serviceLensOk;
+  });
+}
+
+function filteredTimeline(rows: DataRow[], visibleRows: DataRow[], key: "unit_id" | "program_id"): DataRow[] {
+  const visibleIds = new Set(visibleRows.map((row) => stringValue(row, key)));
+  if (!visibleIds.size) return rows;
+  return rows.filter((row) => visibleIds.has(stringValue(row, key)));
+}
+
+function aggregateInpatientTimeline(rows: DataRow[], context: AppContext, data: V3Data): DataRow[] {
+  const latest = latestOpenContext(data);
+  const openLift =
+    numberValue(latest, "respiratory_activity_index") * 0.018 +
+    numberValue(latest, "aqhi_max_proxy") * 0.004 +
+    (latest?.school_break_flag ? 0.018 : 0);
+  const grouped = new Map<number, DataRow[]>();
+  for (const row of rows) {
+    const hour = numberValue(row, "hour");
+    grouped.set(hour, [...(grouped.get(hour) ?? []), row]);
+  }
+  return Array.from(grouped.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([hour, group]) => {
+      const forecast = avgRows(group, "predicted_occupancy") * horizonFactor(context.horizon) + openLift;
+      return {
+        hour,
+        predicted_occupancy: Math.min(1.35, forecast),
+        lower: Math.max(0.3, avgRows(group, "lower") + openLift * 0.6),
+        upper: Math.min(1.45, avgRows(group, "upper") + openLift * 1.2),
+      };
+    });
+}
+
+function aggregateProgramTimeline(rows: DataRow[], context: AppContext, data: V3Data): DataRow[] {
+  const latest = latestOpenContext(data);
+  const openLift =
+    1 +
+    numberValue(latest, "respiratory_activity_index") * 0.025 +
+    numberValue(latest, "aqhi_max_proxy") * 0.006 +
+    (latest?.school_break_flag ? 0.035 : 0);
+  const grouped = new Map<number, DataRow[]>();
+  for (const row of rows) {
+    const week = numberValue(row, "week");
+    grouped.set(week, [...(grouped.get(week) ?? []), row]);
+  }
+  return Array.from(grouped.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([week, group]) => {
+      const forecast = sumRows(group, "forecast_waitlist") * horizonFactor(context.horizon) * openLift;
+      return {
+        week,
+        forecast_waitlist: forecast,
+        lower: forecast * 0.9,
+        upper: forecast * 1.12,
+      };
+    });
+}
+
+function barrierRows(units: DataRow[]): DataRow[] {
+  const total = Math.max(1, sumRows(units, "discharge_barriers"));
+  return [
+    { barrier: "pharmacy", active_count: Math.round(total * 0.28) },
+    { barrier: "imaging", active_count: Math.round(total * 0.2) },
+    { barrier: "transport", active_count: Math.round(total * 0.17) },
+    { barrier: "home supports", active_count: Math.round(total * 0.18) },
+    { barrier: "equipment", active_count: Math.round(total * 0.17) },
+  ];
 }
 
 function Drawer({
@@ -99,6 +242,15 @@ function Drawer({
   );
 }
 
+function ClassificationBadge({ value }: { value: unknown }) {
+  const label = titleCase(String(value || "derived"));
+  return <span className={`mini-badge ${statusTone(value)}`}>{label}</span>;
+}
+
+function ReadinessBadge({ value }: { value: unknown }) {
+  return <span className={`mini-badge ${statusTone(value)}`}>{titleCase(String(value || "pending"))}</span>;
+}
+
 function SourceStoplightButton({
   data,
   sourceId,
@@ -109,7 +261,7 @@ function SourceStoplightButton({
   onOpen: (sourceId: string) => void;
 }) {
   const readiness = sourceReadiness(data, sourceId);
-  const status = stringValue(readiness, "overall_readiness", "pending");
+  const status = stringValue(readiness, "overall_readiness", "registered");
   return (
     <button
       type="button"
@@ -121,7 +273,7 @@ function SourceStoplightButton({
       title={stringValue(readiness, "curated_view", sourceId)}
     >
       <span aria-hidden="true" />
-      {stringValue(readiness, "source_view_name", sourceId)}
+      {stringValue(readiness, "source_view_name", sourceId).replace("VW_", "")}
     </button>
   );
 }
@@ -138,6 +290,7 @@ function SourceChipGroup({
   limit?: number;
 }) {
   const visible = sourceIds.slice(0, limit);
+  if (!visible.length) return <span className="mini-badge neutral">No source badge</span>;
   return (
     <div className="source-chip-row">
       {visible.map((sourceId) => (
@@ -195,6 +348,205 @@ function WorkspaceMetricTile({
   );
 }
 
+function DetailList({ rows }: { rows: Array<[string, unknown]> }) {
+  return (
+    <dl className="detail-list">
+      {rows.map(([label, value]) => (
+        <div key={label}>
+          <dt>{label}</dt>
+          <dd>{String(value ?? "")}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function RegistryTable({
+  rows,
+  columns,
+  limit = 10,
+  onSelect,
+}: {
+  rows: DataRow[];
+  columns: string[];
+  limit?: number;
+  onSelect?: (row: DataRow) => void;
+}) {
+  return (
+    <div className="registry-table">
+      <table>
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th key={column}>{titleCase(column)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.slice(0, limit).map((row, index) => (
+            <tr
+              key={`${columns.map((column) => stringValue(row, column)).join("-")}-${index}`}
+              onClick={() => onSelect?.(row)}
+              className={onSelect ? "clickable-row" : undefined}
+            >
+              {columns.map((column) => (
+                <td key={column}>{String(row[column] ?? "")}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function SourceReadinessTable({ rows, limit = 8, onSelect }: { rows: DataRow[]; limit?: number; onSelect?: (sourceId: string) => void }) {
+  return (
+    <div className="source-readiness-table">
+      {rows.slice(0, limit).map((row) => (
+        <button type="button" key={stringValue(row, "source_id")} onClick={() => onSelect?.(stringValue(row, "source_id"))}>
+          <span>{stringValue(row, "source_view_name", stringValue(row, "source_id"))}</span>
+          <ReadinessBadge value={row.overall_readiness} />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function WarningList({ rows, onSelect }: { rows: DataRow[]; onSelect?: (row: DataRow) => void }) {
+  if (!rows.length) return <p className="muted">No active synthetic warnings for this lens.</p>;
+  return (
+    <div className="warning-list">
+      {rows.slice(0, 8).map((row) => (
+        <button type="button" key={stringValue(row, "warning_id")} onClick={() => onSelect?.(row)}>
+          <AlertTriangle size={17} />
+          <span>
+            <strong>{stringValue(row, "title", stringValue(row, "warning_id"))}</strong>
+            <em>{stringValue(row, "message", stringValue(row, "recommended_action"))}</em>
+          </span>
+          <ReadinessBadge value={row.severity} />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function ModelCardGrid({ rows, limit = 15, onSelect }: { rows: DataRow[]; limit?: number; onSelect?: (assetId: string) => void }) {
+  return (
+    <div className="model-card-grid">
+      {rows.slice(0, limit).map((model) => (
+        <button className="model-card-button" type="button" key={stringValue(model, "asset_id")} onClick={() => onSelect?.(stringValue(model, "asset_id"))}>
+          <article className="model-card">
+            <div className="model-card-top">
+              <BrainCircuit size={20} />
+              <ReadinessBadge value={model.governance_status} />
+            </div>
+            <strong>{stringValue(model, "name")}</strong>
+            <p>{stringValue(model, "intended_use")}</p>
+            <dl>
+              <div>
+                <dt>Domain</dt>
+                <dd>{stringValue(model, "domain")}</dd>
+              </div>
+              <div>
+                <dt>Threshold</dt>
+                <dd>{stringValue(model, "threshold_logic", stringValue(model, "thresholds"))}</dd>
+              </div>
+              <div>
+                <dt>Drift</dt>
+                <dd>{stringValue(model, "drift", stringValue(model, "drift_status"))}</dd>
+              </div>
+            </dl>
+          </article>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function UnitDrilldownBoard({ rows, onSelect }: { rows: DataRow[]; onSelect: (unitId: string) => void }) {
+  return (
+    <div className="object-card-grid">
+      {rows.slice(0, 18).map((row) => (
+        <button className="object-card" type="button" key={stringValue(row, "unit_id")} onClick={() => onSelect(stringValue(row, "unit_id"))}>
+          <span className="object-card-heading">
+            <strong>{stringValue(row, "unit_name")}</strong>
+            <ReadinessBadge value={row.source_readiness} />
+          </span>
+          <span>{stringValue(row, "site_name")}</span>
+          <dl>
+            <div>
+              <dt>Occ</dt>
+              <dd>{formatPct(numberValue(row, "occupancy_pct"))}</dd>
+            </div>
+            <div>
+              <dt>Boarders</dt>
+              <dd>{formatInteger(numberValue(row, "ed_boarders"))}</dd>
+            </div>
+            <div>
+              <dt>HR gap</dt>
+              <dd>{formatInteger(numberValue(row, "staffing_gap_hours"))}h</dd>
+            </div>
+            <div>
+              <dt>Resource</dt>
+              <dd>${numberValue(row, "margin_pressure_k").toFixed(1)}k</dd>
+            </div>
+          </dl>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function ProgramDrilldownBoard({ rows, onSelect }: { rows: DataRow[]; onSelect: (programId: string) => void }) {
+  return (
+    <div className="object-card-grid">
+      {rows.slice(0, 18).map((row) => (
+        <button className="object-card" type="button" key={`${stringValue(row, "site_id")}-${stringValue(row, "program_id")}`} onClick={() => onSelect(stringValue(row, "program_id"))}>
+          <span className="object-card-heading">
+            <strong>{stringValue(row, "program")}</strong>
+            <ReadinessBadge value={row.source_readiness} />
+          </span>
+          <span>{stringValue(row, "site_name")}</span>
+          <dl>
+            <div>
+              <dt>Waitlist</dt>
+              <dd>{formatInteger(numberValue(row, "waitlist_total"))}</dd>
+            </div>
+            <div>
+              <dt>TNA</dt>
+              <dd>{formatInteger(numberValue(row, "third_next_available_days"))}d</dd>
+            </div>
+            <div>
+              <dt>No-show</dt>
+              <dd>{formatPct(numberValue(row, "no_show_rate"))}</dd>
+            </div>
+            <div>
+              <dt>Resource</dt>
+              <dd>${numberValue(row, "finance_pressure_k").toFixed(1)}k</dd>
+            </div>
+          </dl>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function LineageCard({ data, panelId }: { data: V3Data; panelId: string }) {
+  const panel = data.panelLineage.find((row) => stringValue(row, "panel_id") === panelId);
+  if (!panel) return <p className="muted">Panel lineage is pending for this surface.</p>;
+  return (
+    <article className="lineage-card">
+      <div>
+        <ClassificationBadge value={panel.classification} />
+        <ReadinessBadge value={panel.readiness_status} />
+      </div>
+      <p>{stringValue(panel, "lineage_summary")}</p>
+      <em>{stringValue(panel, "caveat")}</em>
+    </article>
+  );
+}
+
 function SourceDrawerContent({ data, sourceId }: { data: V3Data; sourceId: string }) {
   const readiness = sourceReadiness(data, sourceId);
   const source = data.sourceRegistry.find((row) => stringValue(row, "source_id") === sourceId);
@@ -220,228 +572,218 @@ function SourceDrawerContent({ data, sourceId }: { data: V3Data; sourceId: strin
           <strong>{stringValue(row, "source_domain", stringValue(source, "source_domain"))}</strong>
         </div>
       </div>
-      <div className="detail-list">
-        <div>
-          <dt>Curated view</dt>
-          <dd>{stringValue(row, "curated_view", stringValue(source, "curated_view"))}</dd>
-        </div>
-        <div>
-          <dt>Grain</dt>
-          <dd>{stringValue(source, "grain")}</dd>
-        </div>
-        <div>
-          <dt>Fields</dt>
-          <dd>{stringValue(source, "fields")}</dd>
-        </div>
-        <div>
-          <dt>Validation</dt>
-          <dd>{stringValue(source, "validation_rules", stringValue(row, "caveat"))}</dd>
-        </div>
-      </div>
+      <DetailList
+        rows={[
+          ["Curated view", stringValue(row, "curated_view", stringValue(source, "curated_view"))],
+          ["Grain", stringValue(source, "grain")],
+          ["Fields", stringValue(source, "fields")],
+          ["Validation", stringValue(source, "validation_rules", stringValue(row, "caveat"))],
+          ["Caveat", stringValue(row, "caveat", "Synthetic readiness demonstration.")],
+        ]}
+      />
       <RegistryTable rows={[row]} columns={["source_view_present", "field_populated", "freshness", "row_count", "timestamp_logic", "metric_definition_approved", "small_cell_suppression"]} />
     </div>
   );
 }
 
-function DetailList({ rows }: { rows: Array<[string, unknown]> }) {
-  return (
-    <dl className="detail-list">
-      {rows.map(([label, value]) => (
-        <div key={label}>
-          <dt>{label}</dt>
-          <dd>{String(value ?? "")}</dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
-function TimelineStrip({ rows, labelKey, valueKey }: { rows: DataRow[]; labelKey: string; valueKey: string }) {
-  const values = rows.map((row) => numberValue(row, valueKey));
-  const max = Math.max(...values, 1);
-  return (
-    <div className="timeline-strip" aria-label={`${valueKey} trend`}>
-      {rows.map((row, index) => (
-        <span key={`${stringValue(row, labelKey)}-${index}`} style={{ height: `${Math.max(12, (numberValue(row, valueKey) / max) * 92)}%` }} title={`${stringValue(row, labelKey)}: ${numberValue(row, valueKey).toFixed(2)}`} />
-      ))}
-    </div>
-  );
-}
-
-function UnitDrilldownBoard({
-  rows,
-  selectedId,
-  onSelect,
-}: {
-  rows: DataRow[];
-  selectedId: string;
-  onSelect: (unitId: string) => void;
-}) {
-  return (
-    <div className="drilldown-card-grid">
-      {rows.map((row) => {
-        const unitId = stringValue(row, "unit_id");
-        return (
-          <button type="button" className={`drilldown-card ${selectedId === unitId ? "active" : ""}`} key={unitId} onClick={() => onSelect(unitId)}>
-            <div>
-              <strong>{stringValue(row, "unit_name")}</strong>
-              <ReadinessBadge value={row.source_readiness} />
-            </div>
-            <span>{stringValue(row, "site_name")}</span>
-            <dl>
-              <div>
-                <dt>Occupancy</dt>
-                <dd>{formatPct(numberValue(row, "occupancy_pct"))}</dd>
-              </div>
-              <div>
-                <dt>Boarders</dt>
-                <dd>{formatInteger(numberValue(row, "ed_boarders"))}</dd>
-              </div>
-              <div>
-                <dt>Staff gap</dt>
-                <dd>{formatPct(numberValue(row, "staffing_gap_pct"))}</dd>
-              </div>
-            </dl>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function ProgramDrilldownBoard({
-  rows,
-  selectedId,
-  onSelect,
-}: {
-  rows: DataRow[];
-  selectedId: string;
-  onSelect: (programId: string) => void;
-}) {
-  return (
-    <div className="drilldown-card-grid">
-      {rows.map((row) => {
-        const programId = stringValue(row, "program_id");
-        return (
-          <button type="button" className={`drilldown-card ${selectedId === programId ? "active" : ""}`} key={programId} onClick={() => onSelect(programId)}>
-            <div>
-              <strong>{stringValue(row, "program")}</strong>
-              <ReadinessBadge value={row.source_readiness} />
-            </div>
-            <span>{stringValue(row, "freshness")}</span>
-            <dl>
-              <div>
-                <dt>Waitlist</dt>
-                <dd>{formatInteger(numberValue(row, "waitlist_total"))}</dd>
-              </div>
-              <div>
-                <dt>TNA</dt>
-                <dd>{Math.round(numberValue(row, "third_next_available_days"))}d</dd>
-              </div>
-              <div>
-                <dt>Breach</dt>
-                <dd>{formatPct(numberValue(row, "urgent_breach_risk"))}</dd>
-              </div>
-            </dl>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function UnitDrawerContent({ data, unitId, onOpenSource }: { data: V3Data; unitId: string; onOpenSource: (sourceId: string) => void }) {
-  const detail = data.inpatient.unitDetails.find((row) => stringValue(row, "unit_id") === unitId);
-  const timeline = data.inpatient.unitTimeline.filter((row) => stringValue(row, "unit_id") === unitId);
-  if (!detail) return <p className="muted">Unit drilldown not found.</p>;
+function MetricDrawerContent({ data, row, onOpenSource }: { data: V3Data; row: DataRow; onOpenSource: (sourceId: string) => void }) {
+  const metric = data.metricRegistry.find((item) => stringValue(item, "metric_id") === stringValue(row, "metric_id"));
   return (
     <div className="drawer-stack">
       <div className="drawer-summary-grid">
         <div>
-          <span>Census</span>
-          <strong>{formatInteger(numberValue(detail, "census"))}</strong>
+          <span>Value</span>
+          <strong>{stringValue(row, "value")}</strong>
         </div>
         <div>
-          <span>Effective beds</span>
-          <strong>{formatInteger(numberValue(detail, "effective_beds"))}</strong>
+          <span>Classification</span>
+          <ClassificationBadge value={row.classification} />
         </div>
         <div>
-          <span>Step-down ready</span>
-          <strong>{formatInteger(numberValue(detail, "step_down_ready"))}</strong>
+          <span>Validation</span>
+          <ReadinessBadge value={metric?.validation ?? "review"} />
         </div>
         <div>
-          <span>Staff gap hours</span>
-          <strong>{numberValue(detail, "staffing_gap_hours").toFixed(1)}</strong>
+          <span>Panel</span>
+          <strong>{stringValue(row, "panel_id", "PANEL_SYSTEM_POSTURE")}</strong>
         </div>
       </div>
-      <TimelineStrip rows={timeline} labelKey="horizon_hours" valueKey="occupancy_pct" />
       <DetailList
         rows={[
-          ["Service line", stringValue(detail, "service_line")],
-          ["Level of care", stringValue(detail, "level_of_care_mix")],
-          ["Respiratory support", formatInteger(numberValue(detail, "respiratory_support_count"))],
-          ["Discharge barriers", formatInteger(numberValue(detail, "discharge_barriers"))],
-          ["Skill mix gap", stringValue(detail, "skill_mix_gap")],
-          ["Models", stringValue(detail, "model_ids")],
+          ["Metric", stringValue(row, "label", stringValue(metric, "name"))],
+          ["Formula", stringValue(metric, "formula", "Synthetic aggregate calculation")],
+          ["Owner", stringValue(metric, "owner", "Synthetic product owner")],
+          ["Detail", stringValue(row, "detail")],
+          ["Change driver", stringValue(row, "delta")],
+          ["Lineage", stringValue(metric, "lineage_summary", "Direct/derived/modelled lineage is synthetic and requires local validation.")],
         ]}
       />
-      <SourceChipGroup data={data} sourceIds={csvIds(detail.source_ids)} onOpen={onOpenSource} limit={8} />
-      <p className="muted">{stringValue(detail, "caveat")}</p>
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids ?? metric?.source_ids)} onOpen={onOpenSource} limit={8} />
     </div>
   );
 }
 
-function ProgramDrawerContent({ data, programId, onOpenSource }: { data: V3Data; programId: string; onOpenSource: (sourceId: string) => void }) {
-  const detail = data.ambulatory.programDetails.find((row) => stringValue(row, "program_id") === programId);
-  const timeline = data.ambulatory.programTimeline.filter((row) => stringValue(row, "program_id") === programId);
-  if (!detail) return <p className="muted">Program drilldown not found.</p>;
+function SiteDrawerContent({ data, siteId, row, onOpenSource }: { data: V3Data; siteId: string; row?: DataRow; onOpenSource: (sourceId: string) => void }) {
+  const site = row ?? data.commandCenter.sites.find((item) => stringValue(item, "site_id") === siteId);
+  const units = data.inpatient.unitDetails.filter((item) => siteId === "All sites" || stringValue(item, "site_id") === siteId);
+  const programs = data.ambulatory.programDetails.filter((item) => siteId === "All sites" || stringValue(item, "site_id") === siteId);
   return (
     <div className="drawer-stack">
       <div className="drawer-summary-grid">
+        <div>
+          <span>Occupancy</span>
+          <strong>{formatPct(numberValue(site, "occupancy_pct", sumRows(units, "census") / Math.max(1, sumRows(units, "effective_beds"))))}</strong>
+        </div>
+        <div>
+          <span>ED boarders</span>
+          <strong>{formatInteger(numberValue(site, "ed_boarders", sumRows(units, "ed_boarders")))}</strong>
+        </div>
         <div>
           <span>Waitlist</span>
-          <strong>{formatInteger(numberValue(detail, "waitlist_total"))}</strong>
+          <strong>{formatCompact(numberValue(site, "waitlist_total", sumRows(programs, "waitlist_total")))}</strong>
         </div>
         <div>
-          <span>Over target</span>
-          <strong>{formatInteger(numberValue(detail, "over_target_count"))}</strong>
-        </div>
-        <div>
-          <span>Protected slots</span>
-          <strong>{formatInteger(numberValue(detail, "protected_urgent_slots"))}</strong>
-        </div>
-        <div>
-          <span>Diagnostic gaps</span>
-          <strong>{formatInteger(numberValue(detail, "missing_prerequisites"))}</strong>
+          <span>Resource</span>
+          <strong>${numberValue(site, "resource_pressure_k").toFixed(1)}k</strong>
         </div>
       </div>
-      <TimelineStrip rows={timeline} labelKey="horizon_weeks" valueKey="waitlist_total" />
       <DetailList
         rows={[
-          ["Urgent waitlist", formatInteger(numberValue(detail, "urgent_waitlist"))],
-          ["p90 wait", `${formatInteger(numberValue(detail, "p90_wait_days"))} days`],
-          ["No-show rate", formatPct(numberValue(detail, "no_show_rate"))],
-          ["Virtual suitability", formatPct(numberValue(detail, "virtual_suitability"))],
-          ["Travel burden", numberValue(detail, "travel_burden_index").toFixed(2)],
-          ["Models", stringValue(detail, "model_ids")],
+          ["Catchment", stringValue(site, "catchment", siteLabel(siteId))],
+          ["Units in lens", units.length],
+          ["Programs in lens", programs.length],
+          ["HR gap hours", `${formatInteger(numberValue(site, "hr_gap_hours", sumRows(units, "staffing_gap_hours")))}h`],
+          ["Caveat", "Synthetic aggregate command-centre site summary."],
         ]}
       />
-      <SourceChipGroup data={data} sourceIds={csvIds(detail.source_ids)} onOpen={onOpenSource} limit={8} />
-      <p className="muted">{stringValue(detail, "caveat")}</p>
+      <SourceChipGroup data={data} sourceIds={csvIds(site?.source_ids)} onOpen={onOpenSource} limit={8} />
+    </div>
+  );
+}
+
+function UnitDrawerContent({ data, unitId, onOpenSource, onOpenModel }: { data: V3Data; unitId: string; onOpenSource: (sourceId: string) => void; onOpenModel: (assetId: string) => void }) {
+  const unit = data.inpatient.unitDetails.find((row) => stringValue(row, "unit_id") === unitId);
+  if (!unit) return <p className="muted">Unit record not found for the current synthetic data lens.</p>;
+  const timeline = data.inpatient.unitTimeline.filter((row) => stringValue(row, "unit_id") === unitId);
+  const warnings = data.inpatient.warnings.filter((row) => stringValue(row, "unit_id") === unitId);
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Capacity</span>
+          <strong>{numberValue(unit, "census")} / {numberValue(unit, "effective_beds")}</strong>
+        </div>
+        <div>
+          <span>ED boarders</span>
+          <strong>{formatInteger(numberValue(unit, "ed_boarders"))}</strong>
+        </div>
+        <div>
+          <span>Predicted 24h</span>
+          <strong>{formatInteger(numberValue(unit, "predicted_admissions_24h"))} in / {formatInteger(numberValue(unit, "predicted_discharges_24h"))} out</strong>
+        </div>
+        <div>
+          <span>Readiness</span>
+          <ReadinessBadge value={unit.source_readiness} />
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Site", stringValue(unit, "site_name")],
+          ["Service", stringValue(unit, "service_line")],
+          ["Physical/staffed/effective beds", `${numberValue(unit, "physical_beds")} / ${numberValue(unit, "staffed_beds")} / ${numberValue(unit, "effective_beds")}`],
+          ["Transfers", `${numberValue(unit, "transfer_in_requests")} in / ${numberValue(unit, "transfer_out_requests")} out`],
+          ["Discharge barriers", numberValue(unit, "discharge_barriers")],
+          ["RN required/available", `${numberValue(unit, "rn_required")} / ${numberValue(unit, "rn_available")} hours`],
+          ["Allied gap", `${numberValue(unit, "allied_health_gap_hours")} hours`],
+          ["Finance/resource proxy", `$${numberValue(unit, "variable_staffing_cost_k").toFixed(1)}k cost vs $${numberValue(unit, "resource_ceiling_k").toFixed(1)}k ceiling`],
+          ["Open data adjustment", formatPct(numberValue(unit, "open_data_adjustment"))],
+          ["Caveat", stringValue(unit, "caveat")],
+        ]}
+      />
+      <ForecastRibbonChart rows={timeline} xKey="hour" predictionKey="predicted_occupancy" lowerKey="lower" upperKey="upper" label="Unit occupancy forecast drawer chart" height={240} />
+      <div className="source-chip-row">
+        {csvIds(unit.model_ids).map((modelId) => (
+          <button type="button" key={modelId} className="source-chip review" onClick={() => onOpenModel(modelId)}>
+            <span aria-hidden="true" />
+            {modelId}
+          </button>
+        ))}
+      </div>
+      <SourceChipGroup data={data} sourceIds={csvIds(unit.source_ids)} onOpen={onOpenSource} limit={10} />
+      <WarningList rows={warnings} />
+    </div>
+  );
+}
+
+function ProgramDrawerContent({ data, programId, context, onOpenSource, onOpenModel }: { data: V3Data; programId: string; context: AppContext; onOpenSource: (sourceId: string) => void; onOpenModel: (assetId: string) => void }) {
+  const candidates = data.ambulatory.programDetails.filter((row) => stringValue(row, "program_id") === programId);
+  const program = candidates.find((row) => context.site === "All sites" || stringValue(row, "site_id") === context.site) ?? candidates[0];
+  if (!program) return <p className="muted">Program record not found for the current synthetic data lens.</p>;
+  const timeline = data.ambulatory.programTimeline.filter((row) => stringValue(row, "program_id") === programId && (context.site === "All sites" || stringValue(row, "site_id") === context.site));
+  const warnings = data.ambulatory.warnings.filter((row) => stringValue(row, "program_id") === programId && (context.site === "All sites" || stringValue(row, "site_id") === context.site));
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Referrals</span>
+          <strong>{formatInteger(numberValue(program, "referrals_4w"))}</strong>
+        </div>
+        <div>
+          <span>Waitlist</span>
+          <strong>{formatInteger(numberValue(program, "waitlist_total"))}</strong>
+        </div>
+        <div>
+          <span>TNA</span>
+          <strong>{formatInteger(numberValue(program, "third_next_available_days"))}d</strong>
+        </div>
+        <div>
+          <span>Readiness</span>
+          <ReadinessBadge value={program.source_readiness} />
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Site", stringValue(program, "site_name")],
+          ["Program", stringValue(program, "program")],
+          ["Triage volume", numberValue(program, "triage_volume_4w")],
+          ["Urgent/routine waitlist", `${numberValue(program, "urgent_waitlist")} / ${numberValue(program, "routine_waitlist")}`],
+          ["Template capacity/gap", `${numberValue(program, "template_capacity_4w")} / ${numberValue(program, "template_gap_4w")}`],
+          ["No-show rate", formatPct(numberValue(program, "no_show_rate"))],
+          ["Diagnostics readiness", formatPct(numberValue(program, "diagnostic_readiness"))],
+          ["Provider/allied capacity", `${numberValue(program, "provider_capacity_sessions_4w")} / ${numberValue(program, "allied_health_capacity_sessions_4w")} sessions`],
+          ["HR gap", `${numberValue(program, "hr_gap_sessions_4w")} sessions`],
+          ["Finance/resource proxy", `$${numberValue(program, "marginal_resource_need_k").toFixed(1)}k need vs $${numberValue(program, "resource_ceiling_k").toFixed(1)}k ceiling`],
+          ["Open data adjustment", formatPct(numberValue(program, "open_data_adjustment"))],
+          ["Caveat", stringValue(program, "caveat")],
+        ]}
+      />
+      <ForecastRibbonChart rows={timeline.slice(0, 26)} xKey="week" predictionKey="forecast_waitlist" lowerKey="lower" upperKey="upper" label="Program waitlist forecast drawer chart" height={240} />
+      <div className="source-chip-row">
+        {csvIds(program.model_ids).map((modelId) => (
+          <button type="button" key={modelId} className="source-chip review" onClick={() => onOpenModel(modelId)}>
+            <span aria-hidden="true" />
+            {modelId}
+          </button>
+        ))}
+      </div>
+      <SourceChipGroup data={data} sourceIds={csvIds(program.source_ids)} onOpen={onOpenSource} limit={10} />
+      <WarningList rows={warnings} />
     </div>
   );
 }
 
 function ModelDrawerContent({ data, assetId, onOpenSource }: { data: V3Data; assetId: string; onOpenSource: (sourceId: string) => void }) {
   const model = data.modelRegistry.find((row) => stringValue(row, "asset_id") === assetId);
-  const warnings = data.gatekeeper.warningLogic.filter((row) => stringValue(row, "asset_id") === assetId);
-  const validation = data.gatekeeper.validationDrift.find((row) => stringValue(row, "asset_id") === assetId);
+  const drift = data.gatekeeper.validationDrift.find((row) => stringValue(row, "asset_id") === assetId);
   const release = data.gatekeeper.releaseRollback.find((row) => stringValue(row, "asset_id") === assetId);
-  const metricIds = Array.from(new Set(warnings.map((row) => stringValue(row, "metric_id")).filter(Boolean)));
-  const metrics = data.metricRegistry.filter((row) => metricIds.includes(stringValue(row, "metric_id")));
-  const sourceIds = Array.from(new Set(metrics.flatMap((row) => csvIds(row.source_fields))));
-  const coefficients = data.gatekeeper.coefficients.filter((row) => metricIds.some((metricId) => stringValue(row, "applies_to").includes(metricId)) || stringValue(row, "applies_to").includes(assetId));
   if (!model) return <p className="muted">Model card not found.</p>;
+  let coefficients: Record<string, unknown> = {};
+  try {
+    coefficients = JSON.parse(stringValue(model, "proxy_coefficients", "{}")) as Record<string, unknown>;
+  } catch {
+    coefficients = {};
+  }
+  const coefficientRows = Object.entries(coefficients).map(([coefficient_name, default_value]) => ({ coefficient_name, default_value }));
   return (
     <div className="drawer-stack">
       <div className="drawer-summary-grid">
@@ -451,232 +793,259 @@ function ModelDrawerContent({ data, assetId, onOpenSource }: { data: V3Data; ass
         </div>
         <div>
           <span>Calibration</span>
-          <strong>{stringValue(validation, "calibration_status", stringValue(model, "calibration_status"))}</strong>
+          <strong>{stringValue(model, "calibration")}</strong>
         </div>
         <div>
           <span>Drift</span>
-          <strong>{stringValue(validation, "drift_status", stringValue(model, "drift_status"))}</strong>
+          <strong>{stringValue(model, "drift")}</strong>
         </div>
         <div>
-          <span>Release gate</span>
-          <strong>{stringValue(validation, "release_gate", stringValue(release, "release_status"))}</strong>
+          <span>Alert burden</span>
+          <strong>{stringValue(model, "alert_burden")}</strong>
         </div>
       </div>
       <DetailList
         rows={[
-          ["Intended use", stringValue(model, "intended_use")],
-          ["Not intended", stringValue(model, "not_intended_use")],
-          ["Features", stringValue(model, "features")],
-          ["Thresholds", stringValue(model, "thresholds")],
-          ["Alert burden", stringValue(validation, "alert_burden", stringValue(model, "alert_burden"))],
-          ["Rollback", stringValue(release, "rollback_action", stringValue(model, "rollback_plan"))],
+          ["Asset", stringValue(model, "asset_id")],
+          ["Output type", stringValue(model, "output_type")],
+          ["Source fields", stringValue(model, "source_fields")],
+          ["Feature families", stringValue(model, "feature_families")],
+          ["Threshold logic", stringValue(model, "threshold_logic", stringValue(model, "thresholds"))],
+          ["Validation", stringValue(model, "validation")],
+          ["Panels using it", stringValue(model, "panels_using_it")],
+          ["Source lineage", stringValue(model, "source_lineage")],
+          ["Caveats", stringValue(model, "caveats")],
+          ["Rollback", stringValue(release, "rollback_trigger", stringValue(model, "rollback_plan"))],
         ]}
       />
-      <div className="drawer-section">
-        <h3>Warning logic</h3>
-        <RegistryTable rows={warnings} columns={["warning_id", "metric_id", "condition", "threshold", "severity", "status"]} limit={8} />
+      <SensitivityTornado rows={coefficientRows} label="Proxy coefficients" />
+      <RegistryTable rows={[drift ?? {}, release ?? {}]} columns={["asset_id", "primary_metric", "primary_metric_value", "drift_status", "release_gate", "release_status"]} limit={2} />
+      <SourceChipGroup data={data} sourceIds={csvIds(model.source_ids)} onOpen={onOpenSource} limit={10} />
+    </div>
+  );
+}
+
+function WarningDrawerContent({ data, row, onOpenSource, onOpenModel }: { data: V3Data; row: DataRow; onOpenSource: (sourceId: string) => void; onOpenModel: (assetId: string) => void }) {
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Severity</span>
+          <ReadinessBadge value={row.severity} />
+        </div>
+        <div>
+          <span>Readiness</span>
+          <ReadinessBadge value={row.source_readiness} />
+        </div>
+        <div>
+          <span>Classification</span>
+          <ClassificationBadge value={row.classification} />
+        </div>
+        <div>
+          <span>Metric</span>
+          <strong>{stringValue(row, "metric_id")}</strong>
+        </div>
       </div>
-      <div className="drawer-section">
-        <h3>Coefficients</h3>
-        <RegistryTable rows={coefficients} columns={["coefficient_id", "coefficient_name", "value", "unit", "review_status"]} limit={8} />
+      <DetailList
+        rows={[
+          ["Warning", stringValue(row, "title", stringValue(row, "warning_id"))],
+          ["Message", stringValue(row, "message")],
+          ["Object", stringValue(row, "unit_name", stringValue(row, "program"))],
+          ["Recommended action", stringValue(row, "recommended_action")],
+          ["Caveat", "Synthetic warning logic; no clinical action and not validated for clinical decision-making."],
+        ]}
+      />
+      <div className="source-chip-row">
+        {csvIds(row.model_ids).map((modelId) => (
+          <button type="button" key={modelId} className="source-chip review" onClick={() => onOpenModel(modelId)}>
+            <span aria-hidden="true" />
+            {modelId}
+          </button>
+        ))}
       </div>
-      <div className="drawer-section">
-        <h3>Source lineage</h3>
-        <SourceChipGroup data={data} sourceIds={sourceIds} onOpen={onOpenSource} limit={12} />
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={8} />
+    </div>
+  );
+}
+
+function ScenarioDrawerContent({ data, row, onOpenSource }: { data: V3Data; row: DataRow; onOpenSource: (sourceId: string) => void }) {
+  const controls = data.scenarioLab.controlRanges.filter((control) => stringValue(control, "scenario_id") === stringValue(row, "scenario_id"));
+  const affectedUnits = csvIds(row.affected_units)
+    .map((id) => data.inpatient.unitDetails.find((unit) => stringValue(unit, "unit_id") === id))
+    .filter(Boolean) as DataRow[];
+  const affectedPrograms = csvIds(row.affected_programs)
+    .map((id) => data.ambulatory.programDetails.find((program) => stringValue(program, "program_id") === id))
+    .filter(Boolean) as DataRow[];
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Baseline</span>
+          <strong>{formatInteger(numberValue(row, "baseline_value"))}</strong>
+        </div>
+        <div>
+          <span>Scenario</span>
+          <strong>{formatInteger(numberValue(row, "scenario_value"))}</strong>
+        </div>
+        <div>
+          <span>CI</span>
+          <strong>{formatInteger(numberValue(row, "confidence_low"))}-{formatInteger(numberValue(row, "confidence_high"))}</strong>
+        </div>
+        <div>
+          <span>Readiness</span>
+          <ReadinessBadge value={row.readiness} />
+        </div>
       </div>
-      <p className="muted">{stringValue(model, "caveats", stringValue(model, "warnings"))}</p>
+      <DetailList
+        rows={[
+          ["Domain", stringValue(row, "domain")],
+          ["Primary outcome", stringValue(row, "primary_outcome")],
+          ["HR hours required", numberValue(row, "hr_hours_required")],
+          ["Cost required", `$${numberValue(row, "cost_k_required").toFixed(1)}k`],
+          ["Resource ceiling", `$${numberValue(row, "resource_ceiling_k").toFixed(1)}k`],
+          ["Trade-off", stringValue(row, "tradeoff")],
+          ["Writeback", stringValue(row, "writeback_table")],
+        ]}
+      />
+      <RegistryTable rows={controls} columns={["control_id", "domain", "default_value", "unit", "impact_per_unit", "cost_k_per_unit"]} />
+      <RegistryTable rows={affectedUnits} columns={["unit_name", "site_name", "occupancy_pct", "ed_boarders", "staffing_gap_hours"]} limit={6} />
+      <RegistryTable rows={affectedPrograms} columns={["program", "site_name", "waitlist_total", "third_next_available_days", "hr_gap_sessions_4w"]} limit={6} />
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={8} />
     </div>
   );
 }
 
-function ClassificationBadge({ value }: { value: unknown }) {
-  const label = titleCase(value || "derived");
-  return <span className={`mini-badge ${statusTone(value)}`}>{label}</span>;
-}
-
-function ReadinessBadge({ value }: { value: unknown }) {
-  const label = titleCase(value || "ready");
-  return <span className={`mini-badge ${statusTone(value)}`}>{label}</span>;
-}
-
-function LineageCard({ data, panelId }: { data: V3Data; panelId: string }) {
-  const lineage = data.panelLineage.find((row) => stringValue(row, "panel_id") === panelId) ?? data.panelLineage[0];
-  if (!lineage) return null;
+function ObjectDrawer({
+  data,
+  drawer,
+  context,
+  onClose,
+  setDrawer,
+}: {
+  data: V3Data;
+  drawer: DrawerState;
+  context: AppContext;
+  onClose: () => void;
+  setDrawer: (drawer: DrawerState) => void;
+}) {
+  if (!drawer) return null;
+  const openSource = (sourceId: string) => setDrawer({ kind: "source", id: sourceId });
+  const openModel = (assetId: string) => setDrawer({ kind: "model", id: assetId });
+  const title =
+    drawer.kind === "source"
+      ? drawer.id
+      : drawer.kind === "unit"
+        ? stringValue(data.inpatient.unitDetails.find((row) => stringValue(row, "unit_id") === drawer.id), "unit_name", drawer.id)
+        : drawer.kind === "program"
+          ? stringValue(data.ambulatory.programDetails.find((row) => stringValue(row, "program_id") === drawer.id), "program", drawer.id)
+          : drawer.kind === "model"
+            ? stringValue(data.modelRegistry.find((row) => stringValue(row, "asset_id") === drawer.id), "name", drawer.id)
+            : drawer.kind === "metric"
+              ? stringValue(drawer.row, "label", drawer.id)
+              : drawer.kind === "site"
+                ? siteLabel(drawer.id)
+                : drawer.kind === "scenario"
+                  ? stringValue(drawer.row, "scenario_name", drawer.id)
+                  : stringValue(drawer.row, "title", drawer.id);
   return (
-    <article className="lineage-card">
-      <div>
-        <p className="eyebrow">Lineage and readiness</p>
-        <strong>{stringValue(lineage, "title")}</strong>
-      </div>
-      <div className="lineage-badges">
-        <ClassificationBadge value={lineage.classification} />
-        <ReadinessBadge value={lineage.readiness_status} />
-        <span className="mini-badge neutral">{stringValue(lineage, "freshness")}</span>
-        <span className="mini-badge neutral">{titleCase(stringValue(lineage, "confidence", "confidence pending"))}</span>
-      </div>
-      <p>{stringValue(lineage, "lineage_summary")}</p>
-      <em>{stringValue(lineage, "caveat")}</em>
-    </article>
+    <Drawer eyebrow={titleCase(drawer.kind)} title={title} onClose={onClose}>
+      {drawer.kind === "source" && <SourceDrawerContent data={data} sourceId={drawer.id} />}
+      {drawer.kind === "unit" && <UnitDrawerContent data={data} unitId={drawer.id} onOpenSource={openSource} onOpenModel={openModel} />}
+      {drawer.kind === "program" && <ProgramDrawerContent data={data} programId={drawer.id} context={context} onOpenSource={openSource} onOpenModel={openModel} />}
+      {drawer.kind === "model" && <ModelDrawerContent data={data} assetId={drawer.id} onOpenSource={openSource} />}
+      {drawer.kind === "metric" && <MetricDrawerContent data={data} row={drawer.row} onOpenSource={openSource} />}
+      {drawer.kind === "site" && <SiteDrawerContent data={data} siteId={drawer.id} row={drawer.row} onOpenSource={openSource} />}
+      {drawer.kind === "warning" && <WarningDrawerContent data={data} row={drawer.row} onOpenSource={openSource} onOpenModel={openModel} />}
+      {drawer.kind === "scenario" && <ScenarioDrawerContent data={data} row={drawer.row ?? { scenario_id: drawer.id }} onOpenSource={openSource} />}
+    </Drawer>
   );
 }
 
-function SourceReadinessTable({ rows, limit = 8, onSelect }: { rows: DataRow[]; limit?: number; onSelect?: (sourceId: string) => void }) {
-  return (
-    <div className="data-table-wrap">
-      <table className="compact-table">
-        <thead>
-          <tr>
-            <th>Source</th>
-            <th>Readiness</th>
-            <th>Freshness</th>
-            <th>Metric approval</th>
-            <th>Small cells</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.slice(0, limit).map((row) => (
-            <tr key={stringValue(row, "source_id")} className={onSelect ? "clickable-row" : ""} onClick={() => onSelect?.(stringValue(row, "source_id"))}>
-              <td>
-                <strong>{stringValue(row, "source_view_name", stringValue(row, "source_id"))}</strong>
-                <span className="table-subtext">{stringValue(row, "source_domain", stringValue(row, "source_id"))}</span>
-              </td>
-              <td>
-                <ReadinessBadge value={row.overall_readiness} />
-              </td>
-              <td>{stringValue(row, "freshness")}</td>
-              <td>{stringValue(row, "metric_definition_approved")}</td>
-              <td>{stringValue(row, "small_cell_suppression")}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+function contextSummary(data: V3Data, context: AppContext): string {
+  const unit = context.unit === "All units" ? "all units" : stringValue(data.inpatient.unitDetails.find((row) => stringValue(row, "unit_id") === context.unit), "unit_name", context.unit);
+  const program = context.program === "All programs" ? "all programs" : stringValue(data.ambulatory.programDetails.find((row) => stringValue(row, "program_id") === context.program), "program", context.program);
+  const service = context.service === "All services" ? "all services" : stringValue(data.commandCenter.serviceLines.find((row) => stringValue(row, "service_id") === context.service), "service_line", titleCase(context.service));
+  const scenario = context.scenario === "All scenarios" ? "scenario-neutral" : stringValue(data.scenarioLab.scenarios.find((row) => stringValue(row, "scenario_id") === context.scenario), "scenario_name", context.scenario);
+  return `${context.persona} lens | ${siteLabel(context.site)} | ${context.horizon} | ${service} | ${unit} | ${program} | ${scenario}`;
 }
 
-function WarningList({ rows }: { rows: DataRow[] }) {
-  if (!rows.length) return <p className="muted">No active synthetic warnings in this lens.</p>;
-  return (
-    <div className="stack-list">
-      {rows.map((row) => (
-        <article className="warning-card" key={stringValue(row, "warning_id", stringValue(row, "signal_id"))}>
-          <div>
-            <AlertTriangle size={18} />
-            <strong>{stringValue(row, "asset_id")}</strong>
-          </div>
-          <p>{stringValue(row, "message", `${titleCase(stringValue(row, "unit_or_program"))} score ${numberValue(row, "score").toFixed(2)}`)}</p>
-          <div className="lineage-badges">
-            <ReadinessBadge value={row.severity} />
-            <ReadinessBadge value={row.status ?? row.readiness} />
-            <ClassificationBadge value={row.classification ?? "modelled"} />
-          </div>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-function RegistryTable({ rows, columns, limit = 10 }: { rows: DataRow[]; columns: string[]; limit?: number }) {
-  return (
-    <div className="data-table-wrap">
-      <table className="compact-table">
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column}>{titleCase(column)}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.slice(0, limit).map((row, index) => (
-            <tr key={`${stringValue(row, columns[0])}-${index}`}>
-              {columns.map((column) => (
-                <td key={column}>{stringValue(row, column)}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function ModelCardGrid({ rows, limit = 15, onSelect }: { rows: DataRow[]; limit?: number; onSelect?: (assetId: string) => void }) {
-  return (
-    <div className="model-card-grid">
-      {rows.slice(0, limit).map((row) => (
-        <button type="button" className="model-card model-card-button" key={stringValue(row, "asset_id")} onClick={() => onSelect?.(stringValue(row, "asset_id"))}>
-          <div className="model-card-top">
-            <BrainCircuit size={18} />
-            <ReadinessBadge value={row.governance_status} />
-          </div>
-          <strong>{stringValue(row, "asset_id")}</strong>
-          <p>{stringValue(row, "name")}</p>
-          <dl>
-            <div>
-              <dt>Domain</dt>
-              <dd>{stringValue(row, "domain")}</dd>
-            </div>
-            <div>
-              <dt>Output</dt>
-              <dd>{stringValue(row, "output_type")}</dd>
-            </div>
-            <div>
-              <dt>Cadence</dt>
-              <dd>{stringValue(row, "cadence")}</dd>
-            </div>
-            <div>
-              <dt>Fallback</dt>
-              <dd>{stringValue(row, "fallback", "Hide modelled layer and revert to direct metrics.")}</dd>
-            </div>
-          </dl>
-          <em>{stringValue(row, "caveats", stringValue(row, "warnings"))}</em>
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function MemoryEventLog({ events }: { events: DataRow[] }) {
-  return (
-    <div className="event-log">
-      {events.map((event) => (
-        <article key={stringValue(event, "event_id")}>
-          <div>
-            <strong>{titleCase(stringValue(event, "event_type"))}</strong>
-            <ReadinessBadge value={event.status} />
-          </div>
-          <p>{stringValue(event, "note")}</p>
-          <span>
-            {stringValue(event, "writeback_table")} | {stringValue(event, "created_by")} | {stringValue(event, "created_at")}
-          </span>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-type ReadinessCounts = { ready: number; review: number; high: number };
-
-const POSTURE_METRIC_SOURCES: Record<string, { classification: string; sources: string[] }> = {
-  "Network occupancy": { classification: "derived", sources: ["SRC_SYNTH_UNIT_CENSUS_HOURLY", "SRC_SYNTH_BED_STATUS", "SRC_SYNTH_STAFFING_ROSTER"] },
-  "ED boarder hours": { classification: "derived", sources: ["SRC_SYNTH_ED_VISITS", "SRC_SYNTH_ADT_EVENTS", "SRC_SYNTH_PATIENT_CLASS_STATUS"] },
-  "Ambulatory backlog": { classification: "derived", sources: ["SRC_SYNTH_WAITLIST_SNAPSHOTS", "SRC_SYNTH_REFERRALS", "SRC_SYNTH_REFERRAL_TRIAGE"] },
-  "Governed active assets": { classification: "modelled", sources: ["SRC_MODEL_CARD_REGISTRY", "SRC_MODEL_VALIDATION_RESULTS", "SRC_WARNING_LOGIC_REGISTRY"] },
-};
-
-function readinessCounts(rows: DataRow[]): ReadinessCounts {
-  return rows.reduce<ReadinessCounts>(
-    (counts, row) => {
-      const status = statusTone(row.overall_readiness ?? row.readiness_status ?? row.governance_status);
-      if (status === "ready") counts.ready += 1;
-      else if (status === "high") counts.high += 1;
-      else if (stringValue(row, "overall_readiness") === "not_mapped") counts.high += 1;
-      else counts.review += 1;
-      return counts;
+function systemKpis(data: V3Data, context: AppContext, units: DataRow[], programs: DataRow[]): DataRow[] {
+  const latest = latestOpenContext(data);
+  const factor = horizonFactor(context.horizon);
+  const occupancy = (sumRows(units, "census") / Math.max(1, sumRows(units, "effective_beds"))) * factor;
+  const boarders = sumRows(units, "ed_boarders") * factor;
+  const hrGap = sumRows(units, "staffing_gap_hours") * (context.persona.includes("Unit") ? 1.08 : 1);
+  const waitlist = sumRows(programs, "waitlist_total") * (context.program === "All programs" ? 1 : 0.96) * factor;
+  const resource = sumRows(units, "margin_pressure_k") + sumRows(programs, "finance_pressure_k");
+  const openPressure = numberValue(latest, "respiratory_activity_index") * 100 + numberValue(latest, "aqhi_max_proxy") * 2 + (latest?.school_break_flag ? 5 : 0);
+  return [
+    {
+      metric_id: "METRIC_OCCUPANCY",
+      label: "Effective occupancy",
+      value: formatPct(occupancy),
+      detail: "Census against staffed/effective pediatric beds in the active lens",
+      delta: `${context.horizon} factor ${factor.toFixed(2)}`,
+      tone: occupancy >= 1 ? "high" : occupancy >= 0.92 ? "watch" : "good",
+      classification: "derived",
+      source_ids: "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_HR_SHIFT_ROSTER",
+      panel_id: "PANEL_SYSTEM_POSTURE",
     },
-    { ready: 0, review: 0, high: 0 },
-  );
+    {
+      metric_id: "METRIC_ED_BOARDERS",
+      label: "ED boarders",
+      value: formatInteger(boarders),
+      detail: "Synthetic admits awaiting inpatient bed assignment",
+      delta: `${formatPct(numberValue(latest, "ed_wait_pressure_proxy"))} ED wait-style pressure`,
+      tone: boarders > 80 ? "high" : boarders > 35 ? "watch" : "good",
+      classification: "direct",
+      source_ids: "SRC_SYNTH_ED_VISITS,SRC_OPEN_ED_WAIT_TIME_LOGIC",
+      panel_id: "PANEL_SYSTEM_POSTURE",
+    },
+    {
+      metric_id: "METRIC_HR_GAP_HOURS",
+      label: "HR gap hours",
+      value: `${formatInteger(hrGap)}h`,
+      detail: "Required minus available aggregate role-group hours",
+      delta: context.persona.includes("Unit") ? "Unit lens amplifies staffing detail" : "Workforce constraint active",
+      tone: hrGap > 260 ? "high" : hrGap > 120 ? "watch" : "good",
+      classification: "HR",
+      source_ids: "SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_HR_FLOAT_POOL",
+      panel_id: "PANEL_SYSTEM_POSTURE",
+    },
+    {
+      metric_id: "METRIC_TNA",
+      label: "Ambulatory backlog",
+      value: formatCompact(waitlist),
+      detail: "Waitlist total for visible programs and service lens",
+      delta: `${formatInteger(avgRows(programs, "third_next_available_days"))}d avg TNA`,
+      tone: avgRows(programs, "third_next_available_days") > 60 ? "high" : "watch",
+      classification: "derived",
+      source_ids: "SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES",
+      panel_id: "PANEL_SYSTEM_POSTURE",
+    },
+    {
+      metric_id: "METRIC_FINANCE_RESOURCE_PRESSURE",
+      label: "Resource pressure",
+      value: `$${formatInteger(resource)}k`,
+      detail: "Marginal staffing, diagnostic, template, and surge-resource proxy",
+      delta: context.scenario === "All scenarios" ? "No scenario selected" : "Scenario feasibility recalculated",
+      tone: resource > 140 ? "high" : "watch",
+      classification: "finance",
+      source_ids: "SRC_SYNTH_FINANCE_COST_CENTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE",
+      panel_id: "PANEL_SYSTEM_POSTURE",
+    },
+    {
+      metric_id: "METRIC_OPEN_CONTEXT_LIFT",
+      label: "Open-context pressure",
+      value: formatInteger(openPressure),
+      detail: "Respiratory virus, AQHI/smoke, school calendar, population context",
+      delta: `Resp ${numberValue(latest, "respiratory_activity_index").toFixed(2)} | AQHI ${numberValue(latest, "aqhi_max_proxy").toFixed(1)}`,
+      tone: openPressure > 85 ? "high" : openPressure > 60 ? "watch" : "good",
+      classification: "open data",
+      source_ids: "SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      panel_id: "PANEL_SYSTEM_POSTURE",
+    },
+  ];
 }
 
 export function SystemPosturePage({
@@ -688,417 +1057,512 @@ export function SystemPosturePage({
   context: AppContext;
   goTo: (page: PageId) => void;
 }) {
-  const counts = readinessCounts(data.directLinkValidation);
-  const [selectedSourceId, setSelectedSourceId] = useState("");
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const units = useMemo(() => filterUnits(data, context), [data, context]);
+  const programs = useMemo(() => filterPrograms(data, context), [data, context]);
+  const kpis = useMemo(() => systemKpis(data, context, units, programs), [context, data, programs, units]);
+  const warnings = [...data.inpatient.warnings, ...data.ambulatory.warnings].filter((row) => {
+    const siteOk = context.site === "All sites" || stringValue(row, "site_id") === context.site;
+    const unitOk = context.unit === "All units" || stringValue(row, "unit_id") === context.unit;
+    const programOk = context.program === "All programs" || stringValue(row, "program_id") === context.program;
+    return siteOk && unitOk && programOk;
+  });
   return (
     <section className="dashboard-grid">
-      <section className="hero-surface wide frontier-hero">
-        <div>
-          <p className="eyebrow">v3 operating layer</p>
-          <h2>Today’s Pediatric System Posture</h2>
-          <p>
-            A synthetic provincial command surface that separates direct operational signals, derived operational intelligence,
-            and governed modelled assets. Every major panel carries freshness, confidence, caveats, and a lineage path.
-          </p>
-          <div className="hero-actions">
-            <button onClick={() => goTo("gatekeeper")}>
-              <ShieldCheck size={18} />
-              Gatekeeper control plane
-            </button>
-            <button onClick={() => goTo("scenarios")}>
-              <Sparkles size={18} />
-              Scenario comparison
-            </button>
-            <button onClick={() => goTo("memory")}>
-              <History size={18} />
-              Learning memory
-            </button>
-          </div>
-        </div>
-        <div className="operating-layer-map" aria-label="Direct derived modelled operating layer map">
-          {["Direct signals", "Derived metrics", "Modelled assets", "Gatekeeper", "Learning memory"].map((label, index) => (
-            <span key={label} style={{ ["--i" as string]: index }}>
-              {label}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      <section className="kpi-grid wide">
-        {data.systemPosture.kpis.map((row) => {
-          const label = stringValue(row, "label");
-          const wiring = POSTURE_METRIC_SOURCES[label] ?? { classification: "derived", sources: [] };
-          return (
-            <WorkspaceMetricTile
-              key={label}
-              label={label}
-              value={stringValue(row, "value")}
-              detail={stringValue(row, "detail")}
-              delta={stringValue(row, "delta")}
-              tone={kpiTone(row.tone)}
-              classification={wiring.classification}
-              sourceIds={wiring.sources}
-              data={data}
-              onOpenSource={setSelectedSourceId}
-              onClick={() => wiring.sources[0] && setSelectedSourceId(wiring.sources[0])}
-            />
-          );
-        })}
-      </section>
-
-      <section className="posture-grid wide">
-        {data.systemPosture.postureCards.map((row) => (
-          <PostureCard
-            key={stringValue(row, "label")}
-            label={stringValue(row, "label")}
-            value={stringValue(row, "value")}
-            detail={stringValue(row, "detail")}
-            tone={postureTone(row.tone)}
-            icon={statusTone(row.tone) === "review" ? <AlertTriangle size={18} /> : <CheckCircle2 size={18} />}
-          />
-        ))}
-      </section>
-
-      <Panel span="xlarge" eyebrow="Command summary" title="Why this changed" icon={<Activity size={22} />}>
-        <div className="driver-stack">
-          {data.systemPosture.whyChanged.map((row) => (
-            <article key={stringValue(row, "driver")}>
-              <div>
-                <strong>{stringValue(row, "driver")}</strong>
-                <span>{stringValue(row, "change")}</span>
-              </div>
-              <progress max={100} value={numberValue(row, "contribution")} />
-              <p>{stringValue(row, "evidence")}</p>
-            </article>
-          ))}
+      <Panel span="wide" eyebrow="Pediatric command centre" title="Progression hub for today's inpatient, ambulatory, workforce, resource, and public-context pressure" icon={<Activity size={22} />}>
+        <p className="section-intro">
+          {contextSummary(data, context)}. Every number below is clickable and carries direct, derived, modelled, HR, finance, or open-data lineage. The active controls change the object lists, metrics, charts, warnings, and scenario narrative.
+        </p>
+        <div className="hero-actions">
+          <button type="button" onClick={() => goTo("inpatient")}>
+            <BedDouble size={18} />
+            Inpatient objects
+          </button>
+          <button type="button" onClick={() => goTo("ambulatory")}>
+            <CalendarClock size={18} />
+            Ambulatory objects
+          </button>
+          <button type="button" onClick={() => goTo("scenarios")}>
+            <SlidersHorizontal size={18} />
+            Scenario lab
+          </button>
         </div>
       </Panel>
 
-      <Panel span="normal" eyebrow="Current lens" title={context.persona} icon={<ListChecks size={22} />}>
-        <InsightPanel
-          title={`${siteLabel(context.site)} | ${context.horizon}`}
-          body="Huddle mode keeps the executive view short: what changed, which sources are ready, which outputs are modelled, and which decisions need a human review."
-          actions={["Review high-severity warnings.", "Open Gatekeeper before trusting new derived or modelled outputs.", "Capture scenario notes in the learning memory."]}
-          caveat={data.metadata.clinicalUse}
+      {kpis.map((row) => (
+        <WorkspaceMetricTile
+          key={stringValue(row, "metric_id")}
+          label={stringValue(row, "label")}
+          value={stringValue(row, "value")}
+          detail={stringValue(row, "detail")}
+          delta={stringValue(row, "delta")}
+          tone={kpiTone(row.tone)}
+          classification={stringValue(row, "classification")}
+          sourceIds={csvIds(row.source_ids)}
+          data={data}
+          onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+          onClick={() => setDrawer({ kind: "metric", id: stringValue(row, "metric_id"), row })}
         />
+      ))}
+
+      <Panel span="xlarge" eyebrow="Site objects" title="Clickable site command posture" icon={<MapPinned size={22} />}>
+        <div className="object-card-grid">
+          {data.commandCenter.sites.map((site) => (
+            <button type="button" className="object-card" key={stringValue(site, "site_id")} onClick={() => setDrawer({ kind: "site", id: stringValue(site, "site_id"), row: site })}>
+              <span className="object-card-heading">
+                <strong>{stringValue(site, "site_name")}</strong>
+                <ClassificationBadge value="derived" />
+              </span>
+              <span>{stringValue(site, "catchment")}</span>
+              <dl>
+                <div>
+                  <dt>Occ</dt>
+                  <dd>{formatPct(numberValue(site, "occupancy_pct"))}</dd>
+                </div>
+                <div>
+                  <dt>Boarders</dt>
+                  <dd>{formatInteger(numberValue(site, "ed_boarders"))}</dd>
+                </div>
+                <div>
+                  <dt>Waitlist</dt>
+                  <dd>{formatCompact(numberValue(site, "waitlist_total"))}</dd>
+                </div>
+                <div>
+                  <dt>Resource</dt>
+                  <dd>${numberValue(site, "resource_pressure_k").toFixed(1)}k</dd>
+                </div>
+              </dl>
+            </button>
+          ))}
+        </div>
       </Panel>
 
-      <Panel span="xlarge" eyebrow="Readiness overlay" title={`${counts.ready} ready, ${counts.review} review, ${counts.high} blocked`} icon={<DatabaseZap size={22} />}>
-        <SourceReadinessTable rows={data.directLinkValidation} onSelect={setSelectedSourceId} />
+      <Panel span="normal" eyebrow="Warnings" title="Click a warning for object-level action context" icon={<AlertTriangle size={22} />}>
+        <WarningList rows={warnings} onSelect={(row) => setDrawer({ kind: "warning", id: stringValue(row, "warning_id"), row })} />
       </Panel>
 
-      <Panel span="normal" eyebrow="Panel lineage" title="This page is derived, not a direct chart" icon={<Layers3 size={22} />}>
-        <LineageCard data={data} panelId="PANEL_SYSTEM_POSTURE" />
+      <Panel span="xlarge" eyebrow="Public context" title="Respiratory, AQHI/smoke, temperature, school/holiday context" icon={<DatabaseZap size={22} />}>
+        <OpenContextChart rows={openContextRows(data)} />
       </Panel>
-      {selectedSourceId && (
-        <Drawer eyebrow="Source Readiness" title={selectedSourceId} onClose={() => setSelectedSourceId("")}>
-          <SourceDrawerContent data={data} sourceId={selectedSourceId} />
-        </Drawer>
-      )}
+
+      <Panel span="normal" eyebrow="Unit pressure" title="Current service/unit heatmap" icon={<BedDouble size={22} />}>
+        <UnitPressureHeatmap rows={units.slice(0, 10)} />
+      </Panel>
+
+      <Panel span="normal" eyebrow="Ambulatory backlog" title="Programs in the active lens" icon={<CalendarClock size={22} />}>
+        <HorizontalBarChart rows={programs} labelKey="program" valueKey="waitlist_total" label="Program waitlist bars" />
+      </Panel>
+
+      <Panel span="normal" eyebrow="HR constraint" title="Workforce pressure matrix" icon={<Users size={22} />}>
+        <WorkloadMatrix rows={units.slice(0, 12)} />
+      </Panel>
+
+      <Panel span="wide" eyebrow="Lakehouse footprint" title="Synthetic source-layer lakehouse behind the command centre" icon={<Layers3 size={22} />}>
+        <RegistryTable rows={data.commandCenter.lakehouseTables} columns={["table", "rows", "domain"]} limit={8} />
+      </Panel>
+
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
   );
 }
 
 export function FrontierInpatientPage({ data, context }: { data: V3Data; context: AppContext }) {
-  const scopedUnits = context.site === "All sites" ? data.inpatient.unitPressure : data.inpatient.unitPressure.filter((row) => stringValue(row, "site_id") === context.site);
-  const visibleUnits = scopedUnits.length ? scopedUnits : data.inpatient.unitPressure;
-  const censusProxy = Math.round(sumRows(data.inpatient.unitPressure, "occupancy_pct") * 42);
-  const boarders = sumRows(data.inpatient.unitPressure, "ed_boarders");
-  const staffingGap = avgRows(data.inpatient.unitPressure, "staffing_gap_pct");
-  const [selectedUnitId, setSelectedUnitId] = useState("");
-  const [selectedSourceId, setSelectedSourceId] = useState("");
-  const activeUnitId = selectedUnitId || stringValue(visibleUnits[0], "unit_id");
-  const activeUnit = visibleUnits.find((row) => stringValue(row, "unit_id") === activeUnitId);
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const units = useMemo(() => filterUnits(data, context), [data, context]);
+  const timeline = aggregateInpatientTimeline(filteredTimeline(data.inpatient.unitTimeline, units, "unit_id"), context, data);
+  const warnings = data.inpatient.warnings.filter((row) => {
+    const siteOk = context.site === "All sites" || stringValue(row, "site_id") === context.site;
+    const serviceOk = context.service === "All services" || stringValue(row, "service_id") === context.service;
+    const unitOk = context.unit === "All units" || stringValue(row, "unit_id") === context.unit;
+    return siteOk && serviceOk && unitOk;
+  });
+  const metricRows = [
+    {
+      metric_id: "METRIC_OCCUPANCY",
+      label: "Visible occupancy",
+      value: formatPct(sumRows(units, "census") / Math.max(1, sumRows(units, "effective_beds"))),
+      detail: `${units.length} units in active site/service/unit lens`,
+      delta: `${formatInteger(sumRows(units, "predicted_admissions_24h"))} predicted admits`,
+      tone: "watch",
+      classification: "derived",
+      source_ids: "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_HR_SHIFT_ROSTER",
+      panel_id: "PANEL_INPATIENT_COMMAND",
+    },
+    {
+      metric_id: "METRIC_ED_BOARDERS",
+      label: "ED boarders",
+      value: formatInteger(sumRows(units, "ed_boarders")),
+      detail: "Admission decisions awaiting pediatric bed placement",
+      delta: `${formatInteger(sumRows(units, "transfer_in_requests"))} transfer-in requests`,
+      tone: sumRows(units, "ed_boarders") > 45 ? "high" : "watch",
+      classification: "direct",
+      source_ids: "SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_OPEN_ED_WAIT_TIME_LOGIC",
+      panel_id: "PANEL_INPATIENT_COMMAND",
+    },
+    {
+      metric_id: "METRIC_HR_GAP_HOURS",
+      label: "HR and allied gap",
+      value: `${formatInteger(sumRows(units, "staffing_gap_hours") + sumRows(units, "allied_health_gap_hours"))}h`,
+      detail: "RN, allied, and effective-bed constraint proxy",
+      delta: `${formatInteger(sumRows(units, "effective_beds_lost"))} effective beds lost`,
+      tone: "watch",
+      classification: "HR",
+      source_ids: "SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_HR_FLOAT_POOL",
+      panel_id: "PANEL_INPATIENT_COMMAND",
+    },
+    {
+      metric_id: "METRIC_FINANCE_RESOURCE_PRESSURE",
+      label: "Resource pressure",
+      value: `$${sumRows(units, "margin_pressure_k").toFixed(1)}k`,
+      detail: "Variable staffing and constrained resource proxy",
+      delta: `$${sumRows(units, "variable_staffing_cost_k").toFixed(1)}k variable cost`,
+      tone: "watch",
+      classification: "finance",
+      source_ids: "SRC_SYNTH_FINANCE_COST_CENTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE",
+      panel_id: "PANEL_INPATIENT_COMMAND",
+    },
+  ];
   return (
     <section className="dashboard-grid">
-      <Panel span="wide" eyebrow="Inpatient Intelligence" title="Huddle view with source-readiness and model warnings" icon={<Activity size={22} />}>
+      <Panel span="wide" eyebrow="Inpatient progression hub" title="Service and unit objects with capacity, flow, HR, finance, warnings, and source readiness" icon={<BedDouble size={22} />}>
+        <p className="section-intro">{contextSummary(data, context)}. Select a unit or click any card to open the operational drawer.</p>
         <LineageCard data={data} panelId="PANEL_INPATIENT_COMMAND" />
       </Panel>
-      <section className="kpi-grid wide">
-        <WorkspaceMetricTile label="Occupancy proxy" value={formatInteger(censusProxy)} detail="Synthetic weighted census pressure" delta="+2.8 pts" tone="watch" classification="derived" sourceIds={["SRC_SYNTH_UNIT_CENSUS_HOURLY", "SRC_SYNTH_BED_STATUS", "SRC_SYNTH_STAFFING_ROSTER"]} data={data} onOpenSource={setSelectedSourceId} />
-        <WorkspaceMetricTile label="ED boarders" value={formatInteger(boarders)} detail="Across selected synthetic units" delta="+21" tone="high" classification="derived" sourceIds={["SRC_SYNTH_ED_VISITS", "SRC_SYNTH_ADT_EVENTS", "SRC_SYNTH_PATIENT_CLASS_STATUS"]} data={data} onOpenSource={setSelectedSourceId} />
-        <WorkspaceMetricTile label="Staffing gap" value={formatPct(staffingGap)} detail="Mean unit-shift gap" delta="+1.9 pts" tone="watch" classification="derived" sourceIds={["SRC_SYNTH_STAFFING_ROSTER", "SRC_SYNTH_STAFFING_GAPS", "SRC_SYNTH_WORKLOAD_ACUITY"]} data={data} onOpenSource={setSelectedSourceId} />
-        <WorkspaceMetricTile label="Source reviews" value={formatInteger(data.inpatient.unitPressure.filter((row) => stringValue(row, "source_readiness") !== "ready").length)} detail="Panel rows requiring owner review" delta="review" tone="watch" classification="direct" sourceIds={["SRC_DIRECT_LINKAGE_VALIDATION", "SRC_SYNTH_DIAGNOSTIC_READINESS", "SRC_MODEL_DRIFT_RESULTS"]} data={data} onOpenSource={setSelectedSourceId} />
-      </section>
-      <Panel span="xlarge" eyebrow="Clickable unit workspace" title="Select a unit to open source-layer detail" icon={<GitBranch size={22} />}>
-        <UnitDrilldownBoard rows={visibleUnits} selectedId={activeUnitId} onSelect={setSelectedUnitId} />
-        <button type="button" className="primary-action" disabled={!activeUnit} onClick={() => activeUnit && setSelectedUnitId(activeUnitId)}>
-          <ArrowRight size={18} />
-          Open selected unit drawer
-        </button>
+
+      {metricRows.map((row) => (
+        <WorkspaceMetricTile
+          key={stringValue(row, "metric_id")}
+          label={stringValue(row, "label")}
+          value={stringValue(row, "value")}
+          detail={stringValue(row, "detail")}
+          delta={stringValue(row, "delta")}
+          tone={kpiTone(row.tone)}
+          classification={stringValue(row, "classification")}
+          sourceIds={csvIds(row.source_ids)}
+          data={data}
+          onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+          onClick={() => setDrawer({ kind: "metric", id: stringValue(row, "metric_id"), row })}
+        />
+      ))}
+
+      <Panel span="xlarge" eyebrow="Unit objects" title={`${units.length} clickable units in this lens`} icon={<ListChecks size={22} />}>
+        <UnitDrilldownBoard rows={units} onSelect={(unitId) => setDrawer({ kind: "unit", id: unitId })} />
       </Panel>
-      <Panel span="normal" eyebrow="Warning logic" title="Governed warning queue" icon={<AlertTriangle size={22} />}>
-        <WarningList rows={data.inpatient.warnings} />
+      <Panel span="normal" eyebrow="Warnings" title="Unit warnings and actions" icon={<AlertTriangle size={22} />}>
+        <WarningList rows={warnings} onSelect={(row) => setDrawer({ kind: "warning", id: stringValue(row, "warning_id"), row })} />
       </Panel>
-      <Panel span="xlarge" eyebrow="Unit heatmap" title="Chart supports the clickable unit cards" icon={<Gauge size={22} />}>
-        <UnitPressureHeatmap rows={visibleUnits} />
+      <Panel span="xlarge" eyebrow="Forecast" title="Baseline plus open-context adjusted occupancy forecast" icon={<Activity size={22} />}>
+        <ForecastRibbonChart rows={timeline} xKey="hour" predictionKey="predicted_occupancy" lowerKey="lower" upperKey="upper" label="Inpatient occupancy forecast" />
       </Panel>
-      <Panel span="xlarge" eyebrow="Forecast ribbon" title="Occupancy forecast carries model-card caveats" icon={<BrainCircuit size={22} />}>
-        <ForecastRibbonChart rows={data.inpatient.forecast} xKey="horizon_hours" predictionKey="occupancy_forecast" lowerKey="p10" upperKey="p90" label="Inpatient occupancy forecast" />
+      <Panel span="normal" eyebrow="Heatmap" title="Occupancy, staffing gap, ED boarders" icon={<GaugeIcon />}>
+        <UnitPressureHeatmap rows={units.slice(0, 12)} />
       </Panel>
-      <Panel span="normal" eyebrow="Why bed pressure moved" title="Discharge and step-down drivers" icon={<FileCheck2 size={22} />}>
-        <HorizontalBarChart rows={data.inpatient.flowDrivers} labelKey="driver" valueKey="active_count" label="Discharge and step-down drivers" height={280} />
+      <Panel span="normal" eyebrow="Flow" title="ED-to-inpatient bottleneck network" icon={<Workflow size={22} />}>
+        <FlowSankey rows={units} />
       </Panel>
-      {selectedUnitId && (
-        <Drawer eyebrow="Unit Drilldown" title={stringValue(activeUnit, "unit_name", selectedUnitId)} onClose={() => setSelectedUnitId("")}>
-          <UnitDrawerContent data={data} unitId={selectedUnitId} onOpenSource={setSelectedSourceId} />
-        </Drawer>
-      )}
-      {selectedSourceId && (
-        <Drawer eyebrow="Source Readiness" title={selectedSourceId} onClose={() => setSelectedSourceId("")}>
-          <SourceDrawerContent data={data} sourceId={selectedSourceId} />
-        </Drawer>
-      )}
+      <Panel span="normal" eyebrow="Discharge" title="Barrier funnel" icon={<FileCheck2 size={22} />}>
+        <DischargeFunnel rows={barrierRows(units)} />
+      </Panel>
+      <Panel span="normal" eyebrow="Workforce" title="Effective beds lost vs workload" icon={<Users size={22} />}>
+        <WorkloadMatrix rows={units.slice(0, 12)} />
+      </Panel>
+      <Panel span="normal" eyebrow="Boarders" title="ED boarders by unit" icon={<AlertTriangle size={22} />}>
+        <HorizontalBarChart rows={units} labelKey="unit_name" valueKey="ed_boarders" label="ED boarders by unit" />
+      </Panel>
+      <Panel span="normal" eyebrow="Finance" title="Variable staffing cost proxy" icon={<DollarSign size={22} />}>
+        <HorizontalBarChart rows={units} labelKey="unit_name" valueKey="variable_staffing_cost_k" label="Variable staffing cost proxy" />
+      </Panel>
+      <Panel span="normal" eyebrow="Open context" title="Public context affecting forecasts" icon={<DatabaseZap size={22} />}>
+        <OpenContextChart rows={openContextRows(data)} />
+      </Panel>
+      <Panel span="wide" eyebrow="Source readiness" title="Major inpatient sources behind this lens" icon={<ShieldCheck size={22} />}>
+        <SourceReadinessTable rows={data.directLinkValidation.filter((row) => csvIds(units[0]?.source_ids).includes(stringValue(row, "source_id")))} limit={12} onSelect={(sourceId) => setDrawer({ kind: "source", id: sourceId })} />
+      </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
   );
 }
 
-export function FrontierAmbulatoryPage({ data }: { data: V3Data; context: AppContext }) {
-  const waitlist = sumRows(data.ambulatory.programAccess, "waitlist_total");
-  const tna = avgRows(data.ambulatory.programAccess, "third_next_available_days");
-  const breach = avgRows(data.ambulatory.programAccess, "urgent_breach_risk");
-  const [selectedProgramId, setSelectedProgramId] = useState("");
-  const [selectedSourceId, setSelectedSourceId] = useState("");
-  const activeProgramId = selectedProgramId || stringValue(data.ambulatory.programAccess[0], "program_id");
-  const activeProgram = data.ambulatory.programAccess.find((row) => stringValue(row, "program_id") === activeProgramId);
+function GaugeIcon() {
+  return <Activity size={22} />;
+}
+
+export function FrontierAmbulatoryPage({ data, context }: { data: V3Data; context: AppContext }) {
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const programs = useMemo(() => filterPrograms(data, context), [data, context]);
+  const timeline = aggregateProgramTimeline(filteredTimeline(data.ambulatory.programTimeline, programs, "program_id"), context, data);
+  const warnings = data.ambulatory.warnings.filter((row) => {
+    const siteOk = context.site === "All sites" || stringValue(row, "site_id") === context.site;
+    const programOk = context.program === "All programs" || stringValue(row, "program_id") === context.program;
+    return siteOk && programOk;
+  });
+  const metricRows = [
+    {
+      metric_id: "METRIC_WAITLIST_PRESSURE",
+      label: "Visible waitlist",
+      value: formatCompact(sumRows(programs, "waitlist_total")),
+      detail: `${programs.length} program-site objects in active lens`,
+      delta: `${formatInteger(sumRows(programs, "urgent_waitlist"))} urgent waitlist`,
+      tone: "watch",
+      classification: "derived",
+      source_ids: "SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE",
+      panel_id: "PANEL_AMBULATORY_COMMAND",
+    },
+    {
+      metric_id: "METRIC_TNA",
+      label: "Average TNA",
+      value: `${formatInteger(avgRows(programs, "third_next_available_days"))}d`,
+      detail: "Third-next-available proxy from template capacity",
+      delta: `${formatInteger(sumRows(programs, "template_gap_4w"))} template gap`,
+      tone: avgRows(programs, "third_next_available_days") > 60 ? "high" : "watch",
+      classification: "derived",
+      source_ids: "SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY",
+      panel_id: "PANEL_AMBULATORY_COMMAND",
+    },
+    {
+      metric_id: "METRIC_DIAGNOSTIC_READINESS",
+      label: "Diagnostics readiness",
+      value: formatPct(avgRows(programs, "diagnostic_readiness")),
+      detail: "Diagnostic precondition readiness for visits and follow-up",
+      delta: `${formatInteger(sumRows(programs, "followup_overdue"))} overdue follow-ups`,
+      tone: avgRows(programs, "diagnostic_readiness") < 0.68 ? "high" : "watch",
+      classification: "direct",
+      source_ids: "SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_OVERDUE_FOLLOWUP",
+      panel_id: "PANEL_AMBULATORY_COMMAND",
+    },
+    {
+      metric_id: "METRIC_FINANCE_RESOURCE_PRESSURE",
+      label: "Resource pressure",
+      value: `$${sumRows(programs, "finance_pressure_k").toFixed(1)}k`,
+      detail: "Provider, allied-health, diagnostics, and template resource proxy",
+      delta: `${formatInteger(sumRows(programs, "hr_gap_sessions_4w"))} HR gap sessions`,
+      tone: "watch",
+      classification: "finance",
+      source_ids: "SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE",
+      panel_id: "PANEL_AMBULATORY_COMMAND",
+    },
+  ];
   return (
     <section className="dashboard-grid">
-      <Panel span="wide" eyebrow="Ambulatory Access Intelligence" title="Backlog, template capacity, no-show guardrails, and diagnostic readiness" icon={<Workflow size={22} />}>
+      <Panel span="wide" eyebrow="Ambulatory access command centre" title="Program objects with referrals, triage, waitlists, TNA, templates, diagnostics, HR, finance, and source readiness" icon={<CalendarClock size={22} />}>
+        <p className="section-intro">{contextSummary(data, context)}. The service control acts as a program lens when there is a natural pediatric progression relationship.</p>
         <LineageCard data={data} panelId="PANEL_AMBULATORY_COMMAND" />
       </Panel>
-      <section className="kpi-grid wide">
-        <WorkspaceMetricTile label="Waitlist" value={formatInteger(waitlist)} detail="Synthetic aggregate referral backlog" delta="+4.6%" tone="watch" classification="derived" sourceIds={["SRC_SYNTH_WAITLIST_SNAPSHOTS", "SRC_SYNTH_REFERRALS", "SRC_SYNTH_REFERRAL_TRIAGE"]} data={data} onOpenSource={setSelectedSourceId} />
-        <WorkspaceMetricTile label="Third next available" value={`${Math.round(tna)} days`} detail="Mean by program" delta="+3" tone="watch" classification="derived" sourceIds={["SRC_SYNTH_CLINIC_TEMPLATES", "SRC_SYNTH_CLINIC_SLOTS", "SRC_SYNTH_APPOINTMENTS"]} data={data} onOpenSource={setSelectedSourceId} />
-        <WorkspaceMetricTile label="Urgent breach risk" value={formatPct(breach)} detail="Synthetic program-week probability" delta="+4 pts" tone="high" classification="modelled" sourceIds={["SRC_MODEL_PREDICTIONS", "SRC_SYNTH_WAITLIST_SNAPSHOTS", "SRC_WARNING_LOGIC_REGISTRY"]} data={data} onOpenSource={setSelectedSourceId} />
-        <WorkspaceMetricTile label="Diagnostic readiness" value={formatPct(avgRows(data.ambulatory.programAccess, "diagnostic_readiness"))} detail="Dependency completion proxy" delta="-6 pts" tone="watch" classification="derived" sourceIds={["SRC_SYNTH_DIAGNOSTIC_READINESS", "SRC_SYNTH_IMAGING_ORDERS", "SRC_SYNTH_LAB_RESULTS"]} data={data} onOpenSource={setSelectedSourceId} />
-      </section>
-      <Panel span="xlarge" eyebrow="Clickable program workspace" title="Select a program to open access, template, diagnostic, and source detail" icon={<Activity size={22} />}>
-        <ProgramDrilldownBoard rows={data.ambulatory.programAccess} selectedId={activeProgramId} onSelect={setSelectedProgramId} />
-        <button type="button" className="primary-action" disabled={!activeProgram} onClick={() => activeProgram && setSelectedProgramId(activeProgramId)}>
-          <ArrowRight size={18} />
-          Open selected program drawer
-        </button>
+
+      {metricRows.map((row) => (
+        <WorkspaceMetricTile
+          key={stringValue(row, "metric_id")}
+          label={stringValue(row, "label")}
+          value={stringValue(row, "value")}
+          detail={stringValue(row, "detail")}
+          delta={stringValue(row, "delta")}
+          tone={kpiTone(row.tone)}
+          classification={stringValue(row, "classification")}
+          sourceIds={csvIds(row.source_ids)}
+          data={data}
+          onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+          onClick={() => setDrawer({ kind: "metric", id: stringValue(row, "metric_id"), row })}
+        />
+      ))}
+
+      <Panel span="xlarge" eyebrow="Program objects" title={`${programs.length} clickable program-site objects in this lens`} icon={<ListChecks size={22} />}>
+        <ProgramDrilldownBoard rows={programs} onSelect={(programId) => setDrawer({ kind: "program", id: programId })} />
       </Panel>
-      <Panel span="normal" eyebrow="No-show frontier" title="Guardrailed capacity recovery" icon={<Flag size={22} />}>
-        <RegistryTable rows={data.ambulatory.noShowFrontier} columns={["program", "guarded_overbook_pct", "expected_recovered_slots", "equity_guardrail", "no_show_risk"]} limit={8} />
+      <Panel span="normal" eyebrow="Warnings" title="Program warnings and actions" icon={<AlertTriangle size={22} />}>
+        <WarningList rows={warnings} onSelect={(row) => setDrawer({ kind: "warning", id: stringValue(row, "warning_id"), row })} />
       </Panel>
-      <Panel span="xlarge" eyebrow="Access chart" title="Waitlist and urgent breach risk by program" icon={<Gauge size={22} />}>
-        <HorizontalBarChart rows={data.ambulatory.programAccess} labelKey="program" valueKey="waitlist_total" label="Ambulatory waitlist by program" />
+      <Panel span="xlarge" eyebrow="Forecast" title="Baseline plus open-context adjusted waitlist forecast" icon={<Activity size={22} />}>
+        <ForecastRibbonChart rows={timeline} xKey="week" predictionKey="forecast_waitlist" lowerKey="lower" upperKey="upper" label="Ambulatory waitlist forecast" />
       </Panel>
-      <Panel span="xlarge" eyebrow="Backlog forecast" title="Scenario planning forecast, not a scheduling directive" icon={<BrainCircuit size={22} />}>
-        <ForecastRibbonChart rows={data.ambulatory.forecast} xKey="horizon_weeks" predictionKey="backlog_forecast" lowerKey="p10" upperKey="p90" label="Ambulatory backlog forecast" />
+      <Panel span="normal" eyebrow="Access heatmap" title="TNA by program and week" icon={<CalendarClock size={22} />}>
+        <AccessCalendarHeatmap rows={filteredTimeline(data.ambulatory.programTimeline, programs, "program_id")} />
       </Panel>
-      <Panel span="normal" eyebrow="Warning logic" title="Program huddle queue" icon={<AlertTriangle size={22} />}>
-        <WarningList rows={data.ambulatory.warnings} />
+      <Panel span="normal" eyebrow="Waitlist" title="Waitlist by program" icon={<Users size={22} />}>
+        <HorizontalBarChart rows={programs} labelKey="program" valueKey="waitlist_total" label="Waitlist by program" />
       </Panel>
-      {selectedProgramId && (
-        <Drawer eyebrow="Program Drilldown" title={stringValue(activeProgram, "program", selectedProgramId)} onClose={() => setSelectedProgramId("")}>
-          <ProgramDrawerContent data={data} programId={selectedProgramId} onOpenSource={setSelectedSourceId} />
-        </Drawer>
-      )}
-      {selectedSourceId && (
-        <Drawer eyebrow="Source Readiness" title={selectedSourceId} onClose={() => setSelectedSourceId("")}>
-          <SourceDrawerContent data={data} sourceId={selectedSourceId} />
-        </Drawer>
-      )}
+      <Panel span="normal" eyebrow="TNA" title="Third-next-available by program" icon={<Activity size={22} />}>
+        <HorizontalBarChart rows={programs} labelKey="program" valueKey="third_next_available_days" label="TNA by program" />
+      </Panel>
+      <Panel span="normal" eyebrow="Diagnostics" title="Diagnostic readiness by program" icon={<FileCheck2 size={22} />}>
+        <HorizontalBarChart rows={programs} labelKey="program" valueKey="diagnostic_readiness" label="Diagnostic readiness by program" />
+      </Panel>
+      <Panel span="normal" eyebrow="No-show frontier" title="Recovered-slot opportunity" icon={<Sparkles size={22} />}>
+        <ScenarioFrontier rows={data.ambulatory.noShowFrontier.filter((row) => programs.some((program) => stringValue(program, "program_id") === stringValue(row, "program_id")))} outcomeKey="recovered_slots" label="No-show opportunity frontier" />
+      </Panel>
+      <Panel span="normal" eyebrow="Provider capacity" title="Provider sessions by program" icon={<Users size={22} />}>
+        <HorizontalBarChart rows={programs} labelKey="program" valueKey="provider_capacity_sessions_4w" label="Provider capacity by program" />
+      </Panel>
+      <Panel span="normal" eyebrow="Resource" title="Marginal resource need" icon={<DollarSign size={22} />}>
+        <HorizontalBarChart rows={programs} labelKey="program" valueKey="marginal_resource_need_k" label="Marginal resource need" />
+      </Panel>
+      <Panel span="normal" eyebrow="Open context" title="Public context changing access assumptions" icon={<DatabaseZap size={22} />}>
+        <OpenContextChart rows={openContextRows(data)} />
+      </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
   );
 }
 
-export function PredictiveAssetsPage({ data }: { data: V3Data }) {
-  const signalRows = data.predictiveAssets.signals;
-  const [selectedAssetId, setSelectedAssetId] = useState(stringValue(data.modelRegistry[0], "asset_id"));
-  const [drawerAssetId, setDrawerAssetId] = useState("");
-  const [selectedSourceId, setSelectedSourceId] = useState("");
-  const selectedAsset = data.modelRegistry.find((row) => stringValue(row, "asset_id") === selectedAssetId) ?? data.modelRegistry[0];
-  const drawerAsset = data.modelRegistry.find((row) => stringValue(row, "asset_id") === drawerAssetId);
-  const selectedEvidence = data.predictiveAssets.evidenceTrails.filter((row) => stringValue(row, "asset_id") === selectedAssetId);
-  const selectedValidation = data.gatekeeper.validationDrift.find((row) => stringValue(row, "asset_id") === selectedAssetId);
+export function PredictiveAssetsPage({ data, context }: { data: V3Data; context: AppContext }) {
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const unitModels = new Set(filterUnits(data, context).flatMap((row) => csvIds(row.model_ids)));
+  const programModels = new Set(filterPrograms(data, context).flatMap((row) => csvIds(row.model_ids)));
+  const visibleModels = data.modelRegistry.filter((model) => {
+    if (context.service === "All services" && context.program === "All programs" && context.unit === "All units") return true;
+    const id = stringValue(model, "asset_id");
+    return unitModels.has(id) || programModels.has(id) || stringValue(model, "domain").toLowerCase().includes("operational");
+  });
+  const validationRows = data.gatekeeper.validationDrift.filter((row) => visibleModels.some((model) => stringValue(model, "asset_id") === stringValue(row, "asset_id")));
+  const alertRows = visibleModels.map((model, index) => ({
+    asset_id: stringValue(model, "asset_id"),
+    name: stringValue(model, "name"),
+    alert_burden_count: Number.parseInt(stringValue(model, "alert_burden").match(/\d+/)?.[0] ?? String(index + 2), 10),
+  }));
   return (
     <section className="dashboard-grid">
-      <Panel span="wide" eyebrow="Clinical Surveillance / Predictive Asset Layer" title="Modelled outputs remain governed, labelled, and reversible" icon={<BrainCircuit size={22} />}>
+      <Panel span="wide" eyebrow="Predictive asset layer" title="Clickable model cards with wiring, coefficients, thresholds, validation, drift, alert burden, and lineage" icon={<BrainCircuit size={22} />}>
+        <p className="section-intro">{contextSummary(data, context)}. Model cards are not static descriptions; open one to inspect sources, proxy coefficients, thresholds, validation, drift, panels using it, caveats, and rollback.</p>
         <LineageCard data={data} panelId="PANEL_PREDICTIVE_ASSETS" />
       </Panel>
-      <Panel span="xlarge" eyebrow="Model-card drilldown" title="15 governed synthetic assets" icon={<ShieldCheck size={22} />}>
-        <ModelCardGrid rows={data.modelRegistry} onSelect={(assetId) => {
-          setSelectedAssetId(assetId);
-          setDrawerAssetId(assetId);
-        }} />
+      <Panel span="xlarge" eyebrow="Model cards" title={`${visibleModels.length} contextual assets`} icon={<BrainCircuit size={22} />}>
+        <ModelCardGrid rows={visibleModels} onSelect={(assetId) => setDrawer({ kind: "model", id: assetId })} />
       </Panel>
-      <Panel span="normal" eyebrow="Warning overlay" title="Synthetic surveillance signals" icon={<AlertTriangle size={22} />}>
-        <WarningList rows={signalRows} />
+      <Panel span="normal" eyebrow="Alert burden" title="Expected aggregate alerts/week" icon={<AlertTriangle size={22} />}>
+        <HorizontalBarChart rows={alertRows} labelKey="asset_id" valueKey="alert_burden_count" label="Model alert burden" />
       </Panel>
-      <Panel span="xlarge" eyebrow="Evidence overlay" title="Trace warnings to review evidence and caveats" icon={<GitBranch size={22} />}>
-        <label className="field-stack">
-          Asset
-          <select value={selectedAssetId} onChange={(event) => setSelectedAssetId(event.target.value)}>
-            {data.modelRegistry.map((row) => (
-              <option key={stringValue(row, "asset_id")} value={stringValue(row, "asset_id")}>
-                {stringValue(row, "name")} ({stringValue(row, "asset_id")})
-              </option>
-            ))}
-          </select>
-        </label>
-        <div className="model-evidence-card">
-          <strong>{stringValue(selectedAsset, "name")}</strong>
-          <p>{stringValue(selectedAsset, "intended_use")}</p>
-          <dl>
-            <div>
-              <dt>Calibration</dt>
-              <dd>{stringValue(selectedValidation, "calibration_status", stringValue(selectedAsset, "calibration_status"))}</dd>
-            </div>
-            <div>
-              <dt>Drift</dt>
-              <dd>{stringValue(selectedValidation, "drift_status", stringValue(selectedAsset, "drift_status"))}</dd>
-            </div>
-            <div>
-              <dt>Alert burden</dt>
-              <dd>{stringValue(selectedValidation, "alert_burden", stringValue(selectedAsset, "alert_burden"))}</dd>
-            </div>
-            <div>
-              <dt>Release gate</dt>
-              <dd>{stringValue(selectedValidation, "release_gate", stringValue(selectedAsset, "governance_status"))}</dd>
-            </div>
-          </dl>
-          <em>{stringValue(selectedAsset, "not_intended_use")}</em>
-        </div>
-        <RegistryTable rows={selectedEvidence.length ? selectedEvidence : data.predictiveAssets.evidenceTrails} columns={["trail_id", "asset_id", "evidence_step", "detail"]} limit={8} />
+      <Panel span="normal" eyebrow="Validation" title="Primary metric by model" icon={<FileCheck2 size={22} />}>
+        <HorizontalBarChart rows={validationRows} labelKey="asset_id" valueKey="primary_metric_value" label="Validation metric values" />
       </Panel>
-      <Panel span="normal" eyebrow="Safety boundary" title="No clinical decisioning" icon={<FileCheck2 size={22} />}>
-        <InsightPanel
-          title="Displayed as synthetic-only"
-          body="Clinical surveillance assets are shown to demonstrate governance and warning controls. They are not validated for diagnosis, triage, treatment, or patient-level action."
-          actions={["Require threshold review.", "Suppress small cells.", "Retain rollback path and evidence trail."]}
-        />
+      <Panel span="normal" eyebrow="Sensitivity" title="Synthetic coefficients under review" icon={<SlidersHorizontal size={22} />}>
+        <SensitivityTornado rows={data.gatekeeper.coefficients} label="Coefficient sensitivity" />
       </Panel>
-      {drawerAssetId && (
-        <Drawer eyebrow="Model Card" title={stringValue(drawerAsset, "name", drawerAssetId)} onClose={() => setDrawerAssetId("")}>
-          <ModelDrawerContent data={data} assetId={drawerAssetId} onOpenSource={setSelectedSourceId} />
-        </Drawer>
-      )}
-      {selectedSourceId && (
-        <Drawer eyebrow="Source Readiness" title={selectedSourceId} onClose={() => setSelectedSourceId("")}>
-          <SourceDrawerContent data={data} sourceId={selectedSourceId} />
-        </Drawer>
-      )}
+      <Panel span="wide" eyebrow="Source readiness" title="Model and feature-store source stoplights" icon={<DatabaseZap size={22} />}>
+        <SourceReadinessTable rows={data.directLinkValidation.filter((row) => stringValue(row, "source_domain").includes("model") || stringValue(row, "source_domain").includes("open data") || stringValue(row, "source_domain").includes("staffing"))} limit={18} onSelect={(sourceId) => setDrawer({ kind: "source", id: sourceId })} />
+      </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
   );
+}
+
+function selectedScenario(data: V3Data, context: AppContext): DataRow {
+  if (context.scenario !== "All scenarios") {
+    return data.scenarioLab.scenarios.find((row) => stringValue(row, "scenario_id") === context.scenario) ?? data.scenarioLab.scenarios[0] ?? {};
+  }
+  return data.scenarioLab.scenarios[0] ?? {};
 }
 
 export function ScenarioLabPage({
   data,
+  context,
   addMemoryEvent,
 }: {
   data: V3Data;
+  context: AppContext;
   addMemoryEvent: (event: DataRow) => void;
 }) {
-  const [domain, setDomain] = useState<"inpatient" | "ambulatory">("inpatient");
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const scenario = selectedScenario(data, context);
+  const controlsForScenario = data.scenarioLab.controlRanges.filter((control) => {
+    if (context.scenario === "All scenarios") return true;
+    return stringValue(control, "scenario_id") === context.scenario || stringValue(control, "domain") === stringValue(scenario, "domain");
+  });
   const [controlValues, setControlValues] = useState<Record<string, number>>({});
   const [toggles, setToggles] = useState({
-    surgeProtocol: true,
-    weekendClinics: false,
-    equityGuardrail: true,
-    diagnosticHuddle: true,
+    respiratory: true,
+    smoke: true,
+    school: true,
+    hrConstraint: true,
+    financeConstraint: true,
   });
-  const [hrCapacity, setHrCapacity] = useState(18);
-  const [financeBudget, setFinanceBudget] = useState(260);
-  const controls = data.scenarioLab.controlRanges.filter((row) => stringValue(row, "domain") === domain);
-  const baseline = data.scenarioLab.baselines.find((row) => stringValue(row, "domain") === domain) ?? {};
-  const getValue = (control: DataRow) => controlValues[stringValue(control, "control_id")] ?? numberValue(control, "default");
-  const totalHr = controls.reduce((total, control) => total + getValue(control) * numberValue(control, "hr_per_unit"), 0);
-  const totalCost = controls.reduce((total, control) => total + getValue(control) * numberValue(control, "cost_k_per_unit"), 0) + (toggles.weekendClinics ? 42 : 0) + (toggles.surgeProtocol ? 28 : 0);
-  const constraintFactor = Math.min(1, hrCapacity / Math.max(1, totalHr), financeBudget / Math.max(1, totalCost));
-  const stepdown = controlValues.stepdown_beds ?? 5;
-  const pharmacy = controlValues.pharmacy_acceleration ?? 12;
-  const staffing = controlValues.staffing_shifts ?? 8;
-  const surge = controlValues.surge_beds ?? 4;
-  const urgent = controlValues.urgent_slots ?? 48;
-  const virtual = controlValues.virtual_conversion ?? 10;
-  const diagnostics = controlValues.diagnostic_huddle ?? 14;
-  const overbook = controlValues.guarded_overbook ?? 3;
-  const inpatientReduction = (stepdown * 7.2 + pharmacy * 1.15 + staffing * 2.4 + surge * 4.8 + (toggles.surgeProtocol ? 18 : 0)) * constraintFactor;
-  const ambulatoryReduction = (urgent * 4.1 + virtual * 31 + diagnostics * 24 + overbook * 38 + (toggles.weekendClinics ? 310 : 0)) * constraintFactor * (toggles.equityGuardrail ? 0.88 : 1);
-  const scenarioOutcomes =
-    domain === "inpatient"
-      ? {
-          primaryLabel: "Boarder hours",
-          baselinePrimary: numberValue(baseline, "boarder_hours", 186),
-          scenarioPrimary: Math.max(42, numberValue(baseline, "boarder_hours", 186) - inpatientReduction),
-          secondaryLabel: "Occupancy",
-          baselineSecondary: numberValue(baseline, "occupancy_pct", 0.934),
-          scenarioSecondary: Math.max(0.82, numberValue(baseline, "occupancy_pct", 0.934) - inpatientReduction / 1400),
-          improvementLabel: "Boarder-hour reduction",
-          improvement: inpatientReduction,
-        }
-      : {
-          primaryLabel: "Backlog",
-          baselinePrimary: numberValue(baseline, "backlog", 8940),
-          scenarioPrimary: Math.max(6200, numberValue(baseline, "backlog", 8940) - ambulatoryReduction),
-          secondaryLabel: "Urgent breach risk",
-          baselineSecondary: numberValue(baseline, "urgent_breach_risk", 0.337),
-          scenarioSecondary: Math.max(0.08, numberValue(baseline, "urgent_breach_risk", 0.337) - ambulatoryReduction / 22000),
-          improvementLabel: "Backlog reduction",
-          improvement: ambulatoryReduction,
-        };
-  function updateControl(controlId: string, value: number) {
-    setControlValues((current) => ({ ...current, [controlId]: value }));
+  const [hrCapacity, setHrCapacity] = useState(90);
+  const [financeBudget, setFinanceBudget] = useState(120);
+
+  useEffect(() => {
+    setControlValues((current) => {
+      const next = { ...current };
+      for (const control of data.scenarioLab.controlRanges) {
+        const id = stringValue(control, "control_id");
+        if (!(id in next)) next[id] = numberValue(control, "default_value");
+      }
+      return next;
+    });
+  }, [data.scenarioLab.controlRanges]);
+
+  function updateControl(id: string, value: number) {
+    setControlValues((current) => ({ ...current, [id]: value }));
   }
+
+  const latest = latestOpenContext(data);
+  const baseline = numberValue(scenario, "baseline_value", 320);
+  const defaultScenario = numberValue(scenario, "scenario_value", baseline * 0.8);
+  const rawImpact = controlsForScenario.reduce((total, control) => {
+    const id = stringValue(control, "control_id");
+    const current = controlValues[id] ?? numberValue(control, "default_value");
+    const delta = current - numberValue(control, "default_value");
+    return total + delta * numberValue(control, "impact_per_unit");
+  }, baseline - defaultScenario);
+  const openFactor =
+    (toggles.respiratory ? numberValue(latest, "respiratory_activity_index") * 0.08 : 0) +
+    (toggles.smoke ? numberValue(latest, "aqhi_max_proxy") * 0.008 : 0) +
+    (toggles.school && latest?.school_break_flag ? 0.05 : 0);
+  const hrRequired = numberValue(scenario, "hr_hours_required", 60) + controlsForScenario.reduce((total, control) => total + Math.max(0, (controlValues[stringValue(control, "control_id")] ?? numberValue(control, "default_value")) - numberValue(control, "default_value")) * 0.38, 0);
+  const costRequired = numberValue(scenario, "cost_k_required", 40) + controlsForScenario.reduce((total, control) => total + Math.max(0, (controlValues[stringValue(control, "control_id")] ?? numberValue(control, "default_value")) - numberValue(control, "default_value")) * numberValue(control, "cost_k_per_unit") * 0.18, 0);
+  const hrConstraint = toggles.hrConstraint ? Math.min(1, hrCapacity / Math.max(1, hrRequired)) : 1;
+  const financeConstraint = toggles.financeConstraint ? Math.min(1, financeBudget / Math.max(1, costRequired)) : 1;
+  const constraintFactor = Math.min(hrConstraint, financeConstraint);
+  const impact = Math.max(0, rawImpact * (1 + openFactor) * constraintFactor);
+  const scenarioValue = Math.max(0, baseline - impact);
+  const ciLow = Math.max(0, scenarioValue - Math.max(8, impact * 0.18));
+  const ciHigh = scenarioValue + Math.max(10, impact * 0.24);
+  const affectedUnits = csvIds(scenario.affected_units)
+    .map((id) => data.inpatient.unitDetails.find((row) => stringValue(row, "unit_id") === id))
+    .filter(Boolean) as DataRow[];
+  const affectedPrograms = csvIds(scenario.affected_programs)
+    .map((id) => data.ambulatory.programDetails.find((row) => stringValue(row, "program_id") === id))
+    .filter(Boolean) as DataRow[];
+  const sensitivityRows = controlsForScenario.map((control) => ({
+    coefficient_name: stringValue(control, "control_id"),
+    default_value: Math.abs((controlValues[stringValue(control, "control_id")] ?? numberValue(control, "default_value")) * numberValue(control, "impact_per_unit")) / 100,
+  }));
+
   function storeScenarioRun() {
     addMemoryEvent({
-      event_id: `EVT-LOCAL-${Date.now()}`,
+      event_id: `EVT-SCN-${Date.now()}`,
       event_type: "scenario_run",
       created_at: new Date().toISOString(),
       created_by: "showcase_local_user",
-      app_area: "Scenario Simulation Lab",
-      site_id: "SITE_PROV_NETWORK",
-      unit_or_program: domain,
-      related_ids: `${domain}-interactive-scenario`,
-      related_metric_id: domain === "inpatient" ? "METRIC_OCCUPANCY" : "METRIC_WAITLIST_PRESSURE",
-      related_model_id: domain === "inpatient" ? "INPT_OCCUPANCY_FORECAST" : "AMB_BACKLOG_FORECAST",
-      related_panel_id: "PANEL_SCENARIO_LAB",
-      related_scenario_id: `${domain}-interactive-scenario`,
+      app_area: "Scenario Lab",
+      site_id: context.site,
+      unit_or_program: context.unit !== "All units" ? context.unit : context.program,
+      related_ids: stringValue(scenario, "scenario_id"),
+      related_scenario_id: stringValue(scenario, "scenario_id"),
       status: "captured locally",
-      severity: "low",
-      note: `${domain} what-if captured: ${scenarioOutcomes.improvementLabel} ${Math.round(scenarioOutcomes.improvement).toLocaleString()}.`,
-      payload_json: JSON.stringify({ synthetic_demo: true, showcase_local: true, controls: controlValues, toggles, hrCapacity, financeBudget }),
+      severity: constraintFactor < 0.85 ? "medium" : "low",
+      note: `Baseline ${formatInteger(baseline)} to scenario ${formatInteger(scenarioValue)} with HR ${formatInteger(hrCapacity)} and finance $${formatInteger(financeBudget)}k.`,
+      payload_json: JSON.stringify({ synthetic_demo: true, controlValues, toggles }),
       synthetic_demo_flag: true,
       writeback_table: "APP.SCENARIO_RUN_LOG",
     });
   }
+
   return (
     <section className="dashboard-grid">
-      <Panel span="wide" eyebrow="Interactive Scenario Workspace" title="Move sliders, apply constraints, and compare baseline to what-if outcomes" icon={<SlidersHorizontal size={22} />}>
-        <div className="scenario-workspace-header">
-          <div className="segmented-control" role="group" aria-label="Scenario domain">
-            <button className={domain === "inpatient" ? "active" : ""} onClick={() => setDomain("inpatient")}>
-              Inpatient flow
-            </button>
-            <button className={domain === "ambulatory" ? "active" : ""} onClick={() => setDomain("ambulatory")}>
-              Ambulatory access
-            </button>
-          </div>
-          <div className="scenario-constraint-pills">
-            <span className={totalHr <= hrCapacity ? "ready" : "high"}>
-              <Users size={15} /> {totalHr.toFixed(1)} / {hrCapacity} HR shifts
-            </span>
-            <span className={totalCost <= financeBudget ? "ready" : "high"}>
-              <DollarSign size={15} /> ${Math.round(totalCost)}k / ${financeBudget}k
-            </span>
-            <span className={constraintFactor >= 1 ? "ready" : "review"}>{Math.round(constraintFactor * 100)}% feasible</span>
-          </div>
-        </div>
-        <LineageCard data={data} panelId="PANEL_SCENARIO_LAB" />
+      <Panel span="wide" eyebrow="Interactive scenario lab" title="Baseline-vs-scenario workspace with inpatient, ambulatory, HR, finance, and open-data constraints" icon={<SlidersHorizontal size={22} />}>
+        <p className="section-intro">
+          {contextSummary(data, context)}. Sliders change the outcome immediately; toggles decide whether respiratory, AQHI/smoke, calendar, HR, and finance constraints are applied.
+        </p>
+        <LineageCard data={data} panelId="PANEL_SCENARIO_WORKSPACE" />
       </Panel>
 
-      <Panel span="xlarge" eyebrow="What-if controls" title="Operational levers" icon={<SlidersHorizontal size={22} />}>
+      <Panel span="xlarge" eyebrow="Controls" title={`${stringValue(scenario, "scenario_name", "All scenario anchors")} controls`} icon={<SlidersHorizontal size={22} />}>
         <div className="scenario-control-grid">
-          {controls.map((control) => {
-            const controlId = stringValue(control, "control_id");
-            const value = getValue(control);
+          {controlsForScenario.slice(0, 10).map((control) => {
+            const id = stringValue(control, "control_id");
+            const value = controlValues[id] ?? numberValue(control, "default_value");
             return (
-              <label className="slider-control" key={controlId}>
+              <label className="slider-control" key={id}>
                 <span>
-                  <strong>{stringValue(control, "label")}</strong>
+                  <strong>{titleCase(id)}</strong>
                   <em>
                     {value}
                     {stringValue(control, "unit") ? ` ${stringValue(control, "unit")}` : ""}
@@ -1106,10 +1570,10 @@ export function ScenarioLabPage({
                 </span>
                 <input
                   type="range"
-                  min={numberValue(control, "min")}
-                  max={numberValue(control, "max")}
+                  min={numberValue(control, "min_value")}
+                  max={numberValue(control, "max_value")}
                   value={value}
-                  onChange={(event) => updateControl(controlId, Number(event.target.value))}
+                  onChange={(event) => updateControl(id, Number(event.target.value))}
                 />
               </label>
             );
@@ -1117,10 +1581,11 @@ export function ScenarioLabPage({
         </div>
         <div className="toggle-grid">
           {[
-            ["surgeProtocol", "Respiratory surge protocol"],
-            ["weekendClinics", "Weekend clinic capacity"],
-            ["equityGuardrail", "Equity/travel guardrail"],
-            ["diagnosticHuddle", "Diagnostic huddle routing"],
+            ["respiratory", "Respiratory context"],
+            ["smoke", "AQHI/smoke context"],
+            ["school", "School/holiday calendar"],
+            ["hrConstraint", "HR capacity constraint"],
+            ["financeConstraint", "Finance/resource cap"],
           ].map(([key, label]) => (
             <button
               type="button"
@@ -1138,85 +1603,84 @@ export function ScenarioLabPage({
       <Panel span="normal" eyebrow="Constraints" title="HR and finance feasibility" icon={<DollarSign size={22} />}>
         <label className="slider-control compact">
           <span>
-            <strong>Available HR shifts</strong>
+            <strong>Available HR hours</strong>
             <em>{hrCapacity}</em>
           </span>
-          <input type="range" min={4} max={42} value={hrCapacity} onChange={(event) => setHrCapacity(Number(event.target.value))} />
+          <input type="range" min={20} max={220} value={hrCapacity} onChange={(event) => setHrCapacity(Number(event.target.value))} />
         </label>
         <label className="slider-control compact">
           <span>
             <strong>Finance cap</strong>
             <em>${financeBudget}k</em>
           </span>
-          <input type="range" min={60} max={520} step={10} value={financeBudget} onChange={(event) => setFinanceBudget(Number(event.target.value))} />
+          <input type="range" min={20} max={260} step={5} value={financeBudget} onChange={(event) => setFinanceBudget(Number(event.target.value))} />
         </label>
         <button className="primary-action" onClick={storeScenarioRun}>
           <Plus size={18} />
           Capture what-if
         </button>
-        <p className="muted">Captured what-ifs stay local in the showcase; Snowflake Streamlit writes to APP.SCENARIO_RUN_LOG.</p>
       </Panel>
 
-      <Panel span="xlarge" eyebrow="Baseline vs scenario" title="Live outcome comparison" icon={<GitBranch size={22} />}>
+      <Panel span="xlarge" eyebrow="Baseline vs scenario" title="Live outcome comparison with confidence interval" icon={<GitBranch size={22} />}>
         <div className="comparison-board">
           <article>
-            <span>{scenarioOutcomes.primaryLabel}</span>
+            <span>{titleCase(stringValue(scenario, "primary_outcome", "primary outcome"))}</span>
             <div className="comparison-bars">
               <div>
                 <em>Baseline</em>
-                <strong>{formatInteger(scenarioOutcomes.baselinePrimary)}</strong>
-                <progress max={scenarioOutcomes.baselinePrimary} value={scenarioOutcomes.baselinePrimary} />
+                <strong>{formatInteger(baseline)}</strong>
+                <progress max={baseline} value={baseline} />
               </div>
               <div>
                 <em>Scenario</em>
-                <strong>{formatInteger(scenarioOutcomes.scenarioPrimary)}</strong>
-                <progress max={scenarioOutcomes.baselinePrimary} value={scenarioOutcomes.scenarioPrimary} />
+                <strong>{formatInteger(scenarioValue)}</strong>
+                <progress max={baseline} value={scenarioValue} />
               </div>
             </div>
           </article>
           <article>
-            <span>{scenarioOutcomes.secondaryLabel}</span>
-            <div className="comparison-bars">
-              <div>
-                <em>Baseline</em>
-                <strong>{scenarioOutcomes.baselineSecondary <= 1 ? formatPct(scenarioOutcomes.baselineSecondary) : formatInteger(scenarioOutcomes.baselineSecondary)}</strong>
-                <progress max={1} value={scenarioOutcomes.baselineSecondary <= 1 ? scenarioOutcomes.baselineSecondary : 1} />
-              </div>
-              <div>
-                <em>Scenario</em>
-                <strong>{scenarioOutcomes.scenarioSecondary <= 1 ? formatPct(scenarioOutcomes.scenarioSecondary) : formatInteger(scenarioOutcomes.scenarioSecondary)}</strong>
-                <progress max={1} value={scenarioOutcomes.scenarioSecondary <= 1 ? scenarioOutcomes.scenarioSecondary : Math.min(1, scenarioOutcomes.scenarioSecondary / scenarioOutcomes.baselineSecondary)} />
-              </div>
-            </div>
+            <span>Confidence interval</span>
+            <strong>{formatInteger(ciLow)} to {formatInteger(ciHigh)}</strong>
+            <p>Open-data lift {formatPct(openFactor)}; HR constraint {formatPct(hrConstraint)}; finance constraint {formatPct(financeConstraint)}.</p>
           </article>
           <article className="improvement-card">
-            <span>{scenarioOutcomes.improvementLabel}</span>
-            <strong>{formatInteger(scenarioOutcomes.improvement)}</strong>
+            <span>Improvement</span>
+            <strong>{formatInteger(impact)}</strong>
             <p>{constraintFactor < 1 ? "Constrained by HR or finance. Increase capacity to unlock more impact." : "Within active HR and finance constraints."}</p>
           </article>
         </div>
       </Panel>
 
-      <Panel span="normal" eyebrow="Scenario frontier" title="Precomputed scenario anchors" icon={<Sparkles size={22} />}>
-        <ScenarioFrontier rows={data.scenarioLab.scenarios.filter((row) => stringValue(row, "domain") === domain)} outcomeKey="outcome_value" label="Scenario frontier" />
+      <Panel span="normal" eyebrow="Scenario anchors" title="Click a scenario for trade-offs and affected objects" icon={<Sparkles size={22} />}>
+        <ScenarioFrontier rows={data.scenarioLab.scenarios} outcomeKey="outcome_value" label="Scenario frontier" />
       </Panel>
-
-      <Panel span="wide" eyebrow="Scenario table" title="Readiness, classification, and writeback path" icon={<FileCheck2 size={22} />}>
-        <RegistryTable rows={data.scenarioLab.scenarios} columns={["scenario_id", "domain", "scenario_name", "readiness", "classification", "writeback_table"]} limit={8} />
+      <Panel span="normal" eyebrow="Sensitivity" title="Control sensitivity" icon={<SlidersHorizontal size={22} />}>
+        <SensitivityTornado rows={sensitivityRows} label="Scenario sensitivity tornado" />
       </Panel>
+      <Panel span="normal" eyebrow="Affected units" title="Units most exposed to selected scenario" icon={<BedDouble size={22} />}>
+        <HorizontalBarChart rows={affectedUnits} labelKey="unit_name" valueKey="ed_boarders" label="Affected unit boarders" />
+      </Panel>
+      <Panel span="normal" eyebrow="Affected programs" title="Programs most exposed to selected scenario" icon={<CalendarClock size={22} />}>
+        <HorizontalBarChart rows={affectedPrograms} labelKey="program" valueKey="waitlist_total" label="Affected program waitlists" />
+      </Panel>
+      <Panel span="normal" eyebrow="Open context" title="Public-context assumptions" icon={<DatabaseZap size={22} />}>
+        <OpenContextChart rows={openContextRows(data)} />
+      </Panel>
+      <Panel span="wide" eyebrow="Scenario table" title="Readiness, writeback path, and clickable scenario drawers" icon={<FileCheck2 size={22} />}>
+        <RegistryTable rows={data.scenarioLab.scenarios} columns={["scenario_id", "domain", "scenario_name", "readiness", "classification", "writeback_table"]} limit={10} onSelect={(row) => setDrawer({ kind: "scenario", id: stringValue(row, "scenario_id"), row })} />
+      </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
   );
 }
 
 export function GatekeeperControlPlanePage({ data }: { data: V3Data }) {
   const [mode, setMode] = useState<"lite" | "deep">("lite");
-  const controlRows = useMemo(() => {
-    if (mode === "lite") return data.gatekeeper.controlPlane.filter((row) => stringValue(row, "mode").includes("executive"));
-    return data.gatekeeper.controlPlane;
-  }, [data.gatekeeper.controlPlane, mode]);
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const controlRows = mode === "lite" ? data.gatekeeper.controlPlane.filter((row) => stringValue(row, "mode").includes("executive")) : data.gatekeeper.controlPlane;
   return (
     <section className="dashboard-grid">
-      <Panel span="wide" eyebrow="AHA Gatekeeper Control Plane" title="Govern direct linkages, calculated metrics, model assets, warnings, scenarios, and release decisions" icon={<ShieldCheck size={22} />}>
+      <Panel span="wide" eyebrow="Gatekeeper Control Plane" title="Govern direct linkages, calculated metrics, models, warnings, scenarios, and release decisions" icon={<ShieldCheck size={22} />}>
         <div className="segmented-control" role="group" aria-label="Gatekeeper mode">
           <button className={mode === "lite" ? "active" : ""} onClick={() => setMode("lite")}>
             Executive lite
@@ -1257,22 +1721,33 @@ export function GatekeeperControlPlanePage({ data }: { data: V3Data }) {
       <Panel span="normal" eyebrow="Decision ledger" title="Recent governance decisions" icon={<CheckCircle2 size={22} />}>
         <RegistryTable rows={data.gatekeeper.approvals} columns={["decision_id", "related_id", "decision", "reviewer_role"]} limit={5} />
       </Panel>
-      <Panel span="xlarge" eyebrow="Warning registry" title="Thresholds, acknowledgement, and rollback controls" icon={<AlertTriangle size={22} />}>
+      <Panel span="wide" eyebrow="Warning registry" title="Thresholds, acknowledgement, and rollback controls" icon={<AlertTriangle size={22} />}>
         <RegistryTable rows={data.gatekeeper.warningLogic} columns={["warning_id", "asset_id", "metric_id", "threshold", "severity", "status"]} limit={10} />
       </Panel>
-      <Panel span="normal" eyebrow="Coefficient registry" title="Synthetic parameters requiring review" icon={<ListChecks size={22} />}>
-        <RegistryTable rows={data.gatekeeper.coefficients} columns={["coefficient_id", "coefficient_name", "applies_to", "value", "review_status"]} limit={8} />
+      <Panel span="wide" eyebrow="Data quality and drift" title="Contract checks, validation, and model release gates" icon={<FileCheck2 size={22} />}>
+        <RegistryTable rows={[...data.gatekeeper.dataQualityRules.slice(0, 6), ...data.gatekeeper.validationDrift.slice(0, 6)]} columns={["check_id", "asset_id", "source_id", "rule_name", "status", "release_gate"]} limit={12} />
       </Panel>
-      <Panel span="xlarge" eyebrow="Data quality rules" title="Contract checks behind the readiness stoplight" icon={<FileCheck2 size={22} />}>
-        <RegistryTable rows={data.gatekeeper.dataQualityRules} columns={["check_id", "source_id", "rule_name", "severity", "status", "failed_rows"]} limit={10} />
+      <Panel span="wide" eyebrow="Sources" title="Clickable readiness stoplights" icon={<DatabaseZap size={22} />}>
+        <SourceReadinessTable rows={data.directLinkValidation} limit={24} onSelect={(sourceId) => setDrawer({ kind: "source", id: sourceId })} />
       </Panel>
-      <Panel span="normal" eyebrow="Validation and drift" title="Model release gates" icon={<BrainCircuit size={22} />}>
-        <RegistryTable rows={data.gatekeeper.validationDrift} columns={["asset_id", "primary_metric", "primary_metric_value", "drift_status", "release_gate"]} limit={8} />
-      </Panel>
-      <Panel span="wide" eyebrow="Release and rollback" title="Every modelled asset has a reversible path" icon={<Workflow size={22} />}>
-        <RegistryTable rows={data.gatekeeper.releaseRollback} columns={["release_id", "asset_id", "release_status", "canary_scope", "rollback_trigger"]} limit={10} />
-      </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={{ persona: "", site: "All sites", horizon: "Now", service: "All services", unit: "All units", program: "All programs", scenario: "All scenarios" }} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
+  );
+}
+
+function MemoryEventLog({ events }: { events: DataRow[] }) {
+  return (
+    <div className="memory-log">
+      {events.slice(0, 12).map((event) => (
+        <article key={stringValue(event, "event_id")}>
+          <span>{stringValue(event, "event_type")}</span>
+          <strong>{stringValue(event, "note")}</strong>
+          <em>
+            {stringValue(event, "created_at")} | {stringValue(event, "writeback_table")}
+          </em>
+        </article>
+      ))}
+    </div>
   );
 }
 
@@ -1326,6 +1801,7 @@ export function LearningMemoryPage({
 }
 
 export function FutureWiringPage({ data }: { data: V3Data }) {
+  const [drawer, setDrawer] = useState<DrawerState>(null);
   return (
     <section className="dashboard-grid">
       <Panel span="wide" eyebrow="Future Real-Data Wiring" title="A governed read-only augmentation layer for Connect Care-era operations" icon={<Network size={22} />}>
@@ -1343,11 +1819,12 @@ export function FutureWiringPage({ data }: { data: V3Data }) {
         </div>
       </Panel>
       <Panel span="normal" eyebrow="Direct-link stoplight" title="Source validation checks" icon={<FileCheck2 size={22} />}>
-        <SourceReadinessTable rows={data.directLinkValidation} limit={6} />
+        <SourceReadinessTable rows={data.directLinkValidation} limit={8} onSelect={(sourceId) => setDrawer({ kind: "source", id: sourceId })} />
       </Panel>
-      <Panel span="wide" eyebrow="Curated-view registry" title={`${data.sourceRegistry.length} Connect Care-realistic synthetic wiring placeholders`} icon={<DatabaseZap size={22} />}>
-        <RegistryTable rows={data.sourceRegistry} columns={["source_view_name", "curated_view", "source_domain", "grain", "cadence", "classification"]} limit={80} />
+      <Panel span="wide" eyebrow="Curated-view registry" title={`${data.sourceRegistry.length} synthetic wiring placeholders`} icon={<DatabaseZap size={22} />}>
+        <RegistryTable rows={data.sourceRegistry} columns={["source_view_name", "curated_view", "source_domain", "grain", "cadence", "classification"]} limit={80} onSelect={(row) => setDrawer({ kind: "source", id: stringValue(row, "source_id") })} />
       </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={{ persona: "", site: "All sites", horizon: "Now", service: "All services", unit: "All units", program: "All programs", scenario: "All scenarios" }} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
   );
 }

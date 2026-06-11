@@ -1,15 +1,19 @@
 import { expect, test } from "@playwright/test";
 
 const publicPages = [
-  { button: "System Posture", text: "Today’s Pediatric System Posture" },
-  { button: "Inpatient", text: "Huddle view with source-readiness" },
-  { button: "Ambulatory", text: "Backlog, template capacity" },
-  { button: "Predictive Assets", text: "15 governed synthetic assets" },
-  { button: "Scenarios", text: "Move sliders, apply constraints" },
-  { button: "Gatekeeper", text: "AHA Gatekeeper Control Plane" },
+  { button: "System Posture", text: "Pediatric command centre" },
+  { button: "Inpatient", text: "Inpatient progression hub" },
+  { button: "Ambulatory", text: "Ambulatory access command centre" },
+  { button: "Predictive Assets", text: "Predictive asset layer" },
+  { button: "Scenarios", text: "Interactive scenario lab" },
+  { button: "Gatekeeper", text: "Gatekeeper Control Plane" },
   { button: "Memory", text: "Learning System Memory" },
   { button: "Wiring", text: "Future Real-Data Wiring" },
 ];
+
+function control(page: import("@playwright/test").Page, index: number) {
+  return page.locator(".control-band select").nth(index);
+}
 
 test("production public surface hides internal walkthrough", async ({ page }) => {
   const consoleErrors: string[] = [];
@@ -21,17 +25,17 @@ test("production public surface hides internal walkthrough", async ({ page }) =>
 
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: /Provincial Pediatric Acute Care Intelligence Operating Layer/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Pediatric Command Centre/i })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Product areas" })).not.toContainText("Walkthrough");
-  await expect(page.getByRole("button", { name: /10-minute walkthrough/i })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /walkthrough/i })).toHaveCount(0);
   await expect(page.locator(".status-stack").getByText("Synthetic demonstration data", { exact: true })).toBeVisible();
   expect(consoleErrors).toEqual([]);
 });
 
-test("v3 metadata and all public pages render", async ({ page, request }) => {
-  const metadata = await request.get("/data/v3/metadata.json");
+test("v5 metadata and all public pages render", async ({ page, request }) => {
+  const metadata = await request.get("/data/v5/metadata.json");
   await expect(metadata).toBeOK();
-  expect((await metadata.json()).appVersion).toBe("v3.0");
+  expect((await metadata.json()).appVersion).toBe("v5.0");
 
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Product areas" });
@@ -42,72 +46,115 @@ test("v3 metadata and all public pages render", async ({ page, request }) => {
   }
 });
 
-test("charts render and layout avoids page-level horizontal overflow", async ({ page }) => {
+test("global controls visibly change the active command-centre lens", async ({ page }) => {
   await page.goto("/");
-  const nav = page.getByRole("navigation", { name: "Product areas" });
 
-  await nav.getByRole("button", { name: "Inpatient", exact: true }).click();
-  await expect(page.locator("canvas").first()).toBeVisible();
+  await control(page, 1).selectOption("SITE_STOLLERY_INSPIRED");
+  await expect(page.locator(".section-intro").first()).toContainText("Stollery-inspired");
 
-  await nav.getByRole("button", { name: "Scenarios", exact: true }).click();
-  await expect(page.locator("canvas").first()).toBeVisible();
+  await control(page, 3).selectOption("respiratory");
+  await expect(page.locator(".section-intro").first()).toContainText("Respiratory");
 
-  const hasPageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2);
-  expect(hasPageOverflow).toBe(false);
+  await control(page, 2).selectOption("Next 24 hours");
+  await expect(page.locator(".section-intro").first()).toContainText("Next 24 hours");
+
+  await control(page, 6).selectOption("SCN-HR-FLOAT");
+  await expect(page.locator(".section-intro").first()).toContainText("Deploy pediatric float-pool hours");
+
+  await page.getByRole("navigation", { name: "Product areas" }).getByRole("button", { name: "Inpatient", exact: true }).click();
+  const unitOptions = await control(page, 4).locator("option").evaluateAll((options) => options.map((option) => ({ value: (option as HTMLOptionElement).value, text: option.textContent ?? "" })));
+  const respiratoryUnit = unitOptions.find((option) => option.value !== "All units" && /Respiratory/i.test(option.text));
+  expect(respiratoryUnit).toBeTruthy();
+  await control(page, 4).selectOption(respiratoryUnit!.value);
+  await expect(page.locator(".section-intro").first()).toContainText(respiratoryUnit!.text.trim());
+
+  await page.getByRole("navigation", { name: "Product areas" }).getByRole("button", { name: "Ambulatory", exact: true }).click();
+  await control(page, 5).selectOption("respiratory");
+  await expect(page.locator(".section-intro").first()).toContainText("Respiratory");
 });
 
-test("interactive workspace opens drilldowns and responds to scenario controls", async ({ page }) => {
+test("interactive workspace opens object, source, model, warning, and scenario drawers", async ({ page }) => {
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Product areas" });
 
   await nav.getByRole("button", { name: "Inpatient", exact: true }).click();
-  await page.locator(".drilldown-card").first().click();
+  await page.locator(".object-card").first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByText("Unit Drilldown", { exact: true })).toBeVisible();
-  await expect(page.getByText("Synthetic aggregate unit drilldown.")).toBeVisible();
+  await expect(page.getByText("Capacity", { exact: true })).toBeVisible();
+  await expect(page.getByText("Finance/resource proxy")).toBeVisible();
   await page.getByLabel("Close drawer").click();
 
   await nav.getByRole("button", { name: "Ambulatory", exact: true }).click();
-  await page.locator(".drilldown-card").first().click();
+  await page.locator(".object-card").first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByText("Program Drilldown", { exact: true })).toBeVisible();
-  await expect(page.getByText("Synthetic aggregate program drilldown.")).toBeVisible();
+  await expect(page.getByText("Referrals", { exact: true })).toBeVisible();
+  await expect(page.getByText("Template capacity/gap")).toBeVisible();
   await page.getByLabel("Close drawer").click();
 
   await nav.getByRole("button", { name: "Predictive Assets", exact: true }).click();
   await page.locator(".model-card-button").first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByText("Model Card", { exact: true })).toBeVisible();
-  await expect(page.getByText("Warning logic")).toBeVisible();
-  await expect(page.getByText("Coefficients")).toBeVisible();
-  await expect(page.getByLabel("Close drawer")).toBeVisible();
+  await expect(page.getByText("Source fields")).toBeVisible();
+  await expect(page.getByText("Feature families")).toBeVisible();
+  await expect(page.getByText("Threshold logic")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
 
-  await nav.getByRole("button", { name: "System Posture", exact: true }).click();
-  await page.locator(".source-chip").first().click();
+  await nav.getByRole("button", { name: "Gatekeeper", exact: true }).click();
+  await page.locator(".source-readiness-table button").first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByText("Source Readiness", { exact: true })).toBeVisible();
   await expect(page.getByText("Curated view")).toBeVisible();
   await expect(page.getByText("Fields")).toBeVisible();
-  await expect(page.getByLabel("Close drawer")).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+
+  await nav.getByRole("button", { name: "System Posture", exact: true }).click();
+  await page.locator(".warning-list button").first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByText("Recommended action")).toBeVisible();
+  await page.keyboard.press("Escape");
 
   await nav.getByRole("button", { name: "Scenarios", exact: true }).click();
+  await page.locator(".clickable-row").first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("dialog").getByText("Trade-off", { exact: true })).toBeVisible();
+});
+
+test("scenario sliders, toggles, HR, and finance constraints recompute outputs", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("navigation", { name: "Product areas" }).getByRole("button", { name: "Scenarios", exact: true }).click();
+
+  const before = await page.locator(".improvement-card strong").textContent();
   const firstSlider = page.locator(".slider-control input[type='range']").first();
   await firstSlider.evaluate((slider) => {
+    const input = slider as HTMLInputElement;
     const setValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set;
-    setValue?.call(slider, String(Number(slider.max)));
-    slider.dispatchEvent(new Event("input", { bubbles: true }));
-    slider.dispatchEvent(new Event("change", { bubbles: true }));
+    setValue?.call(input, input.max);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
   });
-  await page.getByRole("button", { name: /Weekend clinic capacity/i }).click();
-  await expect(page.getByText("14 beds")).toBeVisible();
-  await expect(page.getByText("Available HR shifts", { exact: true })).toBeVisible();
+  await expect.poll(async () => page.locator(".improvement-card strong").textContent()).not.toBe(before);
+
+  await page.getByRole("button", { name: /AQHI\/smoke context/i }).click();
+  await expect(page.locator(".comparison-board")).toContainText("HR constraint");
+  await expect(page.getByText("Available HR hours", { exact: true })).toBeVisible();
   await expect(page.getByText("Finance cap", { exact: true })).toBeVisible();
-  await expect(page.locator(".comparison-board")).toContainText("Baseline");
-  await expect(page.locator(".comparison-board")).toContainText("Scenario");
+});
+
+test("at least twenty interactive charts exist across the public workspace and layout avoids horizontal overflow", async ({ page }) => {
+  await page.goto("/");
+  const nav = page.getByRole("navigation", { name: "Product areas" });
+  const pages = ["System Posture", "Inpatient", "Ambulatory", "Predictive Assets", "Scenarios"];
+  let chartCount = 0;
+
+  for (const pageName of pages) {
+    await nav.getByRole("button", { name: pageName, exact: true }).click();
+    await expect(page.locator("canvas").first()).toBeVisible();
+    chartCount += await page.locator("canvas").count();
+  }
+
+  expect(chartCount).toBeGreaterThanOrEqual(20);
+  const hasPageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2);
+  expect(hasPageOverflow).toBe(false);
 });
 
 test("showcase learning memory captures local synthetic events", async ({ page }) => {

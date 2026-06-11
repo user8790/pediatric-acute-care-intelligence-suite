@@ -1,0 +1,110 @@
+{
+  "kpis": [
+    {
+      "label": "Network occupancy",
+      "value": "93.6%",
+      "detail": "Census divided by effective staffed beds after HR constraints",
+      "delta": "+2.5 pts open-context lift",
+      "tone": "watch",
+      "classification": "derived",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    },
+    {
+      "label": "ED boarders",
+      "value": "207",
+      "detail": "Synthetic admissions awaiting pediatric inpatient placement",
+      "delta": "61% public wait-style pressure",
+      "tone": "high",
+      "classification": "direct",
+      "source_ids": "SRC_SYNTH_ED_VISITS,SRC_OPEN_ED_WAIT_TIME_LOGIC",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    },
+    {
+      "label": "HR gap hours",
+      "value": "464h",
+      "detail": "Required minus available role-group hours across visible units",
+      "delta": "HR layer constrains staffed capacity",
+      "tone": "watch",
+      "classification": "HR",
+      "source_ids": "SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_HR_FLOAT_POOL",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    },
+    {
+      "label": "Ambulatory waitlist",
+      "value": "28.3k",
+      "detail": "Program waitlist and TNA pressure across synthetic network",
+      "delta": "60d average TNA",
+      "tone": "watch",
+      "classification": "derived",
+      "source_ids": "SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    },
+    {
+      "label": "Resource pressure",
+      "value": "$2k",
+      "detail": "Marginal operating-resource pressure proxy",
+      "delta": "Finance/resource constraint visible",
+      "tone": "watch",
+      "classification": "finance",
+      "source_ids": "SRC_SYNTH_FINANCE_COST_CENTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    },
+    {
+      "label": "Open-context pressure",
+      "value": "47",
+      "detail": "Respiratory, AQHI/smoke, school calendar, population context",
+      "delta": "AQHI proxy 4.94",
+      "tone": "good",
+      "classification": "open data",
+      "source_ids": "SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    }
+  ],
+  "postureCards": [
+    {
+      "label": "Huddle posture",
+      "value": "Progression hub mode",
+      "detail": "Click any metric, unit, program, warning, source, or model to open object detail.",
+      "tone": "steady"
+    },
+    {
+      "label": "Source readiness",
+      "value": "Green with review pockets",
+      "detail": "HR float pool, resource envelope, AQHI/smoke, and ED wait logic remain synthetic review layers.",
+      "tone": "watch"
+    },
+    {
+      "label": "Public context",
+      "value": "Forecast-affecting",
+      "detail": "Respiratory, AQHI/smoke, and school calendar lifts alter visible forecasts and scenario assumptions.",
+      "tone": "watch"
+    }
+  ],
+  "whyChanged": [
+    {
+      "driver": "Respiratory virus context",
+      "change": "+2.5 occupancy pts",
+      "contribution": 36,
+      "evidence": "Cached Alberta respiratory-virus style context"
+    },
+    {
+      "driver": "AQHI/smoke context",
+      "change": "+2.1 access/respiratory pressure pts",
+      "contribution": 21,
+      "evidence": "Cached AQHI/smoke/weather context"
+    },
+    {
+      "driver": "HR effective-bed constraint",
+      "change": "464 synthetic gap hours",
+      "contribution": 27,
+      "evidence": "Synthetic HR roster and float-pool aggregate"
+    },
+    {
+      "driver": "Finance/resource ceiling",
+      "change": "Scenario feasibility capped",
+      "contribution": 16,
+      "evidence": "Synthetic finance/resource envelope"
+    }
+  ]
+}

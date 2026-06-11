@@ -107,12 +107,39 @@ export type V3Data = {
     phases: DataRow[];
     mappings: DataRow[];
   };
+  commandCenter: {
+    sites: DataRow[];
+    serviceLines: DataRow[];
+    programs: DataRow[];
+    openContext: DataRow[];
+    edWaitLogic: DataRow[];
+    scenarioAssumptions: DataRow[];
+    warnings: DataRow[];
+    lakehouseTables: DataRow[];
+    chartCatalog: string[];
+  };
 };
 
 export type AppContext = {
   persona: string;
   site: string;
   horizon: string;
+  service: string;
+  unit: string;
+  program: string;
+  scenario: string;
+};
+
+export type SelectOption = {
+  value: string;
+  label: string;
+};
+
+export type ControlOptions = {
+  services: SelectOption[];
+  units: SelectOption[];
+  programs: SelectOption[];
+  scenarios: SelectOption[];
 };
 
 export const PERSONAS = [

@@ -429,6 +429,8 @@ footer {
 }
 
 .workspace-metric-tile {
+  grid-column: span 2;
+  min-width: 0;
   min-height: 158px;
   border: 1px solid rgba(33, 47, 60, 0.11);
   border-radius: 8px;
@@ -932,6 +934,8 @@ dd {
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .source-chip {
@@ -949,6 +953,8 @@ dd {
   font-weight: 900;
   text-align: left;
   overflow-wrap: anywhere;
+  position: relative;
+  z-index: 3;
 }
 
 .source-chip span {
@@ -1210,6 +1216,188 @@ dd {
 .phase-grid {
   display: grid;
   gap: 12px;
+}
+
+.object-card-grid,
+.source-readiness-table,
+.warning-list,
+.memory-log {
+  display: grid;
+  gap: 10px;
+}
+
+.object-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.object-card,
+.source-readiness-table button,
+.warning-list button,
+.memory-log article {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dce6eb;
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
+  color: inherit;
+  text-align: left;
+}
+
+.object-card,
+.source-readiness-table button,
+.warning-list button {
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.object-card:hover,
+.source-readiness-table button:hover,
+.warning-list button:hover {
+  border-color: #9cc7d3;
+  box-shadow: 0 12px 24px rgba(33, 47, 60, 0.08);
+  transform: translateY(-1px);
+}
+
+.object-card {
+  display: grid;
+  gap: 8px;
+}
+
+.object-card > span:not(.object-card-heading) {
+  color: #64717b;
+  font-size: 0.83rem;
+  font-weight: 800;
+}
+
+.object-card-heading,
+.source-readiness-table button,
+.warning-list button {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.object-card-heading strong {
+  color: #1d2b34;
+  font-size: 0.96rem;
+}
+
+.object-card dl,
+.model-card dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin: 0;
+}
+
+.object-card dl div,
+.model-card dl div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.object-card dt,
+.model-card dt {
+  color: #69757e;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.object-card dd,
+.model-card dd {
+  min-width: 0;
+  margin: 0;
+  color: #26323b;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.source-readiness-table button {
+  align-items: center;
+}
+
+.source-readiness-table span:first-child {
+  color: #26323b;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.warning-list button {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.warning-list button > span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.warning-list strong {
+  color: #26323b;
+}
+
+.warning-list em,
+.memory-log em {
+  color: #65717a;
+  font-size: 0.79rem;
+  font-style: normal;
+  line-height: 1.38;
+}
+
+.registry-table {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.registry-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.registry-table th,
+.registry-table td {
+  border-bottom: 1px solid #e2e9ee;
+  padding: 9px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.registry-table th {
+  color: #596672;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.registry-table td {
+  color: #26323b;
+  overflow-wrap: anywhere;
+}
+
+.memory-log article {
+  display: grid;
+  gap: 5px;
+}
+
+.memory-log span {
+  color: #176b87;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.memory-log strong {
+  color: #26323b;
 }
 
 .driver-stack article,
@@ -1718,6 +1906,10 @@ footer span {
     grid-column: 1 / -1;
   }
 
+  .workspace-metric-tile {
+    grid-column: span 6;
+  }
+
   .hero-surface {
     grid-template-columns: 1fr;
   }
@@ -1727,6 +1919,7 @@ footer span {
   .bed-state-board,
   .definition-grid,
   .model-card-grid,
+  .object-card-grid,
   .drilldown-card-grid,
   .comparison-board,
   .walkthrough-grid,
@@ -1769,6 +1962,7 @@ footer span {
   .bed-state-board,
   .definition-grid,
   .model-card-grid,
+  .object-card-grid,
   .drilldown-card-grid,
   .scenario-control-grid,
   .toggle-grid,
@@ -1806,5 +2000,9 @@ footer span {
 
   .workspace-drawer {
     padding: 16px;
+  }
+
+  .workspace-metric-tile {
+    grid-column: 1 / -1;
   }
 }

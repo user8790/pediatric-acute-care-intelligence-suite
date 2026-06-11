@@ -148,4 +148,15 @@ export const fallbackV3Data: V3Data = {
     phases: [],
     mappings: [],
   },
+  commandCenter: {
+    sites: [],
+    serviceLines: [],
+    programs: [],
+    openContext: [],
+    edWaitLogic: [],
+    scenarioAssumptions: [],
+    warnings: [],
+    lakehouseTables: [],
+    chartCatalog: [],
+  },
 };

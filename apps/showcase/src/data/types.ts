@@ -64,12 +64,16 @@ export type V3Data = {
   };
   inpatient: {
     unitPressure: DataRow[];
+    unitDetails: DataRow[];
+    unitTimeline: DataRow[];
     flowDrivers: DataRow[];
     forecast: DataRow[];
     warnings: DataRow[];
   };
   ambulatory: {
     programAccess: DataRow[];
+    programDetails: DataRow[];
+    programTimeline: DataRow[];
     noShowFrontier: DataRow[];
     forecast: DataRow[];
     warnings: DataRow[];
@@ -81,6 +85,8 @@ export type V3Data = {
   scenarioLab: {
     scenarios: DataRow[];
     comparisons: DataRow[];
+    baselines: DataRow[];
+    controlRanges: DataRow[];
   };
   gatekeeper: {
     controlPlane: DataRow[];

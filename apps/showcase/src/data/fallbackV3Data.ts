@@ -105,12 +105,16 @@ export const fallbackV3Data: V3Data = {
   },
   inpatient: {
     unitPressure: [],
+    unitDetails: [],
+    unitTimeline: [],
     flowDrivers: [],
     forecast: [],
     warnings: [],
   },
   ambulatory: {
     programAccess: [],
+    programDetails: [],
+    programTimeline: [],
     noShowFrontier: [],
     forecast: [],
     warnings: [],
@@ -122,6 +126,8 @@ export const fallbackV3Data: V3Data = {
   scenarioLab: {
     scenarios: [],
     comparisons: [],
+    baselines: [],
+    controlRanges: [],
   },
   gatekeeper: {
     controlPlane: [],

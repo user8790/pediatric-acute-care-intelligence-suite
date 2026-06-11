@@ -540,33 +540,90 @@ def system_posture() -> dict[str, Any]:
 
 def inpatient_payload() -> dict[str, list[dict[str, Any]]]:
     unit_rows: list[dict[str, Any]] = []
+    unit_details: list[dict[str, Any]] = []
+    unit_timeline: list[dict[str, Any]] = []
     units = [
-        ("Respiratory", 0.99, 0.12, 16, "review"),
-        ("General pediatrics", 0.94, 0.08, 11, "ready"),
-        ("PICU", 0.96, 0.10, 5, "review"),
-        ("NICU", 0.90, 0.06, 3, "ready"),
-        ("Surgery", 0.86, 0.04, 2, "ready"),
-        ("Mental health", 0.92, 0.09, 4, "ready"),
+        ("Respiratory", "acute medicine", 0.99, 0.12, 16, "review"),
+        ("General pediatrics", "acute medicine", 0.94, 0.08, 11, "ready"),
+        ("PICU", "critical care", 0.96, 0.10, 5, "review"),
+        ("NICU", "critical care", 0.90, 0.06, 3, "ready"),
+        ("Surgery", "surgical", 0.86, 0.04, 2, "ready"),
+        ("Mental health", "mental health", 0.92, 0.09, 4, "ready"),
     ]
     for site_id, site_name, _ in SITES:
-        for unit, occupancy, staffing_gap, boarders, readiness in units:
+        site_adjustment = 0.015 if site_id == "SITE_STOLLERY_INSPIRED" else -0.008 if site_id == "SITE_ACH_INSPIRED" else 0
+        for unit_index, (unit, service_line, occupancy, staffing_gap, boarders, readiness) in enumerate(units):
+            adjusted_occupancy = occupancy + site_adjustment
+            unit_id = f"{site_id.replace('SITE_', '')}_{unit.upper().replace(' ', '_').replace('/', '_')}"
+            effective_beds = 24 + unit_index * 4 + (8 if service_line == "critical care" else 0)
+            staffed_beds = round(effective_beds * (1 + staffing_gap))
+            census = round(adjusted_occupancy * effective_beds)
             unit_rows.append(
                 {
                     "site_id": site_id,
                     "site_name": site_name,
+                    "unit_id": unit_id,
                     "unit_name": unit,
+                    "service_line": service_line,
                     "occupancy_pct": occupancy + (0.015 if site_id == "SITE_STOLLERY_INSPIRED" else -0.008 if site_id == "SITE_ACH_INSPIRED" else 0),
                     "staffing_gap_pct": staffing_gap,
                     "ed_boarders": boarders,
                     "effective_beds_lost": round(staffing_gap * 42),
+                    "census": census,
+                    "effective_beds": effective_beds,
+                    "staffed_beds": staffed_beds,
                     "source_readiness": readiness,
                     "classification": "derived",
                     "freshness": "15 min",
                     "confidence": "medium-high",
                     "caveat": "Synthetic unit pressure; small cells suppressed.",
                     "lineage_panel_id": "PANEL_INPATIENT_COMMAND",
+                    "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_STAFFING_ROSTER,SRC_SYNTH_ED_VISITS",
                 }
             )
+            unit_details.append(
+                {
+                    "site_id": site_id,
+                    "site_name": site_name,
+                    "unit_id": unit_id,
+                    "unit_name": unit,
+                    "service_line": service_line,
+                    "level_of_care_mix": "critical care weighted" if service_line == "critical care" else "acute inpatient weighted",
+                    "census": census,
+                    "effective_beds": effective_beds,
+                    "physical_beds": effective_beds + round(staffing_gap * 18) + 2,
+                    "staffed_beds": staffed_beds,
+                    "isolation_blocked_beds": max(0, round(adjusted_occupancy * 5) - 2),
+                    "observation_level_pressure": round(0.18 + staffing_gap + unit_index * 0.015, 3),
+                    "respiratory_support_count": max(1, round(census * (0.22 if unit == "Respiratory" else 0.08))),
+                    "transfer_in_requests": max(0, boarders // 4 + (2 if service_line == "critical care" else 0)),
+                    "step_down_ready": max(0, round(boarders * (0.34 if service_line == "critical care" else 0.12))),
+                    "discharge_barriers": max(2, round(census * (0.16 + staffing_gap))),
+                    "pharmacy_pending": max(1, round(census * 0.08)),
+                    "transport_pending": max(1, round(census * 0.05)),
+                    "staffing_gap_hours": round(staffing_gap * 180, 1),
+                    "skill_mix_gap": "RN/RRT" if unit in {"Respiratory", "PICU"} else "RN/clinical aide",
+                    "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_LEVEL_OF_CARE,SRC_SYNTH_ISOLATION_STATUS,SRC_SYNTH_STAFFING_ROSTER,SRC_SYNTH_WORKLOAD_ACUITY,SRC_SYNTH_DISCHARGE_BARRIERS",
+                    "primary_metric_ids": "METRIC_OCCUPANCY,METRIC_EFFECTIVE_STAFFED_BEDS,METRIC_DISCHARGE_RELIABILITY",
+                    "model_ids": "INPT_OCCUPANCY_FORECAST,ED_BOARDING_FORECAST,DISCHARGE_BY_TIME_BAND",
+                    "caveat": "Synthetic aggregate unit drilldown. No patient-level rows, direct identifiers, or clinical decisioning.",
+                }
+            )
+            for horizon_index, horizon in enumerate([0, 6, 12, 24, 36, 48, 60, 72]):
+                relief = max(0, horizon_index - 2) * 0.006
+                unit_timeline.append(
+                    {
+                        "site_id": site_id,
+                        "unit_id": unit_id,
+                        "unit_name": unit,
+                        "horizon_hours": horizon,
+                        "occupancy_pct": round(min(1.08, adjusted_occupancy + horizon_index * 0.008 - relief), 3),
+                        "ed_boarders": max(0, boarders + horizon_index - round(relief * 40)),
+                        "staffing_gap_pct": round(max(0.01, staffing_gap + (0.01 if horizon in {12, 24} else -0.004 if horizon >= 48 else 0)), 3),
+                        "discharge_expected": max(1, round(census * (0.05 + horizon_index * 0.018))),
+                        "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_ED_VISITS,SRC_SYNTH_DISCHARGE_MILESTONES",
+                    }
+                )
     flow_drivers = [
         {"driver": "Pharmacy discharge barrier", "active_count": 38, "median_age_hours": 17.2, "readiness": "ready", "classification": "derived"},
         {"driver": "Transport and portering", "active_count": 31, "median_age_hours": 13.5, "readiness": "ready", "classification": "derived"},
@@ -581,7 +638,14 @@ def inpatient_payload() -> dict[str, list[dict[str, Any]]]:
         {"warning_id": "WARN-INPT-001", "severity": "high", "asset_id": "PICU_NICU_PRESSURE", "message": "PICU/NICU pressure above governed synthetic threshold; review transfer-in and step-down queue.", "status": "acknowledgement required"},
         {"warning_id": "WARN-INPT-002", "severity": "medium", "asset_id": "DISCHARGE_BY_TIME_BAND", "message": "16:00 discharge confidence below synthetic target; review pharmacy and transport barriers.", "status": "open"},
     ]
-    return {"unitPressure": unit_rows, "flowDrivers": flow_drivers, "forecast": forecast, "warnings": warnings}
+    return {
+        "unitPressure": unit_rows,
+        "unitDetails": unit_details,
+        "unitTimeline": unit_timeline,
+        "flowDrivers": flow_drivers,
+        "forecast": forecast,
+        "warnings": warnings,
+    }
 
 
 def ambulatory_payload() -> dict[str, list[dict[str, Any]]]:
@@ -596,9 +660,13 @@ def ambulatory_payload() -> dict[str, list[dict[str, Any]]]:
     ]
     access: list[dict[str, Any]] = []
     frontier: list[dict[str, Any]] = []
-    for program, waitlist, tna, breach, readiness, source_ready in programs:
+    program_details: list[dict[str, Any]] = []
+    program_timeline: list[dict[str, Any]] = []
+    for program_index, (program, waitlist, tna, breach, readiness, source_ready) in enumerate(programs):
+        program_id = f"PROGRAM_{program.upper().replace(' ', '_').replace('-', '_')}"
         access.append(
             {
+                "program_id": program_id,
                 "program": program,
                 "waitlist_total": waitlist,
                 "third_next_available_days": tna,
@@ -610,6 +678,7 @@ def ambulatory_payload() -> dict[str, list[dict[str, Any]]]:
                 "confidence": "medium",
                 "caveat": "Synthetic aggregate access metrics; no patient-level display.",
                 "lineage_panel_id": "PANEL_AMBULATORY_COMMAND",
+                "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_APPOINTMENTS,SRC_SYNTH_DIAGNOSTIC_READINESS",
             }
         )
         frontier.append(
@@ -622,6 +691,46 @@ def ambulatory_payload() -> dict[str, list[dict[str, Any]]]:
                 "asset_id": "NO_SHOW_LATE_CANCEL_RISK",
             }
         )
+        program_details.append(
+            {
+                "program_id": program_id,
+                "program": program,
+                "site_scope": "provincial synthetic aggregate",
+                "waitlist_total": waitlist,
+                "urgent_waitlist": round(waitlist * (0.13 + breach * 0.1)),
+                "over_target_count": round(waitlist * (0.22 + breach * 0.2)),
+                "third_next_available_days": tna,
+                "p90_wait_days": round(tna * (1.8 + breach)),
+                "new_referrals_4wk": round(waitlist * (0.11 + program_index * 0.006)),
+                "triage_median_days": round(3 + breach * 16),
+                "slots_available_4wk": round(waitlist * (0.08 + readiness * 0.03)),
+                "protected_urgent_slots": round(18 + breach * 52),
+                "no_show_rate": round(0.08 + breach * 0.18, 3),
+                "late_cancel_rate": round(0.04 + breach * 0.07, 3),
+                "diagnostic_readiness": readiness,
+                "missing_prerequisites": round(waitlist * (1 - readiness) * 0.24),
+                "virtual_suitability": round(0.18 + readiness * 0.42, 3),
+                "travel_burden_index": round(0.22 + program_index * 0.08 + breach * 0.3, 3),
+                "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_SLOTS,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_VIRTUAL_CARE_SUITABILITY",
+                "primary_metric_ids": "METRIC_WAITLIST_PRESSURE,METRIC_THIRD_NEXT_AVAILABLE,METRIC_NO_SHOW_GUARDRAIL,METRIC_DIAGNOSTIC_READINESS",
+                "model_ids": "AMB_REFERRAL_DEMAND_FORECAST,AMB_BACKLOG_FORECAST,URGENT_WAITLIST_BREACH_RISK,DIAGNOSTIC_READINESS_RISK",
+                "caveat": "Synthetic aggregate program drilldown. No patient-level rows, direct identifiers, or automated scheduling action.",
+            }
+        )
+        for week_index, week in enumerate([0, 1, 2, 4, 8, 13, 18, 26]):
+            scenario_relief = max(0, week_index - 2) * (12 + readiness * 8)
+            program_timeline.append(
+                {
+                    "program_id": program_id,
+                    "program": program,
+                    "horizon_weeks": week,
+                    "waitlist_total": max(100, round(waitlist + week * (12 + breach * 18) - scenario_relief)),
+                    "third_next_available_days": max(10, round(tna + week * 0.5 - scenario_relief * 0.05)),
+                    "urgent_breach_risk": round(min(0.72, max(0.04, breach + week_index * 0.012 - readiness * 0.03)), 3),
+                    "diagnostic_readiness": round(min(0.96, readiness + week_index * 0.012), 3),
+                    "source_ids": "SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_DIAGNOSTIC_READINESS",
+                }
+            )
     forecast = [
         {"horizon_weeks": week, "backlog_forecast": 9100 + week * 18 - (120 if week >= 8 else 0), "p10": 8700 + week * 10, "p90": 9600 + week * 28, "asset_id": "AMB_BACKLOG_FORECAST"}
         for week in [1, 2, 4, 8, 13, 26]
@@ -630,7 +739,14 @@ def ambulatory_payload() -> dict[str, list[dict[str, Any]]]:
         {"warning_id": "WARN-AMB-001", "severity": "medium", "asset_id": "URGENT_WAITLIST_BREACH_RISK", "message": "Neurology and mental health urgent breach risk exceeds synthetic huddle threshold.", "status": "open"},
         {"warning_id": "WARN-AMB-002", "severity": "medium", "asset_id": "DIAGNOSTIC_READINESS_RISK", "message": "Diagnostic readiness is constraining complex care and diagnostic procedure access.", "status": "validation hold"},
     ]
-    return {"programAccess": access, "noShowFrontier": frontier, "forecast": forecast, "warnings": warnings}
+    return {
+        "programAccess": access,
+        "programDetails": program_details,
+        "programTimeline": program_timeline,
+        "noShowFrontier": frontier,
+        "forecast": forecast,
+        "warnings": warnings,
+    }
 
 
 def predictive_assets_payload() -> dict[str, list[dict[str, Any]]]:
@@ -662,7 +778,41 @@ def scenario_lab_payload() -> dict[str, list[dict[str, Any]]]:
         {"comparison_id": "CMP-001", "name": "Flow reliability bundle", "baseline": "186 boarder hours", "scenario": "128 boarder hours", "decision": "candidate for huddle review"},
         {"comparison_id": "CMP-002", "name": "Access recovery bundle", "baseline": "8,940 backlog", "scenario": "8,060 backlog", "decision": "candidate for program review"},
     ]
-    return {"scenarios": scenarios, "comparisons": comparisons}
+    baselines = [
+        {
+            "domain": "inpatient",
+            "boarder_hours": 186,
+            "occupancy_pct": 0.934,
+            "effective_beds": 318,
+            "staff_gap_hours": 182,
+            "operating_cost_k": 0,
+            "hr_shifts": 0,
+            "finance_budget_k": 280,
+            "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_ED_VISITS,SRC_SYNTH_STAFFING_ROSTER,SRC_SYNTH_DISCHARGE_BARRIERS",
+        },
+        {
+            "domain": "ambulatory",
+            "backlog": 8940,
+            "urgent_breach_risk": 0.337,
+            "third_next_available_days": 71,
+            "recovered_slots": 0,
+            "operating_cost_k": 0,
+            "hr_shifts": 0,
+            "finance_budget_k": 220,
+            "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_DIAGNOSTIC_READINESS",
+        },
+    ]
+    control_ranges = [
+        {"control_id": "stepdown_beds", "domain": "inpatient", "label": "Protected step-down beds", "min": 0, "max": 14, "default": 5, "unit": "beds", "hr_per_unit": 0.7, "cost_k_per_unit": 4.2, "source_id": "SRC_SYNTH_LEVEL_OF_CARE"},
+        {"control_id": "pharmacy_acceleration", "domain": "inpatient", "label": "Pharmacy acceleration", "min": 0, "max": 35, "default": 12, "unit": "% faster", "hr_per_unit": 0.08, "cost_k_per_unit": 0.9, "source_id": "SRC_SYNTH_PHARMACY_DISCHARGE_MED_STATUS"},
+        {"control_id": "staffing_shifts", "domain": "inpatient", "label": "Added staffing shifts", "min": 0, "max": 28, "default": 8, "unit": "shifts", "hr_per_unit": 1.0, "cost_k_per_unit": 3.1, "source_id": "SRC_SYNTH_STAFFING_GAPS"},
+        {"control_id": "surge_beds", "domain": "inpatient", "label": "Respiratory surge conversion", "min": 0, "max": 12, "default": 4, "unit": "beds", "hr_per_unit": 1.5, "cost_k_per_unit": 6.7, "source_id": "SRC_OPEN_RESPIRATORY_ACTIVITY"},
+        {"control_id": "urgent_slots", "domain": "ambulatory", "label": "Protected urgent slots", "min": 0, "max": 160, "default": 48, "unit": "slots", "hr_per_unit": 0.08, "cost_k_per_unit": 0.55, "source_id": "SRC_SYNTH_CLINIC_SLOTS"},
+        {"control_id": "virtual_conversion", "domain": "ambulatory", "label": "Virtual-suitable conversion", "min": 0, "max": 30, "default": 10, "unit": "%", "hr_per_unit": 0.12, "cost_k_per_unit": 1.2, "source_id": "SRC_SYNTH_VIRTUAL_CARE_SUITABILITY"},
+        {"control_id": "diagnostic_huddle", "domain": "ambulatory", "label": "Diagnostic readiness lift", "min": 0, "max": 35, "default": 14, "unit": "%", "hr_per_unit": 0.18, "cost_k_per_unit": 1.8, "source_id": "SRC_SYNTH_DIAGNOSTIC_READINESS"},
+        {"control_id": "guarded_overbook", "domain": "ambulatory", "label": "Guardrailed overbook", "min": 0, "max": 8, "default": 3, "unit": "%", "hr_per_unit": 0.22, "cost_k_per_unit": 1.1, "source_id": "SRC_SYNTH_NO_SHOW_LATE_CANCEL"},
+    ]
+    return {"scenarios": scenarios, "comparisons": comparisons, "baselines": baselines, "controlRanges": control_ranges}
 
 
 def warning_logic_registry() -> list[dict[str, Any]]:
@@ -1013,7 +1163,11 @@ def main() -> None:
     write_csv("v3_release_rollback.csv", releases)
     write_csv("v3_scenarios.csv", scenarios["scenarios"])
     write_csv("v3_inpatient_unit_pressure.csv", inpatient["unitPressure"])
+    write_csv("v3_inpatient_unit_details.csv", inpatient["unitDetails"])
+    write_csv("v3_inpatient_unit_timeline.csv", inpatient["unitTimeline"])
     write_csv("v3_ambulatory_program_access.csv", ambulatory["programAccess"])
+    write_csv("v3_ambulatory_program_details.csv", ambulatory["programDetails"])
+    write_csv("v3_ambulatory_program_timeline.csv", ambulatory["programTimeline"])
     print(f"Wrote v3 frontier assets to {OUT}")
 
 

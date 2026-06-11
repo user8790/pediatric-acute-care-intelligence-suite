@@ -271,6 +271,29 @@ def test_v3_gatekeeper_has_expanded_registries():
         assert gatekeeper[key], key
 
 
+def test_v3_workspace_has_drilldown_source_layers_and_scenario_controls():
+    inpatient = load_json("inpatient_intelligence.json")
+    ambulatory = load_json("ambulatory_intelligence.json")
+    scenarios = load_json("scenario_lab.json")
+
+    assert len(inpatient["unitDetails"]) >= 12
+    assert len(inpatient["unitTimeline"]) >= len(inpatient["unitDetails"]) * 6
+    assert len(ambulatory["programDetails"]) >= 6
+    assert len(ambulatory["programTimeline"]) >= len(ambulatory["programDetails"]) * 6
+    assert {row["domain"] for row in scenarios["baselines"]} == {"inpatient", "ambulatory"}
+    assert {row["domain"] for row in scenarios["controlRanges"]} == {"inpatient", "ambulatory"}
+
+    for row in inpatient["unitDetails"] + ambulatory["programDetails"]:
+        assert row["source_ids"]
+        assert row["primary_metric_ids"]
+        assert row["model_ids"]
+        assert "synthetic aggregate" in row["caveat"].lower()
+
+    for control in scenarios["controlRanges"]:
+        assert control["min"] <= control["default"] <= control["max"]
+        assert control["source_id"].startswith("SRC_")
+
+
 def test_v3_assets_do_not_contain_direct_identifiers():
     text = "\n".join(path.read_text(encoding="utf-8") for path in V3_DIR.glob("*.json"))
     forbidden_patterns = [

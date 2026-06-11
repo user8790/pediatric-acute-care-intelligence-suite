@@ -94,5 +94,127 @@
       "scenario": "8,060 backlog",
       "decision": "candidate for program review"
     }
+  ],
+  "baselines": [
+    {
+      "domain": "inpatient",
+      "boarder_hours": 186,
+      "occupancy_pct": 0.934,
+      "effective_beds": 318,
+      "staff_gap_hours": 182,
+      "operating_cost_k": 0,
+      "hr_shifts": 0,
+      "finance_budget_k": 280,
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_ED_VISITS,SRC_SYNTH_STAFFING_ROSTER,SRC_SYNTH_DISCHARGE_BARRIERS"
+    },
+    {
+      "domain": "ambulatory",
+      "backlog": 8940,
+      "urgent_breach_risk": 0.337,
+      "third_next_available_days": 71,
+      "recovered_slots": 0,
+      "operating_cost_k": 0,
+      "hr_shifts": 0,
+      "finance_budget_k": 220,
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_DIAGNOSTIC_READINESS"
+    }
+  ],
+  "controlRanges": [
+    {
+      "control_id": "stepdown_beds",
+      "domain": "inpatient",
+      "label": "Protected step-down beds",
+      "min": 0,
+      "max": 14,
+      "default": 5,
+      "unit": "beds",
+      "hr_per_unit": 0.7,
+      "cost_k_per_unit": 4.2,
+      "source_id": "SRC_SYNTH_LEVEL_OF_CARE"
+    },
+    {
+      "control_id": "pharmacy_acceleration",
+      "domain": "inpatient",
+      "label": "Pharmacy acceleration",
+      "min": 0,
+      "max": 35,
+      "default": 12,
+      "unit": "% faster",
+      "hr_per_unit": 0.08,
+      "cost_k_per_unit": 0.9,
+      "source_id": "SRC_SYNTH_PHARMACY_DISCHARGE_MED_STATUS"
+    },
+    {
+      "control_id": "staffing_shifts",
+      "domain": "inpatient",
+      "label": "Added staffing shifts",
+      "min": 0,
+      "max": 28,
+      "default": 8,
+      "unit": "shifts",
+      "hr_per_unit": 1.0,
+      "cost_k_per_unit": 3.1,
+      "source_id": "SRC_SYNTH_STAFFING_GAPS"
+    },
+    {
+      "control_id": "surge_beds",
+      "domain": "inpatient",
+      "label": "Respiratory surge conversion",
+      "min": 0,
+      "max": 12,
+      "default": 4,
+      "unit": "beds",
+      "hr_per_unit": 1.5,
+      "cost_k_per_unit": 6.7,
+      "source_id": "SRC_OPEN_RESPIRATORY_ACTIVITY"
+    },
+    {
+      "control_id": "urgent_slots",
+      "domain": "ambulatory",
+      "label": "Protected urgent slots",
+      "min": 0,
+      "max": 160,
+      "default": 48,
+      "unit": "slots",
+      "hr_per_unit": 0.08,
+      "cost_k_per_unit": 0.55,
+      "source_id": "SRC_SYNTH_CLINIC_SLOTS"
+    },
+    {
+      "control_id": "virtual_conversion",
+      "domain": "ambulatory",
+      "label": "Virtual-suitable conversion",
+      "min": 0,
+      "max": 30,
+      "default": 10,
+      "unit": "%",
+      "hr_per_unit": 0.12,
+      "cost_k_per_unit": 1.2,
+      "source_id": "SRC_SYNTH_VIRTUAL_CARE_SUITABILITY"
+    },
+    {
+      "control_id": "diagnostic_huddle",
+      "domain": "ambulatory",
+      "label": "Diagnostic readiness lift",
+      "min": 0,
+      "max": 35,
+      "default": 14,
+      "unit": "%",
+      "hr_per_unit": 0.18,
+      "cost_k_per_unit": 1.8,
+      "source_id": "SRC_SYNTH_DIAGNOSTIC_READINESS"
+    },
+    {
+      "control_id": "guarded_overbook",
+      "domain": "ambulatory",
+      "label": "Guardrailed overbook",
+      "min": 0,
+      "max": 8,
+      "default": 3,
+      "unit": "%",
+      "hr_per_unit": 0.22,
+      "cost_k_per_unit": 1.1,
+      "source_id": "SRC_SYNTH_NO_SHOW_LATE_CANCEL"
+    }
   ]
 }

@@ -1,0 +1,148 @@
+{
+  "rows": [
+    {
+      "metric_id": "METRIC_OCCUPANCY",
+      "name": "Network occupancy",
+      "formula": "sum(census) / sum(effective_beds)",
+      "source_fields": "SRC_UNIT_CENSUS,SRC_BED_STATUS",
+      "cadence": "hourly",
+      "owner": "Patient Flow",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "direct"
+    },
+    {
+      "metric_id": "METRIC_ED_BOARDING",
+      "name": "ED boarder hours",
+      "formula": "sum(boarder_count * elapsed_hours)",
+      "source_fields": "SRC_ED_BOARDING,SRC_ADT_ENCOUNTER",
+      "cadence": "15 minutes",
+      "owner": "ED/Inpatient",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    },
+    {
+      "metric_id": "METRIC_DISCHARGE_RELIABILITY",
+      "name": "Discharge reliability",
+      "formula": "completed_discharges_by_1600 / expected_discharges",
+      "source_fields": "SRC_DISCHARGE_MILESTONE",
+      "cadence": "hourly",
+      "owner": "Patient Flow",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    },
+    {
+      "metric_id": "METRIC_EFFECTIVE_STAFFED_BEDS",
+      "name": "Effective staffed beds",
+      "formula": "physical_beds * staffing_factor * isolation_factor",
+      "source_fields": "SRC_BED_STATUS,SRC_STAFFING_ROSTER,SRC_WORKLOAD_ACUITY",
+      "cadence": "hourly",
+      "owner": "Operations",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    },
+    {
+      "metric_id": "METRIC_PICU_NICU_PRESSURE",
+      "name": "PICU/NICU pressure",
+      "formula": "weighted occupancy + transfer demand + step-down constraint",
+      "source_fields": "SRC_UNIT_CENSUS,SRC_TRANSFER_REQUEST",
+      "cadence": "hourly",
+      "owner": "Critical Care",
+      "validation": "review",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    },
+    {
+      "metric_id": "METRIC_OR_CANCELLATION_RISK",
+      "name": "OR cancellation risk",
+      "formula": "post-op bed demand gap + PACU hold + staffing constraint",
+      "source_fields": "SRC_OR_PACU,SRC_UNIT_CENSUS",
+      "cadence": "daily",
+      "owner": "Perioperative",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "modelled"
+    },
+    {
+      "metric_id": "METRIC_WAITLIST_PRESSURE",
+      "name": "Waitlist pressure",
+      "formula": "weighted over-target referrals by priority and age",
+      "source_fields": "SRC_WAITLIST,SRC_REFERRAL",
+      "cadence": "weekly",
+      "owner": "Ambulatory",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    },
+    {
+      "metric_id": "METRIC_THIRD_NEXT_AVAILABLE",
+      "name": "Third next available",
+      "formula": "third open eligible appointment slot from clinic template",
+      "source_fields": "SRC_CLINIC_TEMPLATE,SRC_APPOINTMENT",
+      "cadence": "weekly",
+      "owner": "Ambulatory",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    },
+    {
+      "metric_id": "METRIC_NO_SHOW_GUARDRAIL",
+      "name": "No-show guardrail",
+      "formula": "predicted missed visits constrained by equity and priority rules",
+      "source_fields": "SRC_APPOINTMENT,SRC_REFERRAL",
+      "cadence": "daily",
+      "owner": "Ambulatory",
+      "validation": "review",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "modelled"
+    },
+    {
+      "metric_id": "METRIC_DIAGNOSTIC_READINESS",
+      "name": "Diagnostic readiness",
+      "formula": "complete dependencies / required dependencies",
+      "source_fields": "SRC_DIAGNOSTIC_DEPENDENCY",
+      "cadence": "daily",
+      "owner": "Ambulatory",
+      "validation": "review",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    },
+    {
+      "metric_id": "METRIC_SURVEILLANCE_WARNING",
+      "name": "Clinical surveillance warning",
+      "formula": "synthetic signal above governed threshold",
+      "source_fields": "SRC_SAFETY_QUALITY_SIGNAL,SRC_MODEL_OUTPUT",
+      "cadence": "daily",
+      "owner": "Surveillance",
+      "validation": "review",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "modelled"
+    },
+    {
+      "metric_id": "METRIC_GATEKEEPER_HEALTH",
+      "name": "Governance control health",
+      "formula": "ready assets / active assets with unresolved issues weighted by severity",
+      "source_fields": "SRC_GOVERNANCE_EVENTS,SRC_MODEL_OUTPUT",
+      "cadence": "event-driven",
+      "owner": "Analytics Governance",
+      "validation": "approved",
+      "caveat": "Synthetic metric card; local definition review required before production adoption.",
+      "reviewed_date": "2026-06-11",
+      "classification": "derived"
+    }
+  ]
+}

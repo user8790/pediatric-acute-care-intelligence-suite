@@ -1,0 +1,38 @@
+-- v3 synthetic source layer. Synthetic demonstration data only.
+USE DATABASE PEDIATRIC_AHA_DEMO;
+
+CREATE SCHEMA IF NOT EXISTS RAW_SYNTH;
+CREATE SCHEMA IF NOT EXISTS CANONICAL;
+CREATE SCHEMA IF NOT EXISTS MART;
+CREATE SCHEMA IF NOT EXISTS MODEL;
+CREATE SCHEMA IF NOT EXISTS CONFIG;
+CREATE SCHEMA IF NOT EXISTS GOVERNANCE;
+CREATE SCHEMA IF NOT EXISTS APP;
+CREATE SCHEMA IF NOT EXISTS QUALITY;
+CREATE SCHEMA IF NOT EXISTS OPEN_DATA;
+
+CREATE OR REPLACE TABLE GOVERNANCE.V3_SOURCE_REGISTRY (
+  source_id STRING,
+  curated_view STRING,
+  grain STRING,
+  fields STRING,
+  field_types STRING,
+  cadence STRING,
+  classification STRING,
+  phi_sensitivity STRING,
+  dashboard_usage STRING,
+  validation_rules STRING,
+  future_mapping_placeholder STRING
+);
+
+CREATE OR REPLACE TABLE RAW_SYNTH.V3_OPERATIONAL_SIGNAL (
+  signal_id STRING,
+  source_id STRING,
+  event_ts TIMESTAMP_NTZ,
+  site_id STRING,
+  unit_or_program STRING,
+  metric_name STRING,
+  metric_value FLOAT,
+  payload_json VARIANT,
+  synthetic_demo_flag BOOLEAN
+);

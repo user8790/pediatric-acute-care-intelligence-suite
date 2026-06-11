@@ -1,0 +1,146 @@
+{
+  "phases": [
+    {
+      "phase": "1. Read-only curated views",
+      "scope": "Census, ADT events, bed status, waitlist snapshots, referral demand",
+      "governance_gate": "source readiness stoplight all green"
+    },
+    {
+      "phase": "2. Derived marts",
+      "scope": "Metric registry, coefficient registry, operational marts, quality checks",
+      "governance_gate": "metric owner review and small-cell suppression"
+    },
+    {
+      "phase": "3. Modelled assets",
+      "scope": "Forecasts, warning logic, scenario coefficients, model cards",
+      "governance_gate": "validation, calibration, alert-burden, rollback"
+    },
+    {
+      "phase": "4. Learning writeback",
+      "scope": "Scenario runs, annotations, acknowledgements, review decisions, outcome reviews",
+      "governance_gate": "Snowflake APP/GOVERNANCE write privileges and audit policy"
+    }
+  ],
+  "mappings": [
+    {
+      "source_id": "SRC_ADT_ENCOUNTER",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_01",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_BED_STATUS",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_02",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_UNIT_CENSUS",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_03",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_ED_BOARDING",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_04",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_DISCHARGE_MILESTONE",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_05",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_OR_PACU",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_06",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_TRANSFER_REQUEST",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_07",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_STAFFING_ROSTER",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_08",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_WORKLOAD_ACUITY",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_09",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_REFERRAL",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_10",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_WAITLIST",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_11",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_CLINIC_TEMPLATE",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_12",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_APPOINTMENT",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_13",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_DIAGNOSTIC_DEPENDENCY",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_14",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_SAFETY_QUALITY_SIGNAL",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_15",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_PUBLIC_RESPIRATORY",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_16",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_PUBLIC_WEATHER_AQHI",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_17",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_MODEL_OUTPUT",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_18",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_GOVERNANCE_EVENTS",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_19",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_LEARNING_MEMORY",
+      "future_mapping_placeholder": "CONNECTCARE_OR_ENTERPRISE_MAPPING_TBD_20",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    }
+  ]
+}

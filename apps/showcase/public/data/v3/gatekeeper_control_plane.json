@@ -1,0 +1,212 @@
+{
+  "controlPlane": [
+    {
+      "area": "Direct source readiness",
+      "ready": 17,
+      "review": 3,
+      "blocked": 0,
+      "mode": "executive lite"
+    },
+    {
+      "area": "Metric definitions",
+      "ready": 9,
+      "review": 3,
+      "blocked": 0,
+      "mode": "technical deep"
+    },
+    {
+      "area": "Model cards",
+      "ready": 10,
+      "review": 5,
+      "blocked": 0,
+      "mode": "technical deep"
+    },
+    {
+      "area": "Warning logic",
+      "ready": 6,
+      "review": 4,
+      "blocked": 0,
+      "mode": "executive lite"
+    },
+    {
+      "area": "Learning writebacks",
+      "ready": 10,
+      "review": 0,
+      "blocked": 0,
+      "mode": "technical deep"
+    }
+  ],
+  "dependencyEdges": [
+    {
+      "from": "SRC_ADT_ENCOUNTER",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_BED_STATUS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_UNIT_CENSUS",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_ED_BOARDING",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_DISCHARGE_MILESTONE",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_OR_PACU",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_TRANSFER_REQUEST",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_STAFFING_ROSTER",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_WORKLOAD_ACUITY",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "SRC_REFERRAL",
+      "to": "PANEL_SYSTEM_POSTURE",
+      "relationship": "feeds direct readiness"
+    },
+    {
+      "from": "INPT_OCCUPANCY_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "ED_BOARDING_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "DISCHARGE_BY_TIME_BAND",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "PICU_NICU_PRESSURE",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "OR_CANCELLATION_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "AMB_REFERRAL_DEMAND_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "AMB_BACKLOG_FORECAST",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "NO_SHOW_LATE_CANCEL_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "URGENT_WAITLIST_BREACH_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "DIAGNOSTIC_READINESS_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "PEDIATRIC_EARLY_WARNING_SIGNAL",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "RARE_DISEASE_CASE_FINDING_SIGNAL",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "READMISSION_REVISIT_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    },
+    {
+      "from": "LONG_STAY_RISK",
+      "to": "PANEL_PREDICTIVE_ASSETS",
+      "relationship": "governed output"
+    }
+  ],
+  "issues": [
+    {
+      "issue_id": "ISSUE-001",
+      "severity": "medium",
+      "related_id": "SRC_DIAGNOSTIC_DEPENDENCY",
+      "status": "open",
+      "note": "Definition owner must approve diagnostic readiness denominator."
+    },
+    {
+      "issue_id": "ISSUE-002",
+      "severity": "high",
+      "related_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "status": "review queued",
+      "note": "Alert-burden review required before public warning display."
+    },
+    {
+      "issue_id": "ISSUE-003",
+      "severity": "medium",
+      "related_id": "NO_SHOW_LATE_CANCEL_RISK",
+      "status": "guardrail review",
+      "note": "Equity and travel-burden guardrail needs signoff before scenario promotion."
+    }
+  ],
+  "approvals": [
+    {
+      "decision_id": "GOV-DEC-001",
+      "related_id": "INPT_OCCUPANCY_FORECAST",
+      "decision": "approved for demo",
+      "reviewer_role": "analytics governance",
+      "created_at": "2026-06-11T08:30:00-07:00"
+    },
+    {
+      "decision_id": "GOV-DEC-002",
+      "related_id": "PICU_NICU_PRESSURE",
+      "decision": "approved with warning label",
+      "reviewer_role": "operations sponsor",
+      "created_at": "2026-06-11T08:30:00-07:00"
+    },
+    {
+      "decision_id": "GOV-DEC-003",
+      "related_id": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "decision": "synthetic-only hold",
+      "reviewer_role": "clinical safety reviewer",
+      "created_at": "2026-06-11T08:30:00-07:00"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "events": [
+    {
+      "event_id": "EVT-001",
+      "event_type": "scenario_run",
+      "created_at": "2026-06-11T08:30:00-07:00",
+      "created_by": "synthetic_snowflake_user",
+      "app_area": "Scenario Simulation Lab",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_or_program": "PICU",
+      "related_ids": "SCN-INPT-001",
+      "status": "complete",
+      "severity": "medium",
+      "note": "PICU step-down scenario reduced synthetic boarder hours.",
+      "payload_json": "{\"synthetic_demo\": true, \"source\": \"v3 generator\", \"event_table\": \"APP.SCENARIO_RUN_LOG\"}",
+      "synthetic_demo_flag": true,
+      "writeback_table": "APP.SCENARIO_RUN_LOG"
+    },
+    {
+      "event_id": "EVT-002",
+      "event_type": "warning_acknowledgement",
+      "created_at": "2026-06-11T08:30:00-07:00",
+      "created_by": "synthetic_snowflake_user",
+      "app_area": "Inpatient Intelligence",
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_or_program": "Respiratory",
+      "related_ids": "WARN-INPT-001",
+      "status": "acknowledged",
+      "severity": "high",
+      "note": "Operations huddle acknowledged PICU/NICU warning.",
+      "payload_json": "{\"synthetic_demo\": true, \"source\": \"v3 generator\", \"event_table\": \"APP.USER_ANNOTATION\"}",
+      "synthetic_demo_flag": true,
+      "writeback_table": "APP.USER_ANNOTATION"
+    },
+    {
+      "event_id": "EVT-003",
+      "event_type": "metric_issue_flag",
+      "created_at": "2026-06-11T08:30:00-07:00",
+      "created_by": "synthetic_snowflake_user",
+      "app_area": "Ambulatory Access Intelligence",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_or_program": "Complex care",
+      "related_ids": "METRIC_DIAGNOSTIC_READINESS",
+      "status": "open",
+      "severity": "medium",
+      "note": "Diagnostic readiness denominator requires owner review.",
+      "payload_json": "{\"synthetic_demo\": true, \"source\": \"v3 generator\", \"event_table\": \"APP.WARNING_ACKNOWLEDGEMENT\"}",
+      "synthetic_demo_flag": true,
+      "writeback_table": "APP.WARNING_ACKNOWLEDGEMENT"
+    },
+    {
+      "event_id": "EVT-004",
+      "event_type": "model_review_note",
+      "created_at": "2026-06-11T08:30:00-07:00",
+      "created_by": "synthetic_snowflake_user",
+      "app_area": "Predictive Asset Layer",
+      "site_id": "SITE_STOLLERY_INSPIRED",
+      "unit_or_program": "Network",
+      "related_ids": "SEPSIS_SURVEILLANCE_SIGNAL",
+      "status": "review queued",
+      "severity": "high",
+      "note": "Synthetic surveillance warning remains not clinical-use.",
+      "payload_json": "{\"synthetic_demo\": true, \"source\": \"v3 generator\", \"event_table\": \"APP.METRIC_ISSUE_FLAG\"}",
+      "synthetic_demo_flag": true,
+      "writeback_table": "APP.METRIC_ISSUE_FLAG"
+    },
+    {
+      "event_id": "EVT-005",
+      "event_type": "governance_decision",
+      "created_at": "2026-06-11T08:30:00-07:00",
+      "created_by": "synthetic_snowflake_user",
+      "app_area": "AHA Gatekeeper Control Plane",
+      "site_id": "SITE_ACH_INSPIRED",
+      "unit_or_program": "Neurology",
+      "related_ids": "PICU_NICU_PRESSURE",
+      "status": "approved with caveat",
+      "severity": "medium",
+      "note": "Warning label and rollback path required.",
+      "payload_json": "{\"synthetic_demo\": true, \"source\": \"v3 generator\", \"event_table\": \"APP.MODEL_REVIEW_NOTE\"}",
+      "synthetic_demo_flag": true,
+      "writeback_table": "APP.MODEL_REVIEW_NOTE"
+    },
+    {
+      "event_id": "EVT-006",
+      "event_type": "panel_feedback",
+      "created_at": "2026-06-11T08:30:00-07:00",
+      "created_by": "synthetic_snowflake_user",
+      "app_area": "System Posture",
+      "site_id": "SITE_PROV_NETWORK",
+      "unit_or_program": "System",
+      "related_ids": "PANEL_SYSTEM_POSTURE",
+      "status": "complete",
+      "severity": "low",
+      "note": "Executive mode should keep stoplight overlay visible.",
+      "payload_json": "{\"synthetic_demo\": true, \"source\": \"v3 generator\", \"event_table\": \"APP.GOVERNANCE_DECISION\"}",
+      "synthetic_demo_flag": true,
+      "writeback_table": "APP.GOVERNANCE_DECISION"
+    }
+  ],
+  "writebackTables": [
+    {
+      "table_name": "APP.SCENARIO_RUN_LOG",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.USER_ANNOTATION",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.WARNING_ACKNOWLEDGEMENT",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.METRIC_ISSUE_FLAG",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.MODEL_REVIEW_NOTE",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.GOVERNANCE_DECISION",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.VALIDATION_REVIEW",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.PANEL_FEEDBACK",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.HUDDLE_REVIEW_EVENT",
+      "required": true,
+      "status": "defined"
+    },
+    {
+      "table_name": "APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "required": true,
+      "status": "defined"
+    }
+  ]
+}

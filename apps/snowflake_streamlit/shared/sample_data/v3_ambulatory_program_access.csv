@@ -1,0 +1,8 @@
+program,waitlist_total,third_next_available_days,urgent_breach_risk,diagnostic_readiness,source_readiness,classification,freshness,confidence,caveat,lineage_panel_id
+Complex care,1480,71,0.34,0.78,review,derived,weekly plus daily referral delta,medium,Synthetic aggregate access metrics; no patient-level display.,PANEL_AMBULATORY_COMMAND
+Neurology,1320,86,0.41,0.72,review,derived,weekly plus daily referral delta,medium,Synthetic aggregate access metrics; no patient-level display.,PANEL_AMBULATORY_COMMAND
+Cardiology,940,49,0.19,0.87,ready,derived,weekly plus daily referral delta,medium,Synthetic aggregate access metrics; no patient-level display.,PANEL_AMBULATORY_COMMAND
+Respiratory,1185,58,0.28,0.84,ready,derived,weekly plus daily referral delta,medium,Synthetic aggregate access metrics; no patient-level display.,PANEL_AMBULATORY_COMMAND
+Surgery follow-up,1615,64,0.26,0.81,ready,derived,weekly plus daily referral delta,medium,Synthetic aggregate access metrics; no patient-level display.,PANEL_AMBULATORY_COMMAND
+Mental health,1210,91,0.47,0.69,review,derived,weekly plus daily referral delta,medium,Synthetic aggregate access metrics; no patient-level display.,PANEL_AMBULATORY_COMMAND
+Diagnostic procedures,1190,76,0.39,0.64,review,derived,weekly plus daily referral delta,medium,Synthetic aggregate access metrics; no patient-level display.,PANEL_AMBULATORY_COMMAND

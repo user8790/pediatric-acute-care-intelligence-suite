@@ -7,6 +7,7 @@ export type Metadata = {
   clinicalUse: string;
   historyWindow: string;
   sourceBoundary: string;
+  productName?: string;
 };
 
 export type RowsPayload = { rows: DataRow[] };
@@ -47,6 +48,54 @@ export type V2Data = {
   dataQuality: DataRow[];
   openDataContext: DataRow[];
   coefficients: DataRow[];
+};
+
+export type V3Data = {
+  metadata: Metadata & { productName?: string };
+  sourceRegistry: DataRow[];
+  directLinkValidation: DataRow[];
+  metricRegistry: DataRow[];
+  modelRegistry: DataRow[];
+  panelLineage: DataRow[];
+  systemPosture: {
+    kpis: DataRow[];
+    postureCards: DataRow[];
+    whyChanged: DataRow[];
+  };
+  inpatient: {
+    unitPressure: DataRow[];
+    flowDrivers: DataRow[];
+    forecast: DataRow[];
+    warnings: DataRow[];
+  };
+  ambulatory: {
+    programAccess: DataRow[];
+    noShowFrontier: DataRow[];
+    forecast: DataRow[];
+    warnings: DataRow[];
+  };
+  predictiveAssets: {
+    signals: DataRow[];
+    evidenceTrails: DataRow[];
+  };
+  scenarioLab: {
+    scenarios: DataRow[];
+    comparisons: DataRow[];
+  };
+  gatekeeper: {
+    controlPlane: DataRow[];
+    dependencyEdges: DataRow[];
+    issues: DataRow[];
+    approvals: DataRow[];
+  };
+  learningMemory: {
+    events: DataRow[];
+    writebackTables: DataRow[];
+  };
+  futureWiring: {
+    phases: DataRow[];
+    mappings: DataRow[];
+  };
 };
 
 export type AppContext = {

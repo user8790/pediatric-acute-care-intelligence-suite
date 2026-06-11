@@ -1,0 +1,7 @@
+scenario_id,domain,scenario_name,impact_score,effort_score,operational_risk_score,primary_outcome,outcome_value,readiness,classification,writeback_table
+SCN-INPT-001,inpatient,Protect PICU step-down beds,88,3.4,2.2,boarder_hours,128,review,modelled,APP.SCENARIO_RUN_LOG
+SCN-INPT-002,inpatient,Pharmacy discharge acceleration,76,2.8,1.8,boarder_hours,142,ready,modelled,APP.SCENARIO_RUN_LOG
+SCN-INPT-003,inpatient,Respiratory surge bed conversion,81,4.2,3.1,occupancy_pct,91,review,modelled,APP.SCENARIO_RUN_LOG
+SCN-AMB-001,ambulatory,Urgent slot protection,84,2.7,1.6,backlog,8060,ready,modelled,APP.SCENARIO_RUN_LOG
+SCN-AMB-002,ambulatory,No-show guardrail overbooking,72,2.3,2.5,recovered_slots,214,review,modelled,APP.SCENARIO_RUN_LOG
+SCN-AMB-003,ambulatory,Diagnostic readiness huddle,79,3.1,1.9,ready_referrals,398,review,modelled,APP.SCENARIO_RUN_LOG

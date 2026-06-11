@@ -1,0 +1,4 @@
+issue_id,severity,related_id,status,note
+ISSUE-001,medium,SRC_DIAGNOSTIC_DEPENDENCY,open,Definition owner must approve diagnostic readiness denominator.
+ISSUE-002,high,SEPSIS_SURVEILLANCE_SIGNAL,review queued,Alert-burden review required before public warning display.
+ISSUE-003,medium,NO_SHOW_LATE_CANCEL_RISK,guardrail review,Equity and travel-burden guardrail needs signoff before scenario promotion.

@@ -1,0 +1,98 @@
+{
+  "scenarios": [
+    {
+      "scenario_id": "SCN-INPT-001",
+      "domain": "inpatient",
+      "scenario_name": "Protect PICU step-down beds",
+      "impact_score": 88,
+      "effort_score": 3.4,
+      "operational_risk_score": 2.2,
+      "primary_outcome": "boarder_hours",
+      "outcome_value": 128,
+      "readiness": "review",
+      "classification": "modelled",
+      "writeback_table": "APP.SCENARIO_RUN_LOG"
+    },
+    {
+      "scenario_id": "SCN-INPT-002",
+      "domain": "inpatient",
+      "scenario_name": "Pharmacy discharge acceleration",
+      "impact_score": 76,
+      "effort_score": 2.8,
+      "operational_risk_score": 1.8,
+      "primary_outcome": "boarder_hours",
+      "outcome_value": 142,
+      "readiness": "ready",
+      "classification": "modelled",
+      "writeback_table": "APP.SCENARIO_RUN_LOG"
+    },
+    {
+      "scenario_id": "SCN-INPT-003",
+      "domain": "inpatient",
+      "scenario_name": "Respiratory surge bed conversion",
+      "impact_score": 81,
+      "effort_score": 4.2,
+      "operational_risk_score": 3.1,
+      "primary_outcome": "occupancy_pct",
+      "outcome_value": 91,
+      "readiness": "review",
+      "classification": "modelled",
+      "writeback_table": "APP.SCENARIO_RUN_LOG"
+    },
+    {
+      "scenario_id": "SCN-AMB-001",
+      "domain": "ambulatory",
+      "scenario_name": "Urgent slot protection",
+      "impact_score": 84,
+      "effort_score": 2.7,
+      "operational_risk_score": 1.6,
+      "primary_outcome": "backlog",
+      "outcome_value": 8060,
+      "readiness": "ready",
+      "classification": "modelled",
+      "writeback_table": "APP.SCENARIO_RUN_LOG"
+    },
+    {
+      "scenario_id": "SCN-AMB-002",
+      "domain": "ambulatory",
+      "scenario_name": "No-show guardrail overbooking",
+      "impact_score": 72,
+      "effort_score": 2.3,
+      "operational_risk_score": 2.5,
+      "primary_outcome": "recovered_slots",
+      "outcome_value": 214,
+      "readiness": "review",
+      "classification": "modelled",
+      "writeback_table": "APP.SCENARIO_RUN_LOG"
+    },
+    {
+      "scenario_id": "SCN-AMB-003",
+      "domain": "ambulatory",
+      "scenario_name": "Diagnostic readiness huddle",
+      "impact_score": 79,
+      "effort_score": 3.1,
+      "operational_risk_score": 1.9,
+      "primary_outcome": "ready_referrals",
+      "outcome_value": 398,
+      "readiness": "review",
+      "classification": "modelled",
+      "writeback_table": "APP.SCENARIO_RUN_LOG"
+    }
+  ],
+  "comparisons": [
+    {
+      "comparison_id": "CMP-001",
+      "name": "Flow reliability bundle",
+      "baseline": "186 boarder hours",
+      "scenario": "128 boarder hours",
+      "decision": "candidate for huddle review"
+    },
+    {
+      "comparison_id": "CMP-002",
+      "name": "Access recovery bundle",
+      "baseline": "8,940 backlog",
+      "scenario": "8,060 backlog",
+      "decision": "candidate for program review"
+    }
+  ]
+}

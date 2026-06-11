@@ -1,0 +1,213 @@
+{
+  "programAccess": [
+    {
+      "program": "Complex care",
+      "waitlist_total": 1480,
+      "third_next_available_days": 71,
+      "urgent_breach_risk": 0.34,
+      "diagnostic_readiness": 0.78,
+      "source_readiness": "review",
+      "classification": "derived",
+      "freshness": "weekly plus daily referral delta",
+      "confidence": "medium",
+      "caveat": "Synthetic aggregate access metrics; no patient-level display.",
+      "lineage_panel_id": "PANEL_AMBULATORY_COMMAND"
+    },
+    {
+      "program": "Neurology",
+      "waitlist_total": 1320,
+      "third_next_available_days": 86,
+      "urgent_breach_risk": 0.41,
+      "diagnostic_readiness": 0.72,
+      "source_readiness": "review",
+      "classification": "derived",
+      "freshness": "weekly plus daily referral delta",
+      "confidence": "medium",
+      "caveat": "Synthetic aggregate access metrics; no patient-level display.",
+      "lineage_panel_id": "PANEL_AMBULATORY_COMMAND"
+    },
+    {
+      "program": "Cardiology",
+      "waitlist_total": 940,
+      "third_next_available_days": 49,
+      "urgent_breach_risk": 0.19,
+      "diagnostic_readiness": 0.87,
+      "source_readiness": "ready",
+      "classification": "derived",
+      "freshness": "weekly plus daily referral delta",
+      "confidence": "medium",
+      "caveat": "Synthetic aggregate access metrics; no patient-level display.",
+      "lineage_panel_id": "PANEL_AMBULATORY_COMMAND"
+    },
+    {
+      "program": "Respiratory",
+      "waitlist_total": 1185,
+      "third_next_available_days": 58,
+      "urgent_breach_risk": 0.28,
+      "diagnostic_readiness": 0.84,
+      "source_readiness": "ready",
+      "classification": "derived",
+      "freshness": "weekly plus daily referral delta",
+      "confidence": "medium",
+      "caveat": "Synthetic aggregate access metrics; no patient-level display.",
+      "lineage_panel_id": "PANEL_AMBULATORY_COMMAND"
+    },
+    {
+      "program": "Surgery follow-up",
+      "waitlist_total": 1615,
+      "third_next_available_days": 64,
+      "urgent_breach_risk": 0.26,
+      "diagnostic_readiness": 0.81,
+      "source_readiness": "ready",
+      "classification": "derived",
+      "freshness": "weekly plus daily referral delta",
+      "confidence": "medium",
+      "caveat": "Synthetic aggregate access metrics; no patient-level display.",
+      "lineage_panel_id": "PANEL_AMBULATORY_COMMAND"
+    },
+    {
+      "program": "Mental health",
+      "waitlist_total": 1210,
+      "third_next_available_days": 91,
+      "urgent_breach_risk": 0.47,
+      "diagnostic_readiness": 0.69,
+      "source_readiness": "review",
+      "classification": "derived",
+      "freshness": "weekly plus daily referral delta",
+      "confidence": "medium",
+      "caveat": "Synthetic aggregate access metrics; no patient-level display.",
+      "lineage_panel_id": "PANEL_AMBULATORY_COMMAND"
+    },
+    {
+      "program": "Diagnostic procedures",
+      "waitlist_total": 1190,
+      "third_next_available_days": 76,
+      "urgent_breach_risk": 0.39,
+      "diagnostic_readiness": 0.64,
+      "source_readiness": "review",
+      "classification": "derived",
+      "freshness": "weekly plus daily referral delta",
+      "confidence": "medium",
+      "caveat": "Synthetic aggregate access metrics; no patient-level display.",
+      "lineage_panel_id": "PANEL_AMBULATORY_COMMAND"
+    }
+  ],
+  "noShowFrontier": [
+    {
+      "program": "Complex care",
+      "guarded_overbook_pct": 0.061,
+      "expected_recovered_slots": 33,
+      "equity_guardrail": "within guardrail",
+      "no_show_risk": 0.131,
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK"
+    },
+    {
+      "program": "Neurology",
+      "guarded_overbook_pct": 0.067,
+      "expected_recovered_slots": 30,
+      "equity_guardrail": "requires review",
+      "no_show_risk": 0.144,
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK"
+    },
+    {
+      "program": "Cardiology",
+      "guarded_overbook_pct": 0.047,
+      "expected_recovered_slots": 19,
+      "equity_guardrail": "within guardrail",
+      "no_show_risk": 0.104,
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK"
+    },
+    {
+      "program": "Respiratory",
+      "guarded_overbook_pct": 0.055,
+      "expected_recovered_slots": 25,
+      "equity_guardrail": "within guardrail",
+      "no_show_risk": 0.12,
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK"
+    },
+    {
+      "program": "Surgery follow-up",
+      "guarded_overbook_pct": 0.053,
+      "expected_recovered_slots": 34,
+      "equity_guardrail": "within guardrail",
+      "no_show_risk": 0.117,
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK"
+    },
+    {
+      "program": "Mental health",
+      "guarded_overbook_pct": 0.072,
+      "expected_recovered_slots": 29,
+      "equity_guardrail": "requires review",
+      "no_show_risk": 0.155,
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK"
+    },
+    {
+      "program": "Diagnostic procedures",
+      "guarded_overbook_pct": 0.065,
+      "expected_recovered_slots": 27,
+      "equity_guardrail": "requires review",
+      "no_show_risk": 0.14,
+      "asset_id": "NO_SHOW_LATE_CANCEL_RISK"
+    }
+  ],
+  "forecast": [
+    {
+      "horizon_weeks": 1,
+      "backlog_forecast": 9118,
+      "p10": 8710,
+      "p90": 9628,
+      "asset_id": "AMB_BACKLOG_FORECAST"
+    },
+    {
+      "horizon_weeks": 2,
+      "backlog_forecast": 9136,
+      "p10": 8720,
+      "p90": 9656,
+      "asset_id": "AMB_BACKLOG_FORECAST"
+    },
+    {
+      "horizon_weeks": 4,
+      "backlog_forecast": 9172,
+      "p10": 8740,
+      "p90": 9712,
+      "asset_id": "AMB_BACKLOG_FORECAST"
+    },
+    {
+      "horizon_weeks": 8,
+      "backlog_forecast": 9124,
+      "p10": 8780,
+      "p90": 9824,
+      "asset_id": "AMB_BACKLOG_FORECAST"
+    },
+    {
+      "horizon_weeks": 13,
+      "backlog_forecast": 9214,
+      "p10": 8830,
+      "p90": 9964,
+      "asset_id": "AMB_BACKLOG_FORECAST"
+    },
+    {
+      "horizon_weeks": 26,
+      "backlog_forecast": 9448,
+      "p10": 8960,
+      "p90": 10328,
+      "asset_id": "AMB_BACKLOG_FORECAST"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "WARN-AMB-001",
+      "severity": "medium",
+      "asset_id": "URGENT_WAITLIST_BREACH_RISK",
+      "message": "Neurology and mental health urgent breach risk exceeds synthetic huddle threshold.",
+      "status": "open"
+    },
+    {
+      "warning_id": "WARN-AMB-002",
+      "severity": "medium",
+      "asset_id": "DIAGNOSTIC_READINESS_RISK",
+      "message": "Diagnostic readiness is constraining complex care and diagnostic procedure access.",
+      "status": "validation hold"
+    }
+  ]
+}

@@ -1,25 +1,35 @@
 import { useState } from "react";
 import { AppHeader, ControlBand, ProductFooter, ProductNav, type PageId } from "./components/AppShell";
-import { useV2Data } from "./data/v2Data";
+import { useV3Data } from "./data/v3Data";
 import { HORIZONS, PERSONAS } from "./data/types";
-import type { AppContext } from "./data/types";
-import { AmbulatoryPage } from "./pages/AmbulatoryPage";
-import { GovernancePage } from "./pages/GovernancePage";
-import { InpatientPage } from "./pages/InpatientPage";
-import { LandingPage } from "./pages/LandingPage";
-import { MethodsPage } from "./pages/MethodsPage";
-import { SimulationPage } from "./pages/SimulationPage";
+import type { AppContext, DataRow } from "./data/types";
+import {
+  FrontierAmbulatoryPage,
+  FrontierInpatientPage,
+  FutureWiringPage,
+  GatekeeperControlPlanePage,
+  LearningMemoryPage,
+  PredictiveAssetsPage,
+  ScenarioLabPage,
+  SystemPosturePage,
+} from "./pages/FrontierPages";
 import { WalkthroughPage } from "./pages/WalkthroughPage";
 
 function App() {
-  const { data, isLoading } = useV2Data();
+  const { data, isLoading } = useV3Data();
   const showInternalWalkthrough = import.meta.env.DEV || import.meta.env.VITE_SHOW_WALKTHROUGH === "true";
-  const [activePage, setActivePage] = useState<PageId>("overview");
+  const [activePage, setActivePage] = useState<PageId>("posture");
+  const [memoryEvents, setMemoryEvents] = useState<DataRow[]>(data.learningMemory.events);
   const [context, setContext] = useState<AppContext>({
     persona: PERSONAS[0],
     site: "All sites",
     horizon: HORIZONS[3],
   });
+
+  const events = memoryEvents.length ? memoryEvents : data.learningMemory.events;
+  function addMemoryEvent(event: DataRow) {
+    setMemoryEvents((current) => [event, ...(current.length ? current : data.learningMemory.events)]);
+  }
 
   return (
     <main className="app-shell">
@@ -27,19 +37,14 @@ function App() {
       <ControlBand context={context} setContext={setContext} generatedAt={data.metadata.generatedAt} />
       <ProductNav activePage={activePage} setActivePage={setActivePage} showInternal={showInternalWalkthrough} />
 
-      {activePage === "overview" && (
-        <LandingPage
-          data={data}
-          context={context}
-          goTo={(page) => setActivePage(page as PageId)}
-          showInternalWalkthrough={showInternalWalkthrough}
-        />
-      )}
-      {activePage === "inpatient" && <InpatientPage data={data} context={context} />}
-      {activePage === "ambulatory" && <AmbulatoryPage data={data} context={context} />}
-      {activePage === "simulation" && <SimulationPage data={data} context={context} />}
-      {activePage === "methods" && <MethodsPage data={data} />}
-      {activePage === "governance" && <GovernancePage data={data} />}
+      {activePage === "posture" && <SystemPosturePage data={data} context={context} goTo={setActivePage} />}
+      {activePage === "inpatient" && <FrontierInpatientPage data={data} context={context} />}
+      {activePage === "ambulatory" && <FrontierAmbulatoryPage data={data} context={context} />}
+      {activePage === "predictive" && <PredictiveAssetsPage data={data} />}
+      {activePage === "scenarios" && <ScenarioLabPage data={data} addMemoryEvent={addMemoryEvent} />}
+      {activePage === "gatekeeper" && <GatekeeperControlPlanePage data={data} />}
+      {activePage === "memory" && <LearningMemoryPage data={data} events={events} addMemoryEvent={addMemoryEvent} />}
+      {activePage === "wiring" && <FutureWiringPage data={data} />}
       {showInternalWalkthrough && activePage === "walkthrough" && <WalkthroughPage data={data} context={context} />}
 
       <ProductFooter />

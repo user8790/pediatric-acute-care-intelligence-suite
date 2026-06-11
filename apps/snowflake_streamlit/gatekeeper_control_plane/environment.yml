@@ -1,0 +1,13 @@
+name: pediatric-aha-gatekeeper-control-plane
+channels:
+  - snowflake
+dependencies:
+  - python=3.11
+  - streamlit
+  - pandas
+  - plotly
+  - altair
+  - numpy
+  - scipy
+  - scikit-learn
+  - statsmodels

@@ -9,7 +9,7 @@ from typing import Any
 import pandas as pd
 import streamlit as st
 
-APP_VERSION = "v2.0"
+APP_VERSION = "v3.0"
 SYNTHETIC_NOTICE = "Synthetic demonstration data. Not validated for clinical decision-making."
 SNOWFLAKE_SAFE_PACKAGES = ("river", "dowhy", "mesa", "cleanlab")
 
@@ -119,4 +119,26 @@ def try_store_scenario(table_name: str, payload: dict[str, Any]) -> str:
         return f"Stored in {table_name}."
     except Exception as exc:  # pragma: no cover - depends on Snowflake privileges
         st.session_state.setdefault("scenario_runs", []).append(payload)
+        return f"Snowflake write unavailable; stored in session state. Details: {exc}"
+
+
+def _sql_literal(value: Any) -> str:
+    if value is None:
+        return "NULL"
+    text = str(value).replace("'", "''")
+    return f"'{text}'"
+
+
+def try_store_learning_event(table_name: str, payload: dict[str, Any]) -> str:
+    session = get_snowpark_session()
+    if session is None:
+        st.session_state.setdefault("learning_events", []).append(payload)
+        return "Stored in Streamlit session state for local/sample mode."
+    columns = ", ".join(payload.keys())
+    values = ", ".join(_sql_literal(value) for value in payload.values())
+    try:
+        session.sql(f"INSERT INTO {table_name} ({columns}) SELECT {values}").collect()
+        return f"Stored in {table_name}."
+    except Exception as exc:  # pragma: no cover - depends on Snowflake privileges
+        st.session_state.setdefault("learning_events", []).append(payload)
         return f"Snowflake write unavailable; stored in session state. Details: {exc}"

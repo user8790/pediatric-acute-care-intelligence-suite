@@ -19,6 +19,7 @@ import { HORIZONS, PERSONAS, SITES } from "../data/types";
 
 export type PageId =
   | "posture"
+  | "ops"
   | "inpatient"
   | "ambulatory"
   | "predictive"
@@ -34,6 +35,7 @@ type PageConfig = { id: PageId; label: string; icon: typeof Home };
 
 export const PUBLIC_PAGES: PageConfig[] = [
   { id: "posture", label: "System Posture", icon: Home },
+  { id: "ops", label: "Command Desk", icon: Workflow },
   { id: "inpatient", label: "Inpatient", icon: BedDouble },
   { id: "ambulatory", label: "Ambulatory", icon: CalendarClock },
   { id: "predictive", label: "Predictive Assets", icon: BrainCircuit },

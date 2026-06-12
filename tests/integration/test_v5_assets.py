@@ -101,6 +101,11 @@ def test_v5_metadata_and_command_center_context():
     assert len(command["implementationReadiness"]) >= 20
     assert len(command["actionLearningLoops"]) >= 20
     assert len(command["signalSimulations"]) == 4
+    assert len(command["expertLensReviews"]) == 15
+    assert len(command["decisionPackets"]) >= 7
+    assert len(command["operatingCadence"]) >= 5
+    assert len(command["escalationLanes"]) >= 5
+    assert len(command["chartCatalog"]) >= 26
 
 
 def test_v5_service_unit_and_program_depth():
@@ -218,6 +223,50 @@ def test_v5_decision_support_readiness_and_signal_simulations():
         assert len(row["coefficients"]) >= 5
         assert len(row["factors"]) >= 4
         assert "identifier" in row["cohort"] or "identifiable" in row["cohort"]
+
+
+def test_v5_command_desk_operating_layer():
+    command = load_json("command_center_context.json")
+    lens_names = {row["lens"] for row in command["expertLensReviews"]}
+    assert {
+        "Software architect",
+        "Principal frontend engineer",
+        "Clinical informatician",
+        "Health AI safety",
+        "Queueing theory / flow",
+        "Implementation scientist",
+        "Executive strategist",
+    }.issubset(lens_names)
+
+    packet_required = {
+        "packet_id",
+        "packet_name",
+        "urgency",
+        "owner_persona",
+        "scenario_id",
+        "scenario_name",
+        "evidence_to_clear",
+        "safety_gate",
+        "follow_up_window",
+        "learning_metric",
+        "writeback_table",
+        "source_ids",
+        "model_ids",
+    }
+    scenario_ids = {row["scenario_id"] for row in load_json("scenario_lab.json")["scenarios"]}
+    for row in command["decisionPackets"]:
+        assert packet_required.issubset(row)
+        assert row["scenario_id"] in scenario_ids
+        assert row["writeback_table"] == "APP.COMMAND_DECISION_PACKET_LOG"
+
+    huddle_required = {"huddle_id", "cadence_name", "cadence", "owner", "input_objects", "expected_outputs", "writeback_table"}
+    for row in command["operatingCadence"]:
+        assert huddle_required.issubset(row)
+
+    lane_required = {"lane_id", "lane", "trigger", "owner", "next_action", "safety_gate", "learning_metric"}
+    for row in command["escalationLanes"]:
+        assert lane_required.issubset(row)
+    assert any(row["readiness"] == "blocked" for row in command["escalationLanes"])
 
 
 def test_v5_classification_and_source_readiness_layers_present():

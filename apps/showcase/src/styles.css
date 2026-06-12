@@ -995,6 +995,189 @@ dd {
   background: #c94751;
 }
 
+.packet-worklist,
+.cadence-list,
+.lens-board,
+.escalation-lane-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.packet-worklist button,
+.cadence-list button,
+.lens-board button,
+.escalation-lane-grid button,
+.secondary-action {
+  appearance: none;
+  width: 100%;
+  border: 1px solid #dce6eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+.packet-worklist button:hover,
+.packet-worklist button.active,
+.cadence-list button:hover,
+.lens-board button:hover,
+.lens-board button.active,
+.escalation-lane-grid button:hover,
+.secondary-action:hover {
+  transform: translateY(-1px);
+  border-color: #9cc7d3;
+  background: #f8fcfd;
+}
+
+.packet-worklist {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.packet-worklist button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  min-height: 112px;
+  padding: 12px;
+}
+
+.packet-worklist span {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.packet-worklist strong,
+.cadence-list strong,
+.lens-board strong,
+.escalation-lane-grid strong {
+  color: #18242d;
+  overflow-wrap: anywhere;
+}
+
+.packet-worklist em,
+.cadence-list span,
+.escalation-lane-grid em {
+  color: #596672;
+  font-size: 0.84rem;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.packet-detail-card {
+  display: grid;
+  gap: 12px;
+  min-height: 100%;
+  border: 1px solid #dce6eb;
+  border-left: 6px solid #176b87;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fbfcfd;
+}
+
+.packet-detail-card.watch {
+  border-left-color: #f2a65a;
+}
+
+.packet-detail-card.high {
+  border-left-color: #d65f5f;
+}
+
+.packet-detail-card p {
+  margin: 0;
+  color: #46525c;
+  line-height: 1.45;
+}
+
+.packet-detail-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hero-actions.compact {
+  margin-top: 6px;
+}
+
+.hero-actions.compact button {
+  min-height: 38px;
+  font-size: 0.84rem;
+}
+
+.cadence-list button {
+  display: grid;
+  gap: 5px;
+  min-height: 66px;
+  padding: 10px;
+}
+
+.lens-board {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lens-board button {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-height: 72px;
+  padding: 10px;
+}
+
+.lens-board button > span:first-child {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #e9f4f5;
+  color: #176b87;
+  font-weight: 900;
+}
+
+.secondary-action {
+  min-height: 38px;
+  padding: 8px 10px;
+  color: #176b87;
+  font-weight: 850;
+  text-align: center;
+}
+
+.escalation-lane-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.escalation-lane-grid button {
+  display: grid;
+  gap: 10px;
+  min-height: 156px;
+  padding: 12px;
+}
+
+.escalation-lane-grid dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.escalation-lane-grid dl div {
+  display: grid;
+  gap: 3px;
+  border-top: 1px solid #e3ebef;
+  padding-top: 8px;
+}
+
+.escalation-lane-grid dd {
+  text-align: left;
+  font-weight: 850;
+}
+
 .clickable-row {
   cursor: pointer;
 }
@@ -2042,6 +2225,9 @@ footer span {
   .definition-grid,
   .model-card-grid,
   .object-card-grid,
+  .packet-worklist,
+  .lens-board,
+  .escalation-lane-grid,
   .interpretation-grid,
   .learning-loop-board,
   .drilldown-card-grid,
@@ -2088,6 +2274,9 @@ footer span {
   .definition-grid,
   .model-card-grid,
   .object-card-grid,
+  .packet-worklist,
+  .lens-board,
+  .escalation-lane-grid,
   .interpretation-grid,
   .learning-loop-board,
   .drilldown-card-grid,
@@ -2117,6 +2306,7 @@ footer span {
 
   .quality-row,
   .scenario-card,
+  .lens-board button,
   .model-card dl div,
   .detail-list div {
     grid-template-columns: 1fr;

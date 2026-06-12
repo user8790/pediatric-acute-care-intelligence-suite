@@ -4,6 +4,7 @@ import { useV3Data } from "./data/v3Data";
 import { HORIZONS, PERSONAS } from "./data/types";
 import type { AppContext, ControlOptions, DataRow, SelectOption } from "./data/types";
 import {
+  CommandDeskPage,
   FrontierAmbulatoryPage,
   FrontierInpatientPage,
   FutureWiringPage,
@@ -70,6 +71,7 @@ function App() {
       <ProductNav activePage={activePage} setActivePage={setActivePage} showInternal={showInternalWalkthrough} />
 
       {activePage === "posture" && <SystemPosturePage data={data} context={context} goTo={setActivePage} />}
+      {activePage === "ops" && <CommandDeskPage data={data} context={context} addMemoryEvent={addMemoryEvent} />}
       {activePage === "inpatient" && <FrontierInpatientPage data={data} context={context} />}
       {activePage === "ambulatory" && <FrontierAmbulatoryPage data={data} context={context} />}
       {activePage === "predictive" && <PredictiveAssetsPage data={data} context={context} />}

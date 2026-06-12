@@ -186,6 +186,20 @@ The four simulation pages should share the same trust language:
 - Subgroup calibration, drift, alert-burden, and human-factors review before release.
 - Clinical owner, analytics owner, governance owner, and rollback path required.
 
+## International And Safety-Governance Refinement Inputs
+
+This pass broadened the benchmark beyond North American command-centre examples. Publicly described Singapore C3 and smart-hospital patterns reinforce that command centres mature through stages: real-time visibility, predictive sensing, cross-institution coordination, operational escalation, and closed-loop learning. Japan's medical-DX and health-data modernization direction reinforces the same prerequisite: high-quality interoperable data infrastructure before operational AI should be trusted.
+
+Design implications added in the 15-lens pass:
+
+- The app needs an operating desk, not only domain pages.
+- Signals should become reviewable decision packets with owner, urgency, evidence-to-clear, action options, safety gate, follow-up window, and learning metric.
+- International command-centre examples emphasize cadence: huddles, executive reviews, source repair, clinical safety holds, and cross-site escalation.
+- AI governance examples from WHO, NIST, FDA, and Singapore guidance emphasize transparency, lifecycle risk management, human oversight, monitoring, rollback, and clear non-autonomous decision-support boundaries.
+- Implementation-science patterns emphasize fit with existing huddles, local champions, audit-and-feedback, adaptation, and spread/retire decisions.
+
+The v6-style Command Desk was added to make those implications visible in the product.
+
 ## Implementation Notes And Gaps
 
 This research is sufficient to guide v5. Remaining future gaps:

@@ -51,6 +51,10 @@ type DrawerState =
   | { kind: "site"; id: string; row?: DataRow }
   | { kind: "warning"; id: string; row: DataRow }
   | { kind: "scenario"; id: string; row?: DataRow }
+  | { kind: "packet"; id: string; row: DataRow }
+  | { kind: "lens"; id: string; row: DataRow }
+  | { kind: "huddle"; id: string; row: DataRow }
+  | { kind: "escalation"; id: string; row: DataRow }
   | null;
 
 function kpiTone(value: unknown): Tone {
@@ -68,8 +72,8 @@ function postureTone(value: unknown): "steady" | "watch" | "high" {
 function statusTone(value: unknown): string {
   const status = String(value ?? "").toLowerCase();
   if (status.includes("ready") || status.includes("approved") || status.includes("pass")) return "ready";
-  if (status.includes("hold") || status.includes("blocked") || status.includes("not_connected") || status.includes("not mapped") || status.includes("high")) return "high";
-  if (status.includes("pending") || status.includes("review") || status.includes("watch") || status.includes("open")) return "review";
+  if (status.includes("now") || status.includes("hold") || status.includes("blocked") || status.includes("not_connected") || status.includes("not mapped") || status.includes("high")) return "high";
+  if (status.includes("next") || status.includes("pending") || status.includes("review") || status.includes("watch") || status.includes("open")) return "review";
   return "neutral";
 }
 
@@ -915,6 +919,179 @@ function ScenarioDrawerContent({ data, row, onOpenSource }: { data: V3Data; row:
   );
 }
 
+function PacketDrawerContent({
+  data,
+  row,
+  onOpenSource,
+  onOpenModel,
+}: {
+  data: V3Data;
+  row: DataRow;
+  onOpenSource: (sourceId: string) => void;
+  onOpenModel: (assetId: string) => void;
+}) {
+  const scenario = data.scenarioLab.scenarios.find((item) => stringValue(item, "scenario_id") === stringValue(row, "scenario_id"));
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Urgency</span>
+          <ReadinessBadge value={row.urgency} />
+        </div>
+        <div>
+          <span>Confidence</span>
+          <strong>{stringValue(row, "confidence")}</strong>
+        </div>
+        <div>
+          <span>Expected impact</span>
+          <strong>{numberValue(row, "expected_impact").toFixed(1)}</strong>
+        </div>
+        <div>
+          <span>Readiness</span>
+          <ReadinessBadge value={row.readiness} />
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Signal", stringValue(row, "signal")],
+          ["Interpretation", stringValue(row, "interpretation")],
+          ["Primary driver", stringValue(row, "primary_driver")],
+          ["Now what", stringValue(row, "now_what")],
+          ["Owner", stringValue(row, "owner_persona")],
+          ["Huddle cadence", stringValue(row, "huddle_cadence")],
+          ["Scenario", stringValue(row, "scenario_name", stringValue(scenario, "scenario_name"))],
+          ["Evidence to clear", stringValue(row, "evidence_to_clear")],
+          ["Safety gate", stringValue(row, "safety_gate")],
+          ["Learning metric", stringValue(row, "learning_metric")],
+          ["Writeback", stringValue(row, "writeback_table")],
+          ["Caveat", stringValue(row, "caveat")],
+        ]}
+      />
+      <div className="drawer-summary-grid">
+        <div>
+          <span>HR constraint</span>
+          <strong>{stringValue(row, "hr_constraint")}</strong>
+        </div>
+        <div>
+          <span>Finance constraint</span>
+          <strong>{stringValue(row, "finance_constraint")}</strong>
+        </div>
+      </div>
+      <div className="source-chip-row">
+        {csvIds(row.model_ids).map((modelId) => (
+          <button type="button" key={modelId} className="source-chip review" onClick={() => onOpenModel(modelId)}>
+            <span aria-hidden="true" />
+            {modelId}
+          </button>
+        ))}
+      </div>
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={10} />
+    </div>
+  );
+}
+
+function LensDrawerContent({ row }: { row: DataRow }) {
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Priority</span>
+          <strong>{formatInteger(numberValue(row, "priority"))}</strong>
+        </div>
+        <div>
+          <span>Status</span>
+          <ReadinessBadge value={row.status} />
+        </div>
+        <div>
+          <span>Owner</span>
+          <strong>{stringValue(row, "owner")}</strong>
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Lens", stringValue(row, "lens")],
+          ["Finding", stringValue(row, "finding")],
+          ["Improvement added", stringValue(row, "improvement_added")],
+          ["Acceptance signal", stringValue(row, "acceptance_signal")],
+          ["Research inspiration", stringValue(row, "source_inspiration")],
+        ]}
+      />
+    </div>
+  );
+}
+
+function HuddleDrawerContent({ data, row, onOpenSource }: { data: V3Data; row: DataRow; onOpenSource: (sourceId: string) => void }) {
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Cadence</span>
+          <strong>{stringValue(row, "cadence")}</strong>
+        </div>
+        <div>
+          <span>Decision window</span>
+          <strong>{formatInteger(numberValue(row, "decision_window_minutes"))} min</strong>
+        </div>
+        <div>
+          <span>Packets</span>
+          <strong>{formatInteger(numberValue(row, "packets_reviewed"))}</strong>
+        </div>
+        <div>
+          <span>Status</span>
+          <ReadinessBadge value={row.status} />
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Owner", stringValue(row, "owner")],
+          ["Participants", stringValue(row, "participants")],
+          ["Input objects", stringValue(row, "input_objects")],
+          ["Expected outputs", stringValue(row, "expected_outputs")],
+          ["Escalation triggers", stringValue(row, "escalation_triggers")],
+          ["Writeback", stringValue(row, "writeback_table")],
+          ["Reliability score", formatPct(numberValue(row, "reliability_score"))],
+        ]}
+      />
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={8} />
+    </div>
+  );
+}
+
+function EscalationDrawerContent({ data, row, onOpenSource }: { data: V3Data; row: DataRow; onOpenSource: (sourceId: string) => void }) {
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>SLA</span>
+          <strong>{formatInteger(numberValue(row, "escalation_sla_minutes"))} min</strong>
+        </div>
+        <div>
+          <span>Active packets</span>
+          <strong>{formatInteger(numberValue(row, "active_packets"))}</strong>
+        </div>
+        <div>
+          <span>Readiness</span>
+          <ReadinessBadge value={row.readiness} />
+        </div>
+        <div>
+          <span>Reliability</span>
+          <strong>{formatPct(numberValue(row, "reliability_score"))}</strong>
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Trigger", stringValue(row, "trigger")],
+          ["Owner", stringValue(row, "owner")],
+          ["Next action", stringValue(row, "next_action")],
+          ["Safety gate", stringValue(row, "safety_gate")],
+          ["Learning metric", stringValue(row, "learning_metric")],
+        ]}
+      />
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={8} />
+    </div>
+  );
+}
+
 function ObjectDrawer({
   data,
   drawer,
@@ -946,7 +1123,15 @@ function ObjectDrawer({
                 ? siteLabel(drawer.id)
                 : drawer.kind === "scenario"
                   ? stringValue(drawer.row, "scenario_name", drawer.id)
-                  : stringValue(drawer.row, "title", drawer.id);
+                  : drawer.kind === "packet"
+                    ? stringValue(drawer.row, "packet_name", drawer.id)
+                    : drawer.kind === "lens"
+                      ? stringValue(drawer.row, "lens", drawer.id)
+                      : drawer.kind === "huddle"
+                        ? stringValue(drawer.row, "cadence_name", drawer.id)
+                        : drawer.kind === "escalation"
+                          ? stringValue(drawer.row, "lane", drawer.id)
+                          : stringValue(drawer.row, "title", drawer.id);
   return (
     <Drawer eyebrow={titleCase(drawer.kind)} title={title} onClose={onClose}>
       {drawer.kind === "source" && <SourceDrawerContent data={data} sourceId={drawer.id} />}
@@ -957,6 +1142,10 @@ function ObjectDrawer({
       {drawer.kind === "site" && <SiteDrawerContent data={data} siteId={drawer.id} row={drawer.row} onOpenSource={openSource} />}
       {drawer.kind === "warning" && <WarningDrawerContent data={data} row={drawer.row} onOpenSource={openSource} onOpenModel={openModel} />}
       {drawer.kind === "scenario" && <ScenarioDrawerContent data={data} row={drawer.row ?? { scenario_id: drawer.id }} onOpenSource={openSource} />}
+      {drawer.kind === "packet" && <PacketDrawerContent data={data} row={drawer.row} onOpenSource={openSource} onOpenModel={openModel} />}
+      {drawer.kind === "lens" && <LensDrawerContent row={drawer.row} />}
+      {drawer.kind === "huddle" && <HuddleDrawerContent data={data} row={drawer.row} onOpenSource={openSource} />}
+      {drawer.kind === "escalation" && <EscalationDrawerContent data={data} row={drawer.row} onOpenSource={openSource} />}
     </Drawer>
   );
 }
@@ -1093,6 +1282,310 @@ function ActionLearningLoopBoard({
   );
 }
 
+function filteredDecisionPackets(data: V3Data, context: AppContext): DataRow[] {
+  const serviceLabelValue =
+    context.service === "All services"
+      ? ""
+      : stringValue(data.commandCenter.serviceLines.find((row) => stringValue(row, "service_id") === context.service), "service_line", context.service).toLowerCase();
+  const programLabelValue =
+    context.program === "All programs"
+      ? ""
+      : stringValue(data.commandCenter.programs.find((row) => stringValue(row, "program_id") === context.program), "program", context.program).toLowerCase();
+  const rows = data.commandCenter.decisionPackets.filter((packet) => {
+    const siteOk = context.site === "All sites" || stringValue(packet, "site_id") === context.site || stringValue(packet, "site_id") === "SITE_PROV_NETWORK";
+    const serviceText = stringValue(packet, "service_or_program").toLowerCase();
+    const serviceOk = !serviceLabelValue || serviceText.includes(serviceLabelValue);
+    const programOk = !programLabelValue || serviceText.includes(programLabelValue);
+    const scenarioOk = context.scenario === "All scenarios" || stringValue(packet, "scenario_id") === context.scenario;
+    const personaOk =
+      context.persona === "Executive" ||
+      stringValue(packet, "owner_persona") === context.persona ||
+      (context.persona === "Analytics / informatics / AI team" && stringValue(packet, "packet_type").includes("governance"));
+    return siteOk && serviceOk && programOk && scenarioOk && personaOk;
+  });
+  return rows.length ? rows : data.commandCenter.decisionPackets;
+}
+
+function packetTone(packet: DataRow): Tone {
+  const urgency = stringValue(packet, "urgency").toLowerCase();
+  if (urgency.includes("now") || urgency.includes("hold")) return "high";
+  if (urgency.includes("next") || urgency.includes("review")) return "watch";
+  return "neutral";
+}
+
+function packetChartRows(rows: DataRow[]): DataRow[] {
+  return rows.map((row) => ({
+    packet_name: stringValue(row, "packet_name").replace(" packet", ""),
+    expected_impact: numberValue(row, "expected_impact"),
+    queue_pressure: numberValue(row, "queue_pressure") * 100,
+  }));
+}
+
+function commandDeskKpis(data: V3Data, packets: DataRow[]): DataRow[] {
+  const huddles = data.commandCenter.operatingCadence;
+  const escalations = data.commandCenter.escalationLanes;
+  const nowCount = packets.filter((row) => stringValue(row, "urgency").includes("Now")).length;
+  const holds = packets.filter((row) => statusTone(row.readiness) === "high").length;
+  return [
+    {
+      metric_id: "CMD_PACKET_COUNT",
+      label: "Decision packets",
+      value: formatInteger(packets.length),
+      detail: "Signals packaged with owner, evidence, scenario, safety gate, and learning metric",
+      delta: `${nowCount} now-huddle items`,
+      tone: packets.length > 5 ? "watch" : "good",
+      classification: "decision support",
+      source_ids: "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_HR_SHIFT_ROSTER",
+    },
+    {
+      metric_id: "CMD_GOV_HOLDS",
+      label: "Governance holds",
+      value: formatInteger(holds),
+      detail: "Packets blocked until implementation, validation, or governance evidence clears",
+      delta: holds ? "Safety gate active" : "No holds",
+      tone: holds ? "high" : "good",
+      classification: "governance",
+      source_ids: "SRC_MODEL_VALIDATION_RESULTS,SRC_GOVERNANCE_APPROVALS",
+    },
+    {
+      metric_id: "CMD_CADENCE_LOAD",
+      label: "Cadence load",
+      value: formatInteger(sumRows(huddles, "packets_reviewed")),
+      detail: "Synthetic packets allocated across huddles and review boards",
+      delta: `${formatInteger(avgRows(huddles, "decision_window_minutes"))} min avg window`,
+      tone: "watch",
+      classification: "workflow",
+      source_ids: "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_WAITLIST_SNAPSHOTS",
+    },
+    {
+      metric_id: "CMD_ESCALATION_RELIABILITY",
+      label: "Escalation reliability",
+      value: formatPct(avgRows(escalations, "reliability_score")),
+      detail: "Prototype reliability of escalation lane ownership and feedback loops",
+      delta: `${formatInteger(sumRows(escalations, "active_packets"))} active packet links`,
+      tone: avgRows(escalations, "reliability_score") >= 0.75 ? "good" : "watch",
+      classification: "derived",
+      source_ids: "SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_MODEL_VALIDATION_RESULTS",
+    },
+  ];
+}
+
+export function CommandDeskPage({
+  data,
+  context,
+  addMemoryEvent,
+}: {
+  data: V3Data;
+  context: AppContext;
+  addMemoryEvent: (event: DataRow) => void;
+}) {
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const packets = useMemo(() => filteredDecisionPackets(data, context), [data, context]);
+  const [selectedPacketId, setSelectedPacketId] = useState("");
+  const [selectedLensId, setSelectedLensId] = useState("LENS-01");
+  const selectedPacket = packets.find((packet) => stringValue(packet, "packet_id") === selectedPacketId) ?? packets[0];
+  const selectedLens = data.commandCenter.expertLensReviews.find((lens) => stringValue(lens, "lens_id") === selectedLensId) ?? data.commandCenter.expertLensReviews[0];
+  const kpis = useMemo(() => commandDeskKpis(data, packets), [data, packets]);
+
+  useEffect(() => {
+    if (packets.length && !packets.some((packet) => stringValue(packet, "packet_id") === selectedPacketId)) {
+      setSelectedPacketId(stringValue(packets[0], "packet_id"));
+    }
+  }, [packets, selectedPacketId]);
+
+  function capturePacketDecision() {
+    if (!selectedPacket) return;
+    addMemoryEvent({
+      event_id: `LOCAL_PACKET_${Date.now()}`,
+      event_type: "command_packet_review",
+      app_area: "Command Desk",
+      title: `${stringValue(selectedPacket, "packet_name")} reviewed`,
+      narrative: `${stringValue(selectedPacket, "packet_name")} captured as a synthetic command-desk review with owner ${stringValue(selectedPacket, "owner_persona")} and follow-up window ${stringValue(selectedPacket, "follow_up_window")}.`,
+      created_at: new Date().toISOString(),
+      owner: stringValue(selectedPacket, "owner_persona"),
+      note: `${stringValue(selectedPacket, "packet_name")} captured as a synthetic command-desk review.`,
+      writeback_table: stringValue(selectedPacket, "writeback_table"),
+      caveat: "Local showcase memory only; production would use governed Snowflake writeback tables.",
+    });
+  }
+
+  if (!selectedPacket) {
+    return (
+      <section className="dashboard-grid">
+        <Panel span="wide" eyebrow="Command desk" title="No decision packets generated" icon={<Workflow size={22} />}>
+          <p className="section-intro">The synthetic command-centre data did not include decision packets for this build.</p>
+        </Panel>
+      </section>
+    );
+  }
+
+  return (
+    <section className="dashboard-grid">
+      <Panel span="wide" eyebrow="Command operating desk" title="Signal-to-action workbench for huddles, escalation, readiness, and learning" icon={<Workflow size={22} />}>
+        <p className="section-intro">
+          {contextSummary(data, context)}. This page packages signals into decision packets: each packet has an owner, urgency, evidence-to-clear, scenario link, safety gate, follow-up window, and learning metric. It is synthetic demonstration data and not an operational directive.
+        </p>
+      </Panel>
+
+      {kpis.map((row) => (
+        <WorkspaceMetricTile
+          key={stringValue(row, "metric_id")}
+          label={stringValue(row, "label")}
+          value={stringValue(row, "value")}
+          detail={stringValue(row, "detail")}
+          delta={stringValue(row, "delta")}
+          tone={kpiTone(row.tone)}
+          classification={stringValue(row, "classification")}
+          sourceIds={csvIds(row.source_ids)}
+          data={data}
+          onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+          onClick={() => setDrawer({ kind: "metric", id: stringValue(row, "metric_id"), row })}
+        />
+      ))}
+
+      <Panel span="xlarge" eyebrow="Decision packet worklist" title="What should the command centre review next?" icon={<ListChecks size={22} />}>
+        <div className="packet-worklist">
+          {packets.map((packet) => {
+            const packetId = stringValue(packet, "packet_id");
+            const selected = packetId === stringValue(selectedPacket, "packet_id");
+            return (
+              <button type="button" key={packetId} className={selected ? "active" : undefined} onClick={() => setSelectedPacketId(packetId)}>
+                <span>
+                  <strong>{stringValue(packet, "packet_name")}</strong>
+                  <em>{stringValue(packet, "signal")}</em>
+                </span>
+                <ReadinessBadge value={packet.urgency} />
+              </button>
+            );
+          })}
+        </div>
+      </Panel>
+
+      <Panel span="normal" eyebrow="Selected packet" title={stringValue(selectedPacket, "packet_name")} icon={<FileCheck2 size={22} />}>
+        <article className={`packet-detail-card ${packetTone(selectedPacket)}`}>
+          <div className="packet-detail-top">
+            <ReadinessBadge value={selectedPacket.urgency} />
+            <ReadinessBadge value={selectedPacket.readiness} />
+          </div>
+          <p>{stringValue(selectedPacket, "interpretation")}</p>
+          <DetailList
+            rows={[
+              ["Now what", stringValue(selectedPacket, "now_what")],
+              ["Owner", stringValue(selectedPacket, "owner_persona")],
+              ["Scenario", stringValue(selectedPacket, "scenario_name")],
+              ["Safety gate", stringValue(selectedPacket, "safety_gate")],
+              ["Learning metric", stringValue(selectedPacket, "learning_metric")],
+            ]}
+          />
+          <SourceChipGroup data={data} sourceIds={csvIds(selectedPacket.source_ids)} onOpen={(sourceId) => setDrawer({ kind: "source", id: sourceId })} limit={4} />
+          <div className="hero-actions compact">
+            <button type="button" onClick={() => setDrawer({ kind: "packet", id: stringValue(selectedPacket, "packet_id"), row: selectedPacket })}>
+              <FileCheck2 size={17} />
+              Open packet evidence
+            </button>
+            <button type="button" onClick={capturePacketDecision}>
+              <History size={17} />
+              Capture review
+            </button>
+          </div>
+        </article>
+      </Panel>
+
+      <Panel span="xlarge" eyebrow="Impact / pressure" title="Expected impact by decision packet" icon={<Activity size={22} />}>
+        <HorizontalBarChart rows={packetChartRows(packets)} labelKey="packet_name" valueKey="expected_impact" label="Decision packet expected impact" />
+      </Panel>
+
+      <Panel span="normal" eyebrow="Operating cadence" title="Where packets get reviewed" icon={<CalendarClock size={22} />}>
+        <HorizontalBarChart rows={data.commandCenter.operatingCadence} labelKey="cadence_name" valueKey="packets_reviewed" label="Operating cadence packet load" height={260} />
+        <div className="cadence-list">
+          {data.commandCenter.operatingCadence.map((row) => (
+            <button type="button" key={stringValue(row, "huddle_id")} onClick={() => setDrawer({ kind: "huddle", id: stringValue(row, "huddle_id"), row })}>
+              <strong>{stringValue(row, "cadence_name")}</strong>
+              <span>{stringValue(row, "owner")} | {stringValue(row, "cadence")}</span>
+            </button>
+          ))}
+        </div>
+      </Panel>
+
+      <Panel span="xlarge" eyebrow="15 expert lenses" title="World-class review board embedded into the product backlog" icon={<BrainCircuit size={22} />}>
+        <div className="lens-board">
+          {data.commandCenter.expertLensReviews.map((lens) => {
+            const lensId = stringValue(lens, "lens_id");
+            return (
+              <button type="button" key={lensId} className={lensId === stringValue(selectedLens, "lens_id") ? "active" : undefined} onClick={() => setSelectedLensId(lensId)}>
+                <span>{formatInteger(numberValue(lens, "priority"))}</span>
+                <strong>{stringValue(lens, "lens")}</strong>
+                <ReadinessBadge value={lens.status} />
+              </button>
+            );
+          })}
+        </div>
+      </Panel>
+
+      <Panel span="normal" eyebrow="Selected lens" title={stringValue(selectedLens, "lens", "Expert review")} icon={<Sparkles size={22} />}>
+        <article className="decision-support-card">
+          <div>
+            <BrainCircuit size={18} />
+            <strong>{stringValue(selectedLens, "lens")}</strong>
+            <ReadinessBadge value={selectedLens.status} />
+          </div>
+          <dl className="so-what-list">
+            <div>
+              <dt>Finding</dt>
+              <dd>{stringValue(selectedLens, "finding")}</dd>
+            </div>
+            <div>
+              <dt>Improvement added</dt>
+              <dd>{stringValue(selectedLens, "improvement_added")}</dd>
+            </div>
+            <div>
+              <dt>Acceptance signal</dt>
+              <dd>{stringValue(selectedLens, "acceptance_signal")}</dd>
+            </div>
+          </dl>
+          <button type="button" className="secondary-action" onClick={() => setDrawer({ kind: "lens", id: stringValue(selectedLens, "lens_id"), row: selectedLens })}>
+            Open lens detail
+          </button>
+        </article>
+      </Panel>
+
+      <Panel span="xlarge" eyebrow="Escalation lanes" title="When local review needs sponsorship, repair, or safety hold" icon={<AlertTriangle size={22} />}>
+        <div className="escalation-lane-grid">
+          {data.commandCenter.escalationLanes.map((lane) => (
+            <button type="button" key={stringValue(lane, "lane_id")} onClick={() => setDrawer({ kind: "escalation", id: stringValue(lane, "lane_id"), row: lane })}>
+              <span className="object-card-heading">
+                <strong>{stringValue(lane, "lane")}</strong>
+                <ReadinessBadge value={lane.readiness} />
+              </span>
+              <em>{stringValue(lane, "trigger")}</em>
+              <dl>
+                <div>
+                  <dt>SLA</dt>
+                  <dd>{formatInteger(numberValue(lane, "escalation_sla_minutes"))}m</dd>
+                </div>
+                <div>
+                  <dt>Packets</dt>
+                  <dd>{formatInteger(numberValue(lane, "active_packets"))}</dd>
+                </div>
+                <div>
+                  <dt>Reliability</dt>
+                  <dd>{formatPct(numberValue(lane, "reliability_score"))}</dd>
+                </div>
+              </dl>
+            </button>
+          ))}
+        </div>
+      </Panel>
+
+      <Panel span="wide" eyebrow="Learning loop" title="How command packets become organizational learning" icon={<History size={22} />}>
+        <ActionLearningLoopBoard data={data} loopId="LOOP-UNIT-PRESSURE" />
+      </Panel>
+
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
+    </section>
+  );
+}
+
 function systemKpis(data: V3Data, context: AppContext, units: DataRow[], programs: DataRow[]): DataRow[] {
   const latest = latestOpenContext(data);
   const factor = horizonFactor(context.horizon);
@@ -1198,6 +1691,10 @@ export function SystemPosturePage({
           {contextSummary(data, context)}. Every number below is clickable and carries direct, derived, modelled, HR, finance, or open-data lineage. The active controls change the object lists, metrics, charts, warnings, and scenario narrative.
         </p>
         <div className="hero-actions">
+          <button type="button" onClick={() => goTo("ops")}>
+            <Workflow size={18} />
+            Command desk
+          </button>
           <button type="button" onClick={() => goTo("inpatient")}>
             <BedDouble size={18} />
             Inpatient objects

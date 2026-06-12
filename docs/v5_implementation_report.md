@@ -4,6 +4,8 @@ Date: 2026-06-11
 
 Update: 2026-06-12 decision-grade refinement pass.
 
+Update: 2026-06-12 15-lens command-desk operating-layer pass.
+
 ## Scope
 
 This v5 pass converts the showcase into a more interactive pediatric command centre / progression hub using synthetic demonstration data only. It remains not connected to real hospital systems and is not validated for clinical decision-making.
@@ -81,6 +83,20 @@ The four AI signal pages are implementation prototypes. They are designed to sho
 
 Each page shows clinical boundary language, source readiness, model-family assumptions, proxy coefficients, threshold logic, validation state, governance state, affected operational objects, and next implementation steps.
 
+## 15-Lens Command-Desk Pass
+
+Detailed review notes are in `docs/v6_15_lens_command_centre_review.md`.
+
+This pass advances the showcase from object-centred dashboard to operating workbench:
+
+- Added public `Command Desk` page.
+- Added generated `expertLensReviews`, `decisionPackets`, `operatingCadence`, and `escalationLanes` to the command-centre context.
+- Added decision-packet worklist with urgency, owner, signal, interpretation, scenario link, evidence-to-clear, safety gate, HR/finance constraints, follow-up window, and learning metric.
+- Added packet, expert-lens, huddle, and escalation drawers using the existing object-drawer pattern.
+- Added interactive 15-lens review board reflecting software architecture, frontend, informatics, AI safety, modelling, queueing, operations, pediatric, nursing, human factors, implementation science, interoperability, and executive strategy lenses.
+- Added huddle/cadence and escalation-lane surfaces so signals move toward review, action, follow-up, and organizational learning.
+- Added local synthetic command-packet review capture into the Learning Memory page.
+
 ## Tooling And Packages
 
 No new package or plugin dependency was added.
@@ -134,6 +150,7 @@ Browser inspection:
 - Implementation readiness is explicit: `Data & Model Readiness` page and readiness registry are covered by Playwright.
 - Action-and-learning loop is visible: scenario and AI signal pages show detection-to-spread stages.
 - Four ultra-deep AI signal simulation pages exist: covered by v5 asset tests and Playwright.
+- Command Desk operating layer exists: generated packets, expert lenses, huddles, and escalation lanes are asserted in v5 asset tests and covered by Playwright.
 
 ## Remaining Gaps
 

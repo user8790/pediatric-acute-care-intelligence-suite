@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const publicPages = [
   { button: "System Posture", text: "Pediatric command centre" },
+  { button: "Command Desk", text: "Command operating desk" },
   { button: "Inpatient", text: "Inpatient progression hub" },
   { button: "Ambulatory", text: "Ambulatory access command centre" },
   { button: "Predictive Assets", text: "Predictive asset layer" },
@@ -164,10 +165,41 @@ test("readiness and AI signal simulation pages expose implementation transparenc
   await expect(page.getByText("reviewed as a synthetic implementation rehearsal")).toBeVisible();
 });
 
+test("command desk packages signals into reviewable operating packets", async ({ page }) => {
+  await page.goto("/");
+  const nav = page.getByRole("navigation", { name: "Product areas" });
+
+  await nav.getByRole("button", { name: "Command Desk", exact: true }).click();
+  await expect(page.getByText("Signal-to-action workbench")).toBeVisible();
+  await expect(page.getByText("Decision packet worklist")).toBeVisible();
+  await page.getByRole("button", { name: /Open packet evidence/i }).click();
+  const packetDialog = page.getByRole("dialog");
+  await expect(packetDialog).toBeVisible();
+  await expect(packetDialog.getByText("Evidence to clear")).toBeVisible();
+  await expect(packetDialog.getByText("Safety gate")).toBeVisible();
+  await page.getByLabel("Close drawer").click();
+
+  await page.getByRole("button", { name: /Health AI safety/i }).click();
+  await expect(page.getByText("Models should be blocked by default")).toBeVisible();
+  await page.getByRole("button", { name: /Open lens detail/i }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByText("Research inspiration")).toBeVisible();
+  await page.keyboard.press("Escape");
+
+  await page.getByRole("button", { name: /ED-to-bed progression huddle/i }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByText("Decision window")).toBeVisible();
+  await page.keyboard.press("Escape");
+
+  await page.getByRole("button", { name: /Capture review/i }).click();
+  await nav.getByRole("button", { name: "Memory", exact: true }).click();
+  await expect(page.getByText("captured as a synthetic command-desk review")).toBeVisible();
+});
+
 test("at least twenty interactive charts exist across the public workspace and layout avoids horizontal overflow", async ({ page }) => {
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Product areas" });
-  const pages = ["System Posture", "Inpatient", "Ambulatory", "Predictive Assets", "Scenarios", "AI Signals"];
+  const pages = ["System Posture", "Command Desk", "Inpatient", "Ambulatory", "Predictive Assets", "Scenarios", "AI Signals"];
   let chartCount = 0;
 
   for (const pageName of pages) {

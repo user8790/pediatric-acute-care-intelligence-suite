@@ -5,7 +5,7 @@ import { DefinitionList, QualityTable } from "../../components/StructuredLists";
 import type { DataRow } from "../../data/types";
 
 const governanceRows: Array<[string, string]> = [
-  ["Synthetic-only boundary", "No names, MRNs, health numbers, direct addresses, phone numbers, or direct identifiers are generated."],
+  ["Synthetic-only boundary", "No direct identifiers or contact-detail fields are generated."],
   ["Aggregate-first product surface", "Patient-level rows are suppressed by default; operational displays use aggregate synthetic rows."],
   ["Curated governed views", "Future real-data implementation maps through governed Snowflake views, not raw PHI tables."],
   ["Clinical-use caveat", "The prototype is not validated for clinical decision-making and should be treated as planning/demo software."],

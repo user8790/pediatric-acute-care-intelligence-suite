@@ -43,7 +43,7 @@ function App() {
       const serviceOk = context.service === "All services" || String(row.service_id) === context.service;
       return siteOk && serviceOk;
     });
-    const units = uniqueOptions(unitRows, "unit_id", "unit_name", "All units", "All units");
+    const units = unitOptions(unitRows, context.site === "All sites");
     const programRows = data.ambulatory.programDetails.filter((row) => context.site === "All sites" || String(row.site_id) === context.site);
     const programs = uniqueOptions(programRows, "program_id", "program", "All programs", "All programs");
     const scenarios = uniqueOptions(data.scenarioLab.scenarios, "scenario_id", "scenario_name", "All scenarios", "All scenarios");
@@ -99,6 +99,21 @@ function uniqueOptions(rows: DataRow[], valueKey: string, labelKey: string, allV
     options.push({ value, label });
   }
   return options.sort((a, b) => (a.value === allValue ? -1 : b.value === allValue ? 1 : a.label.localeCompare(b.label)));
+}
+
+function unitOptions(rows: DataRow[], includeSite: boolean): SelectOption[] {
+  const seen = new Set<string>();
+  const options: SelectOption[] = [{ value: "All units", label: "All units" }];
+  for (const row of rows) {
+    const value = String(row.unit_id ?? "");
+    const unitName = String(row.unit_name ?? value);
+    const siteName = String(row.site_name ?? "");
+    const label = includeSite && siteName ? `${unitName} - ${siteName}` : unitName;
+    if (!value || seen.has(value)) continue;
+    seen.add(value);
+    options.push({ value, label });
+  }
+  return options.sort((a, b) => (a.value === "All units" ? -1 : b.value === "All units" ? 1 : a.label.localeCompare(b.label)));
 }
 
 export default App;

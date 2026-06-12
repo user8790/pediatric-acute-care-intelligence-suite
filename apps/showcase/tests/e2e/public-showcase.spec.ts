@@ -150,6 +150,15 @@ test("readiness and AI signal simulation pages expose implementation transparenc
   await nav.getByRole("button", { name: "Readiness", exact: true }).click();
   await expect(page.getByText("Implementation transparency for feeds")).toBeVisible();
   await expect(page.getByText("Blocked / not connected")).toBeVisible();
+  await expect(page.getByText("Production cutover runway")).toBeVisible();
+  const sourceContractsStage = page.locator(".runway-grid article").filter({ hasText: "Curated source contracts" });
+  await expect(sourceContractsStage).toBeVisible();
+  await sourceContractsStage.getByRole("button").click();
+  await expect(page.getByRole("dialog")).toContainText("Next implementation step");
+  await page.getByLabel("Close drawer").click();
+  await page.getByRole("row", { name: /ADT and bed status/i }).click();
+  await expect(page.getByRole("dialog")).toContainText("Source-owner mapping");
+  await page.getByLabel("Close drawer").click();
   await page.getByRole("button", { name: /Pending Model/i }).click();
   await expect(page.getByRole("cell", { name: "Rare-disease case-finding simulation" }).first()).toBeVisible();
 
@@ -179,12 +188,15 @@ test("command desk packages signals into reviewable operating packets", async ({
   await expect(packetDialog.getByText("Safety gate")).toBeVisible();
   await page.getByLabel("Close drawer").click();
 
-  await page.getByRole("button", { name: /Health AI safety/i }).click();
-  await expect(page.getByText("Models should be blocked by default")).toBeVisible();
-  await page.getByRole("button", { name: /Open lens detail/i }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByText("Research inspiration")).toBeVisible();
-  await page.keyboard.press("Escape");
+  await expect(page.getByText("Packet trust gates")).toBeVisible();
+  const sourceFreshnessGate = page.locator(".packet-gate-grid article").filter({ hasText: "Source freshness" });
+  await expect(sourceFreshnessGate).toBeVisible();
+  await sourceFreshnessGate.locator(".object-card-trigger").click();
+  await expect(page.getByRole("dialog")).toContainText("Evidence needed");
+  await page.getByLabel("Close drawer").click();
+  await expect(page.locator(".packet-gate-grid article").filter({ hasText: "Operating owner signoff" })).toBeVisible();
+  await expect(page.getByText("Operating playbook")).toBeVisible();
+  await expect(page.getByText("15 expert lenses")).toHaveCount(0);
 
   await page.getByRole("button", { name: /ED-to-bed progression huddle/i }).click();
   await expect(page.getByRole("dialog")).toBeVisible();

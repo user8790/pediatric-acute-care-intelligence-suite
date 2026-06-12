@@ -101,10 +101,13 @@ def test_v5_metadata_and_command_center_context():
     assert len(command["implementationReadiness"]) >= 20
     assert len(command["actionLearningLoops"]) >= 20
     assert len(command["signalSimulations"]) == 4
-    assert len(command["expertLensReviews"]) == 15
+    assert "expertLensReviews" not in command
     assert len(command["decisionPackets"]) >= 7
+    assert len(command["packetReadinessGates"]) >= 40
     assert len(command["operatingCadence"]) >= 5
     assert len(command["escalationLanes"]) >= 5
+    assert len(command["productionRunway"]) >= 6
+    assert len(command["integrationDependencies"]) >= 8
     assert len(command["chartCatalog"]) >= 26
 
 
@@ -227,17 +230,6 @@ def test_v5_decision_support_readiness_and_signal_simulations():
 
 def test_v5_command_desk_operating_layer():
     command = load_json("command_center_context.json")
-    lens_names = {row["lens"] for row in command["expertLensReviews"]}
-    assert {
-        "Software architect",
-        "Principal frontend engineer",
-        "Clinical informatician",
-        "Health AI safety",
-        "Queueing theory / flow",
-        "Implementation scientist",
-        "Executive strategist",
-    }.issubset(lens_names)
-
     packet_required = {
         "packet_id",
         "packet_name",
@@ -259,6 +251,13 @@ def test_v5_command_desk_operating_layer():
         assert row["scenario_id"] in scenario_ids
         assert row["writeback_table"] == "APP.COMMAND_DECISION_PACKET_LOG"
 
+    gate_required = {"packet_id", "gate_id", "gate_name", "status", "owner", "gate_question", "evidence_needed", "decision"}
+    packet_ids = {row["packet_id"] for row in command["decisionPackets"]}
+    for row in command["packetReadinessGates"]:
+        assert gate_required.issubset(row)
+        assert row["packet_id"] in packet_ids
+    assert {"source_freshness", "owner_signoff", "safety_equity", "writeback_ready"}.issubset({row["gate_id"] for row in command["packetReadinessGates"]})
+
     huddle_required = {"huddle_id", "cadence_name", "cadence", "owner", "input_objects", "expected_outputs", "writeback_table"}
     for row in command["operatingCadence"]:
         assert huddle_required.issubset(row)
@@ -267,6 +266,15 @@ def test_v5_command_desk_operating_layer():
     for row in command["escalationLanes"]:
         assert lane_required.issubset(row)
     assert any(row["readiness"] == "blocked" for row in command["escalationLanes"])
+
+    runway_required = {"stage_id", "stage_name", "owner", "status", "next_step", "implementation_artifact", "exit_criteria"}
+    for row in command["productionRunway"]:
+        assert runway_required.issubset(row)
+
+    dependency_required = {"dependency_id", "dependency", "feeds", "from_stage", "to_stage", "status", "blocker"}
+    for row in command["integrationDependencies"]:
+        assert dependency_required.issubset(row)
+    assert any(row["status"] == "blocked" for row in command["integrationDependencies"])
 
 
 def test_v5_classification_and_source_readiness_layers_present():

@@ -52,9 +52,11 @@ type DrawerState =
   | { kind: "warning"; id: string; row: DataRow }
   | { kind: "scenario"; id: string; row?: DataRow }
   | { kind: "packet"; id: string; row: DataRow }
-  | { kind: "lens"; id: string; row: DataRow }
+  | { kind: "gate"; id: string; row: DataRow }
   | { kind: "huddle"; id: string; row: DataRow }
   | { kind: "escalation"; id: string; row: DataRow }
+  | { kind: "runway"; id: string; row: DataRow }
+  | { kind: "dependency"; id: string; row: DataRow }
   | null;
 
 function kpiTone(value: unknown): Tone {
@@ -990,32 +992,35 @@ function PacketDrawerContent({
   );
 }
 
-function LensDrawerContent({ row }: { row: DataRow }) {
+function GateDrawerContent({ data, row, onOpenSource }: { data: V3Data; row: DataRow; onOpenSource: (sourceId: string) => void }) {
   return (
     <div className="drawer-stack">
       <div className="drawer-summary-grid">
-        <div>
-          <span>Priority</span>
-          <strong>{formatInteger(numberValue(row, "priority"))}</strong>
-        </div>
         <div>
           <span>Status</span>
           <ReadinessBadge value={row.status} />
         </div>
         <div>
+          <span>Decision</span>
+          <strong>{stringValue(row, "decision")}</strong>
+        </div>
+        <div>
           <span>Owner</span>
           <strong>{stringValue(row, "owner")}</strong>
+        </div>
+        <div>
+          <span>Gate order</span>
+          <strong>{formatInteger(numberValue(row, "gate_order"))}</strong>
         </div>
       </div>
       <DetailList
         rows={[
-          ["Lens", stringValue(row, "lens")],
-          ["Finding", stringValue(row, "finding")],
-          ["Improvement added", stringValue(row, "improvement_added")],
-          ["Acceptance signal", stringValue(row, "acceptance_signal")],
-          ["Research inspiration", stringValue(row, "source_inspiration")],
+          ["Gate question", stringValue(row, "gate_question")],
+          ["Evidence needed", stringValue(row, "evidence_needed")],
+          ["Caveat", stringValue(row, "caveat")],
         ]}
       />
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={8} />
     </div>
   );
 }
@@ -1053,6 +1058,60 @@ function HuddleDrawerContent({ data, row, onOpenSource }: { data: V3Data; row: D
         ]}
       />
       <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={8} />
+    </div>
+  );
+}
+
+function RunwayDrawerContent({ row }: { row: DataRow }) {
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Status</span>
+          <ReadinessBadge value={row.status} />
+        </div>
+        <div>
+          <span>Owner</span>
+          <strong>{stringValue(row, "owner")}</strong>
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Next implementation step", stringValue(row, "next_step")],
+          ["Implementation artifact", stringValue(row, "implementation_artifact")],
+          ["Exit criteria", stringValue(row, "exit_criteria")],
+          ["Classification", stringValue(row, "classification")],
+        ]}
+      />
+    </div>
+  );
+}
+
+function DependencyDrawerContent({ data, row, onOpenSource }: { data: V3Data; row: DataRow; onOpenSource: (sourceId: string) => void }) {
+  return (
+    <div className="drawer-stack">
+      <div className="drawer-summary-grid">
+        <div>
+          <span>Status</span>
+          <ReadinessBadge value={row.status} />
+        </div>
+        <div>
+          <span>From</span>
+          <strong>{stringValue(row, "from_stage")}</strong>
+        </div>
+        <div>
+          <span>To</span>
+          <strong>{stringValue(row, "to_stage")}</strong>
+        </div>
+      </div>
+      <DetailList
+        rows={[
+          ["Feeds", stringValue(row, "feeds")],
+          ["Blocker", stringValue(row, "blocker")],
+          ["Classification", stringValue(row, "classification")],
+        ]}
+      />
+      <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={10} />
     </div>
   );
 }
@@ -1125,12 +1184,16 @@ function ObjectDrawer({
                   ? stringValue(drawer.row, "scenario_name", drawer.id)
                   : drawer.kind === "packet"
                     ? stringValue(drawer.row, "packet_name", drawer.id)
-                    : drawer.kind === "lens"
-                      ? stringValue(drawer.row, "lens", drawer.id)
-                      : drawer.kind === "huddle"
+                    : drawer.kind === "gate"
+                      ? stringValue(drawer.row, "gate_name", drawer.id)
+                    : drawer.kind === "huddle"
                         ? stringValue(drawer.row, "cadence_name", drawer.id)
                         : drawer.kind === "escalation"
                           ? stringValue(drawer.row, "lane", drawer.id)
+                          : drawer.kind === "runway"
+                            ? stringValue(drawer.row, "stage_name", drawer.id)
+                            : drawer.kind === "dependency"
+                              ? stringValue(drawer.row, "dependency", drawer.id)
                           : stringValue(drawer.row, "title", drawer.id);
   return (
     <Drawer eyebrow={titleCase(drawer.kind)} title={title} onClose={onClose}>
@@ -1143,9 +1206,11 @@ function ObjectDrawer({
       {drawer.kind === "warning" && <WarningDrawerContent data={data} row={drawer.row} onOpenSource={openSource} onOpenModel={openModel} />}
       {drawer.kind === "scenario" && <ScenarioDrawerContent data={data} row={drawer.row ?? { scenario_id: drawer.id }} onOpenSource={openSource} />}
       {drawer.kind === "packet" && <PacketDrawerContent data={data} row={drawer.row} onOpenSource={openSource} onOpenModel={openModel} />}
-      {drawer.kind === "lens" && <LensDrawerContent row={drawer.row} />}
+      {drawer.kind === "gate" && <GateDrawerContent data={data} row={drawer.row} onOpenSource={openSource} />}
       {drawer.kind === "huddle" && <HuddleDrawerContent data={data} row={drawer.row} onOpenSource={openSource} />}
       {drawer.kind === "escalation" && <EscalationDrawerContent data={data} row={drawer.row} onOpenSource={openSource} />}
+      {drawer.kind === "runway" && <RunwayDrawerContent row={drawer.row} />}
+      {drawer.kind === "dependency" && <DependencyDrawerContent data={data} row={drawer.row} onOpenSource={openSource} />}
     </Drawer>
   );
 }
@@ -1370,6 +1435,65 @@ function commandDeskKpis(data: V3Data, packets: DataRow[]): DataRow[] {
   ];
 }
 
+function packetGates(data: V3Data, packetId: string): DataRow[] {
+  return data.commandCenter.packetReadinessGates
+    .filter((row) => stringValue(row, "packet_id") === packetId)
+    .sort((a, b) => numberValue(a, "gate_order") - numberValue(b, "gate_order"));
+}
+
+function PacketGateBoard({
+  data,
+  packet,
+  onOpenSource,
+  onOpenGate,
+}: {
+  data: V3Data;
+  packet: DataRow;
+  onOpenSource: (sourceId: string) => void;
+  onOpenGate: (row: DataRow) => void;
+}) {
+  const gates = packetGates(data, stringValue(packet, "packet_id"));
+  if (!gates.length) return <p className="muted">No packet readiness gates are available for this signal.</p>;
+  return (
+    <div className="packet-gate-grid">
+      {gates.map((gate) => (
+        <article key={`${stringValue(gate, "packet_id")}-${stringValue(gate, "gate_id")}`}>
+          <button type="button" className="object-card-trigger" onClick={() => onOpenGate(gate)}>
+            <div>
+              <strong>{stringValue(gate, "gate_name")}</strong>
+              <ReadinessBadge value={gate.status} />
+            </div>
+            <p>{stringValue(gate, "gate_question")}</p>
+            <em>{stringValue(gate, "decision")} | {stringValue(gate, "owner")}</em>
+          </button>
+          <SourceChipGroup data={data} sourceIds={csvIds(gate.source_ids)} onOpen={onOpenSource} limit={2} />
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function PacketPlaybook({ packet }: { packet: DataRow }) {
+  const steps = [
+    ["Review", stringValue(packet, "now_what"), stringValue(packet, "owner_persona")],
+    ["Clear Evidence", stringValue(packet, "evidence_to_clear"), "source / metric / owner"],
+    ["Escalate", stringValue(packet, "safety_gate"), stringValue(packet, "huddle_cadence")],
+    ["Follow Up", stringValue(packet, "learning_metric"), stringValue(packet, "follow_up_window")],
+  ];
+  return (
+    <div className="packet-playbook">
+      {steps.map(([step, description, owner], index) => (
+        <article key={step}>
+          <span>{index + 1}</span>
+          <strong>{step}</strong>
+          <p>{description}</p>
+          <em>{owner}</em>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export function CommandDeskPage({
   data,
   context,
@@ -1382,9 +1506,7 @@ export function CommandDeskPage({
   const [drawer, setDrawer] = useState<DrawerState>(null);
   const packets = useMemo(() => filteredDecisionPackets(data, context), [data, context]);
   const [selectedPacketId, setSelectedPacketId] = useState("");
-  const [selectedLensId, setSelectedLensId] = useState("LENS-01");
   const selectedPacket = packets.find((packet) => stringValue(packet, "packet_id") === selectedPacketId) ?? packets[0];
-  const selectedLens = data.commandCenter.expertLensReviews.find((lens) => stringValue(lens, "lens_id") === selectedLensId) ?? data.commandCenter.expertLensReviews[0];
   const kpis = useMemo(() => commandDeskKpis(data, packets), [data, packets]);
 
   useEffect(() => {
@@ -1507,46 +1629,17 @@ export function CommandDeskPage({
         </div>
       </Panel>
 
-      <Panel span="xlarge" eyebrow="15 expert lenses" title="World-class review board embedded into the product backlog" icon={<BrainCircuit size={22} />}>
-        <div className="lens-board">
-          {data.commandCenter.expertLensReviews.map((lens) => {
-            const lensId = stringValue(lens, "lens_id");
-            return (
-              <button type="button" key={lensId} className={lensId === stringValue(selectedLens, "lens_id") ? "active" : undefined} onClick={() => setSelectedLensId(lensId)}>
-                <span>{formatInteger(numberValue(lens, "priority"))}</span>
-                <strong>{stringValue(lens, "lens")}</strong>
-                <ReadinessBadge value={lens.status} />
-              </button>
-            );
-          })}
-        </div>
+      <Panel span="xlarge" eyebrow="Packet trust gates" title="Evidence that must clear before a packet can drive real workflow" icon={<ShieldCheck size={22} />}>
+        <PacketGateBoard
+          data={data}
+          packet={selectedPacket}
+          onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+          onOpenGate={(row) => setDrawer({ kind: "gate", id: stringValue(row, "gate_id"), row })}
+        />
       </Panel>
 
-      <Panel span="normal" eyebrow="Selected lens" title={stringValue(selectedLens, "lens", "Expert review")} icon={<Sparkles size={22} />}>
-        <article className="decision-support-card">
-          <div>
-            <BrainCircuit size={18} />
-            <strong>{stringValue(selectedLens, "lens")}</strong>
-            <ReadinessBadge value={selectedLens.status} />
-          </div>
-          <dl className="so-what-list">
-            <div>
-              <dt>Finding</dt>
-              <dd>{stringValue(selectedLens, "finding")}</dd>
-            </div>
-            <div>
-              <dt>Improvement added</dt>
-              <dd>{stringValue(selectedLens, "improvement_added")}</dd>
-            </div>
-            <div>
-              <dt>Acceptance signal</dt>
-              <dd>{stringValue(selectedLens, "acceptance_signal")}</dd>
-            </div>
-          </dl>
-          <button type="button" className="secondary-action" onClick={() => setDrawer({ kind: "lens", id: stringValue(selectedLens, "lens_id"), row: selectedLens })}>
-            Open lens detail
-          </button>
-        </article>
+      <Panel span="normal" eyebrow="Operating playbook" title="How this packet should move through review" icon={<Workflow size={22} />}>
+        <PacketPlaybook packet={selectedPacket} />
       </Panel>
 
       <Panel span="xlarge" eyebrow="Escalation lanes" title="When local review needs sponsorship, repair, or safety hold" icon={<AlertTriangle size={22} />}>
@@ -2366,6 +2459,38 @@ export function ImplementationReadinessPage({ data, context }: { data: V3Data; c
         onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
       />
 
+      <Panel span="xlarge" eyebrow="Production cutover runway" title="What must be true before real provincial feeds can support workflow" icon={<Workflow size={22} />}>
+        <div className="runway-grid">
+          {data.commandCenter.productionRunway.map((row) => (
+            <article key={stringValue(row, "stage_id")}>
+              <button type="button" className="object-card-trigger" onClick={() => setDrawer({ kind: "runway", id: stringValue(row, "stage_id"), row })}>
+                <div>
+                  <strong>{stringValue(row, "stage_name")}</strong>
+                  <ReadinessBadge value={row.status} />
+                </div>
+                <p>{stringValue(row, "next_step")}</p>
+              </button>
+              <DetailList
+                rows={[
+                  ["Owner", stringValue(row, "owner")],
+                  ["Artifact", stringValue(row, "implementation_artifact")],
+                  ["Exit criteria", stringValue(row, "exit_criteria")],
+                ]}
+              />
+            </article>
+          ))}
+        </div>
+      </Panel>
+
+      <Panel span="normal" eyebrow="Integration dependencies" title="Real-data blockers by source domain" icon={<Network size={22} />}>
+        <RegistryTable
+          rows={data.commandCenter.integrationDependencies}
+          columns={["dependency", "status", "from_stage", "to_stage", "blocker"]}
+          limit={8}
+          onSelect={(row) => setDrawer({ kind: "dependency", id: stringValue(row, "dependency_id"), row })}
+        />
+      </Panel>
+
       <Panel span="wide" eyebrow="Readiness filters" title="Implementation queue by category" icon={<SlidersHorizontal size={22} />}>
         <div className="segmented-control wrap" role="group" aria-label="Readiness category">
           <button className={category === "all" ? "active" : ""} onClick={() => setCategory("all")}>
@@ -2695,6 +2820,14 @@ export function FutureWiringPage({ data }: { data: V3Data }) {
       </Panel>
       <Panel span="normal" eyebrow="Direct-link stoplight" title="Source validation checks" icon={<FileCheck2 size={22} />}>
         <SourceReadinessTable rows={data.directLinkValidation} limit={8} onSelect={(sourceId) => setDrawer({ kind: "source", id: sourceId })} />
+      </Panel>
+      <Panel span="wide" eyebrow="Integration dependencies" title="Source-to-workflow dependency map" icon={<GitBranch size={22} />}>
+        <RegistryTable
+          rows={data.commandCenter.integrationDependencies}
+          columns={["dependency", "feeds", "from_stage", "to_stage", "status", "blocker"]}
+          limit={12}
+          onSelect={(row) => setDrawer({ kind: "dependency", id: stringValue(row, "dependency_id"), row })}
+        />
       </Panel>
       <Panel span="wide" eyebrow="Curated-view registry" title={`${data.sourceRegistry.length} synthetic wiring placeholders`} icon={<DatabaseZap size={22} />}>
         <RegistryTable rows={data.sourceRegistry} columns={["source_view_name", "curated_view", "source_domain", "grain", "cadence", "classification"]} limit={80} onSelect={(row) => setDrawer({ kind: "source", id: stringValue(row, "source_id") })} />

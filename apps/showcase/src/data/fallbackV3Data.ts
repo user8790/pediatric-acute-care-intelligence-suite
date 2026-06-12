@@ -163,9 +163,11 @@ export const fallbackV3Data: V3Data = {
     implementationReadiness: [],
     actionLearningLoops: [],
     signalSimulations: [],
-    expertLensReviews: [],
     decisionPackets: [],
+    packetReadinessGates: [],
     operatingCadence: [],
     escalationLanes: [],
+    productionRunway: [],
+    integrationDependencies: [],
   },
 };

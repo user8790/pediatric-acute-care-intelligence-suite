@@ -997,7 +997,9 @@ dd {
 
 .packet-worklist,
 .cadence-list,
-.lens-board,
+.packet-gate-grid,
+.packet-playbook,
+.runway-grid,
 .escalation-lane-grid {
   display: grid;
   gap: 10px;
@@ -1005,7 +1007,6 @@ dd {
 
 .packet-worklist button,
 .cadence-list button,
-.lens-board button,
 .escalation-lane-grid button,
 .secondary-action {
   appearance: none;
@@ -1025,8 +1026,6 @@ dd {
 .packet-worklist button:hover,
 .packet-worklist button.active,
 .cadence-list button:hover,
-.lens-board button:hover,
-.lens-board button.active,
 .escalation-lane-grid button:hover,
 .secondary-action:hover {
   transform: translateY(-1px);
@@ -1054,7 +1053,6 @@ dd {
 
 .packet-worklist strong,
 .cadence-list strong,
-.lens-board strong,
 .escalation-lane-grid strong {
   color: #18242d;
   overflow-wrap: anywhere;
@@ -1116,28 +1114,95 @@ dd {
   padding: 10px;
 }
 
-.lens-board {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.packet-gate-grid,
+.runway-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.lens-board button {
+.packet-gate-grid article,
+.packet-playbook article,
+.runway-grid article {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) auto;
   gap: 8px;
-  align-items: center;
-  min-height: 72px;
-  padding: 10px;
+  min-height: 128px;
+  border: 1px solid #dce6eb;
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
 }
 
-.lens-board button > span:first-child {
+.object-card-trigger {
+  appearance: none;
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.object-card-trigger:hover strong,
+.object-card-trigger:focus-visible strong {
+  color: #176b87;
+}
+
+.object-card-trigger:focus-visible {
+  outline: 2px solid #6fb6c2;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.packet-gate-grid .object-card-trigger > div,
+.runway-grid .object-card-trigger > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.packet-gate-grid p,
+.packet-playbook p,
+.runway-grid p {
+  margin: 0;
+  color: #46525c;
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+.packet-gate-grid em,
+.packet-playbook em {
+  color: #596672;
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.packet-playbook {
+  grid-template-columns: 1fr;
+}
+
+.packet-playbook article {
+  grid-template-columns: 30px 1fr;
+  min-height: 96px;
+}
+
+.packet-playbook article span {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 8px;
-  background: #e9f4f5;
-  color: #176b87;
+  background: #176b87;
+  color: #ffffff;
   font-weight: 900;
+}
+
+.packet-playbook article p,
+.packet-playbook article em {
+  grid-column: 2;
 }
 
 .secondary-action {
@@ -2226,7 +2291,8 @@ footer span {
   .model-card-grid,
   .object-card-grid,
   .packet-worklist,
-  .lens-board,
+  .packet-gate-grid,
+  .runway-grid,
   .escalation-lane-grid,
   .interpretation-grid,
   .learning-loop-board,
@@ -2275,7 +2341,8 @@ footer span {
   .model-card-grid,
   .object-card-grid,
   .packet-worklist,
-  .lens-board,
+  .packet-gate-grid,
+  .runway-grid,
   .escalation-lane-grid,
   .interpretation-grid,
   .learning-loop-board,
@@ -2306,7 +2373,6 @@ footer span {
 
   .quality-row,
   .scenario-card,
-  .lens-board button,
   .model-card dl div,
   .detail-list div {
     grid-template-columns: 1fr;

@@ -90,10 +90,10 @@ Detailed review notes are in `docs/v6_15_lens_command_centre_review.md`.
 This pass advances the showcase from object-centred dashboard to operating workbench:
 
 - Added public `Command Desk` page.
-- Added generated `expertLensReviews`, `decisionPackets`, `operatingCadence`, and `escalationLanes` to the command-centre context.
+- Added generated `decisionPackets`, `packetReadinessGates`, `operatingCadence`, `escalationLanes`, `productionRunway`, and `integrationDependencies` to the command-centre context.
 - Added decision-packet worklist with urgency, owner, signal, interpretation, scenario link, evidence-to-clear, safety gate, HR/finance constraints, follow-up window, and learning metric.
 - Added packet, expert-lens, huddle, and escalation drawers using the existing object-drawer pattern.
-- Added interactive 15-lens review board reflecting software architecture, frontend, informatics, AI safety, modelling, queueing, operations, pediatric, nursing, human factors, implementation science, interoperability, and executive strategy lenses.
+- Used the 15 expert lenses as an internal review method; the public product now exposes packet trust gates and operating workflow surfaces instead of an expert-lens board.
 - Added huddle/cadence and escalation-lane surfaces so signals move toward review, action, follow-up, and organizational learning.
 - Added local synthetic command-packet review capture into the Learning Memory page.
 
@@ -150,7 +150,7 @@ Browser inspection:
 - Implementation readiness is explicit: `Data & Model Readiness` page and readiness registry are covered by Playwright.
 - Action-and-learning loop is visible: scenario and AI signal pages show detection-to-spread stages.
 - Four ultra-deep AI signal simulation pages exist: covered by v5 asset tests and Playwright.
-- Command Desk operating layer exists: generated packets, expert lenses, huddles, and escalation lanes are asserted in v5 asset tests and covered by Playwright.
+- Command Desk operating layer exists: generated packets, packet trust gates, huddles, escalation lanes, production runway, and dependencies are asserted in v5 asset tests and covered by Playwright.
 
 ## Remaining Gaps
 

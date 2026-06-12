@@ -122,10 +122,12 @@ export type V3Data = {
     implementationReadiness: DataRow[];
     actionLearningLoops: DataRow[];
     signalSimulations: DataRow[];
-    expertLensReviews: DataRow[];
     decisionPackets: DataRow[];
+    packetReadinessGates: DataRow[];
     operatingCadence: DataRow[];
     escalationLanes: DataRow[];
+    productionRunway: DataRow[];
+    integrationDependencies: DataRow[];
   };
 };
 

@@ -912,6 +912,7 @@ def command_center_context(
     scenarios: dict[str, list[dict[str, Any]]],
     open_rows: list[dict[str, Any]],
 ) -> dict[str, Any]:
+    packets = decision_packet_rows(inpatient, ambulatory, scenarios, open_rows)
     sites = []
     for site_id, site_name, catchment, _ in SITES:
         site_units = [row for row in inpatient["unitDetails"] if row["site_id"] == site_id]
@@ -997,10 +998,12 @@ def command_center_context(
         "implementationReadiness": implementation_readiness_rows(scenarios),
         "actionLearningLoops": action_learning_loop_rows(inpatient, ambulatory, scenarios),
         "signalSimulations": signal_simulation_rows(open_rows),
-        "expertLensReviews": expert_lens_review_rows(),
-        "decisionPackets": decision_packet_rows(inpatient, ambulatory, scenarios, open_rows),
+        "decisionPackets": packets,
+        "packetReadinessGates": packet_readiness_gate_rows(packets),
         "operatingCadence": operating_cadence_rows(),
         "escalationLanes": escalation_lane_rows(),
+        "productionRunway": production_runway_rows(),
+        "integrationDependencies": integration_dependency_rows(),
     }
 
 
@@ -1403,145 +1406,6 @@ def signal_simulation_rows(open_rows: list[dict[str, Any]]) -> list[dict[str, An
     return configs
 
 
-def expert_lens_review_rows() -> list[dict[str, Any]]:
-    lenses = [
-        (
-            "Software architect",
-            "The product needs a durable operating-object model, not page-specific logic.",
-            "Decision packets now provide a shared object that can be routed across posture, huddle, readiness, escalation, and learning surfaces.",
-            "Architecture / platform",
-            "Every major signal can be represented as packet, source, model, owner, action, and learning event.",
-            "ready",
-        ),
-        (
-            "Principal frontend engineer",
-            "Dense command-centre experiences need stable controls, clear object affordances, and drilldowns that do not shift layout.",
-            "The Command Desk uses selectable packet cards, compact status badges, drawer details, and charts with stable dimensions.",
-            "Frontend",
-            "Users can select a packet, open its evidence, and keep orientation without page jumps.",
-            "ready",
-        ),
-        (
-            "Clinical informatician",
-            "Operational signals must separate observation, interpretation, and clinical action boundaries.",
-            "Packets include interpretation, evidence-to-clear, safety gate, and a careful not-a-clinical-directive stance.",
-            "Clinical informatics",
-            "Each packet shows why it is visible, what review is reasonable, and what must not be inferred.",
-            "review",
-        ),
-        (
-            "Healthcare informatician",
-            "Definitions, owners, workflow state, and writeback need to travel with every signal.",
-            "The operating cadence rows map signals into huddles, outputs, and governed writeback tables.",
-            "Healthcare informatics",
-            "Huddle outputs and learning tables are explicit for each operating loop.",
-            "review",
-        ),
-        (
-            "Health AI safety",
-            "Models should be blocked by default until validation, subgroup calibration, monitoring, and rollback evidence exist.",
-            "Escalation lanes and readiness rows expose blocked model gates and required human review.",
-            "AI governance",
-            "High-stakes AI packets cannot appear as production-ready without validation and governance evidence.",
-            "blocked",
-        ),
-        (
-            "Data scientist",
-            "Feature families, proxy weights, scenario effects, and uncertainty should be visible where decisions are made.",
-            "Decision packets link to model cards, source badges, confidence language, and scenario IDs.",
-            "Analytics",
-            "A user can trace packet impact back to model and source assumptions.",
-            "review",
-        ),
-        (
-            "Statistician / modeller",
-            "Forecasts and scenarios need uncertainty, sensitivity, calibration, denominator ownership, and drift review.",
-            "Packets carry confidence, learning metric, expected impact, and evidence-to-clear fields.",
-            "Model risk",
-            "Each packet states what would make the signal trusted or retired.",
-            "review",
-        ),
-        (
-            "Queueing theory / flow",
-            "Flow work must distinguish arrival pressure, service rate, buffers, downstream capacity, and bottleneck location.",
-            "The triage/LOS and ED-boarder packets expose bottleneck and scenario levers rather than a generic pressure score.",
-            "Patient flow analytics",
-            "The selected packet identifies the constrained queue and the feasible lever.",
-            "ready",
-        ),
-        (
-            "Acute care operations",
-            "A command centre must tell teams what to review this huddle and what can wait.",
-            "Urgency, owner persona, cadence, follow-up window, and escalation lane are first-class packet fields.",
-            "Operations",
-            "The page can sort work into now, next shift, next day, and governance lanes.",
-            "ready",
-        ),
-        (
-            "Pediatric clinical leader",
-            "Pediatric specificity matters: NICU/PICU, respiratory season, complex care, family travel, and child-specific safety.",
-            "Packets and AI simulations include pediatric domains, safety gates, and open-context seasonality.",
-            "Pediatric clinical leadership",
-            "Pediatric service and unit context is visible in every clinical-adjacent signal.",
-            "review",
-        ),
-        (
-            "Nursing / charge-flow",
-            "Charge and flow leaders need effective capacity, skill mix, workload, and discharge barriers in the same object.",
-            "Unit packets combine boarders, effective beds, HR constraints, owner, action, and follow-up window.",
-            "Nursing / flow",
-            "A unit leader can identify what is blocking progression and what evidence to clear.",
-            "ready",
-        ),
-        (
-            "Human factors / UX",
-            "The product should reduce cognitive work by making status, confidence, boundary, and next action immediately visible.",
-            "Packet cards expose the same state grammar: urgency, confidence, owner, workflow state, safety gate.",
-            "Human factors",
-            "Users can compare packets without reading a long report first.",
-            "review",
-        ),
-        (
-            "Implementation scientist",
-            "Adoption depends on fit with huddles, local champions, audit-and-feedback, and learning loops.",
-            "Operating cadence and learning-loop rows show when signals are reviewed, who owns them, and how spread/retire decisions happen.",
-            "Implementation",
-            "Each packet has a follow-up window and learning metric.",
-            "review",
-        ),
-        (
-            "Data engineering / interoperability",
-            "Future real feeds need curated views, canonical grains, source badges, and dependency gates before workflow dependence.",
-            "Packets keep source IDs, model IDs, writeback targets, and readiness links together.",
-            "Data platform",
-            "Every packet can be traced to governed synthetic views and future Snowflake mappings.",
-            "review",
-        ),
-        (
-            "Executive strategist",
-            "The executive surface must connect pressure, risk, resource choices, and implementation blockers to strategy.",
-            "The Command Desk includes resource constraints, escalation lanes, governance blockers, and system-level learning.",
-            "Executive leadership",
-            "Leaders can see which decisions need sponsorship versus local action.",
-            "ready",
-        ),
-    ]
-    return [
-        {
-            "lens_id": f"LENS-{index:02d}",
-            "lens": lens,
-            "finding": finding,
-            "improvement_added": improvement,
-            "owner": owner,
-            "acceptance_signal": acceptance,
-            "status": status,
-            "priority": index,
-            "source_inspiration": "International command-centre, smart-hospital, clinical AI governance, patient-flow, and implementation-science patterns.",
-        }
-        for index, (lens, finding, improvement, owner, acceptance, status) in enumerate(lenses, start=1)
-    ]
-
-
 def decision_packet_rows(
     inpatient: dict[str, list[dict[str, Any]]],
     ambulatory: dict[str, list[dict[str, Any]]],
@@ -1708,6 +1572,92 @@ def decision_packet_rows(
         "silent PPV, alert burden, subgroup calibration, and override review",
     )
     return packets
+
+
+def packet_readiness_gate_rows(packets: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    gate_templates = [
+        ("source_freshness", "Source freshness", "Curated source checks are passing within expected refresh cadence.", "Data engineering / interoperability", "SRC_DIRECT_LINKAGE_VALIDATION"),
+        ("metric_definition", "Metric definition", "Denominator, timestamp logic, and owner-approved calculation are documented.", "Healthcare informatics", "SRC_METRIC_REGISTRY"),
+        ("owner_signoff", "Operating owner signoff", "Named clinical-operational owner has reviewed the signal, action boundary, and follow-up window.", "Operations", "SRC_GOVERNANCE_APPROVALS"),
+        ("hr_feasibility", "HR/workforce feasibility", "Scenario or action does not exceed aggregate skill-mix, float-pool, or overtime constraints.", "Workforce analytics", "SRC_SYNTH_HR_SHIFT_ROSTER"),
+        ("finance_feasibility", "Finance/resource feasibility", "Resource envelope is explicit and not treated as production accounting truth.", "Finance partner", "SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE"),
+        ("safety_equity", "Safety and equity review", "Clinical safety, human-factors, subgroup, family-impact, and equity risks have been reviewed for the signal type.", "Clinical safety / AI governance", "SRC_MODEL_VALIDATION_RESULTS"),
+        ("writeback_ready", "Learning writeback", "Acknowledgement, decision, outcome review, and retire/spread fields have a governed writeback path.", "Snowflake app owner", "SRC_LEARNING_SYSTEM_EVENTS"),
+    ]
+    rows: list[dict[str, Any]] = []
+    for packet in packets:
+        readiness = packet.get("readiness", "review")
+        for index, (gate_id, gate_name, gate_question, owner, source_id) in enumerate(gate_templates, start=1):
+            blocked_gate = readiness == "blocked" and gate_id in {"owner_signoff", "safety_equity", "writeback_ready"}
+            review_gate = gate_id in {"metric_definition", "hr_feasibility", "finance_feasibility", "safety_equity"} or readiness == "review"
+            status = "blocked" if blocked_gate else "review" if review_gate else "ready"
+            rows.append(
+                {
+                    "packet_id": packet["packet_id"],
+                    "gate_id": gate_id,
+                    "gate_name": gate_name,
+                    "gate_order": index,
+                    "status": status,
+                    "owner": owner,
+                    "gate_question": gate_question,
+                    "evidence_needed": packet["evidence_to_clear"] if status != "ready" else "Evidence is synthetically complete for demonstration.",
+                    "source_ids": source_id,
+                    "decision": "hold" if status == "blocked" else "review before action" if status == "review" else "usable in synthetic demo",
+                    "caveat": "Synthetic gate only; production requires local source-owner evidence and governance approval.",
+                }
+            )
+    return rows
+
+
+def production_runway_rows() -> list[dict[str, Any]]:
+    stages = [
+        ("RUNWAY-01", "Curated source contracts", "Data engineering / interoperability", "blocked", "Define read-only curated Snowflake views, grains, freshness SLAs, small-cell rules, and source-owner signoff.", "source contracts, access controls, quality checks", "Every source feeding command packets has owner, grain, fields, cadence, and validation evidence."),
+        ("RUNWAY-02", "Canonical operating marts", "Healthcare informatics", "pending", "Build ADT/bed, ED boarding, discharge, ambulatory access, HR aggregate, finance-resource, and open-context marts.", "canonical marts and semantic layer", "Metrics can be recalculated from marts without app-specific joins."),
+        ("RUNWAY-03", "Metric and coefficient governance", "Analytics / model risk", "pending", "Approve denominators, coefficient provenance, scenario assumptions, and model-card evidence.", "metric registry and coefficient registry", "Every major number has definition, owner, lineage, and validation state."),
+        ("RUNWAY-04", "Silent validation and shadow huddles", "Clinical safety / operations", "pending", "Run signals silently beside existing huddles, compare actions, assess false positives, subgroup performance, and alert burden.", "validation workbook and huddle observations", "Signals improve review quality without unsafe burden or hidden inequity."),
+        ("RUNWAY-05", "Workflow pilot with writeback", "Operations / Snowflake app owner", "pending", "Pilot command packets in one site/service lane with acknowledgement, owner, action, outcome, and learning writeback.", "APP and GOVERNANCE writeback tables", "Packet review, action, follow-up, and learning can be audited end to end."),
+        ("RUNWAY-06", "Governed scale and retirement", "Executive / AI governance", "not_started", "Scale only after rollback, monitoring, role training, incident response, and retire/spread rules are approved.", "release gate, rollback plan, monitoring dashboard", "The operating layer can add, change, pause, or retire signals safely."),
+    ]
+    return [
+        {
+            "stage_id": stage_id,
+            "stage_name": stage_name,
+            "owner": owner,
+            "status": status,
+            "next_step": next_step,
+            "implementation_artifact": artifact,
+            "exit_criteria": exit_criteria,
+            "classification": "implementation readiness",
+        }
+        for stage_id, stage_name, owner, status, next_step, artifact, exit_criteria in stages
+    ]
+
+
+def integration_dependency_rows() -> list[dict[str, Any]]:
+    dependencies = [
+        ("DEP-ADT-BED", "ADT and bed status", "Unit census, effective beds, ED boarders, transfers", "Curated source contracts", "Canonical operating marts", "blocked", "Source-owner mapping and timestamp reconciliation", "SRC_SYNTH_ED_VISITS,SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_TRANSFER_REQUESTS"),
+        ("DEP-DISCHARGE", "Discharge milestones", "Barriers, readiness, discharge forecast, outcome review", "Canonical operating marts", "Shadow huddles", "pending", "Milestone definition and interdisciplinary owner approval", "SRC_SYNTH_CARE_PLAN_MILESTONES,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_MODEL_PREDICTIONS"),
+        ("DEP-AMB", "Ambulatory access", "Referrals, triage, waitlist, TNA, templates, diagnostics, no-shows", "Curated source contracts", "Workflow pilot", "pending", "Template rules, provider leave handling, and diagnostics joins", "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS"),
+        ("DEP-HR", "HR/workforce aggregate", "Staffed/effective beds, role groups, float pool, overtime constraint", "Source contracts", "Scenario feasibility", "pending", "Aggregate role grouping and minimum-cell policy", "SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_HR_FLOAT_POOL,SRC_SYNTH_WORKLOAD_ACUITY"),
+        ("DEP-FIN", "Finance/resource proxy", "Resource envelope, marginal capacity cost, scenario feasibility", "Source contracts", "Executive review", "pending", "Resource proxy signoff and display granularity", "SRC_SYNTH_FINANCE_COST_CENTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE"),
+        ("DEP-OPEN", "Public context", "Respiratory, AQHI/smoke, school calendar, population context", "Open-data cache", "Forecast feature store", "review", "Refresh monitoring and site/catchment mapping", "SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_STATCAN_PED_POPULATION,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_ED_WAIT_TIME_LOGIC"),
+        ("DEP-MODEL", "Model validation", "Forecasts, warning logic, AI signal rehearsals, drift and release gates", "Metric governance", "Governed launch", "blocked", "Silent evaluation, subgroup calibration, alert burden, rollback", "SRC_MODEL_PREDICTIONS,SRC_MODEL_VALIDATION_RESULTS,SRC_MODEL_DRIFT_RESULTS"),
+        ("DEP-WRITEBACK", "Learning writeback", "Acknowledgements, decisions, outcomes, retire/spread learning", "Workflow pilot", "Governed scale", "pending", "APP/GOVERNANCE schema grants, audit policy, retention", "SRC_LEARNING_SYSTEM_EVENTS,SRC_GOVERNANCE_APPROVALS"),
+    ]
+    return [
+        {
+            "dependency_id": dependency_id,
+            "dependency": dependency,
+            "feeds": feeds,
+            "from_stage": from_stage,
+            "to_stage": to_stage,
+            "status": status,
+            "blocker": blocker,
+            "classification": "implementation dependency",
+            "source_ids": source_ids,
+        }
+        for dependency_id, dependency, feeds, from_stage, to_stage, status, blocker, source_ids in dependencies
+    ]
 
 
 def operating_cadence_rows() -> list[dict[str, Any]]:

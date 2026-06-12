@@ -33,11 +33,11 @@ The showcase is now credible as a pediatric command centre direction, but a deci
 
 1. World-class software architect and developer
    Finding: Page-level intelligence must become an operating-object model.
-   Implemented: `decisionPackets`, `operatingCadence`, `escalationLanes`, and `expertLensReviews` are generated source-layer artifacts under v5 command context.
+   Implemented: `decisionPackets`, `packetReadinessGates`, `operatingCadence`, `escalationLanes`, `productionRunway`, and `integrationDependencies` are generated source-layer artifacts under v5 command context.
 
 2. Principal frontend engineer
    Finding: Dense control surfaces must preserve orientation, stable layout, and clear affordances.
-   Implemented: public `Command Desk` page with selectable packet worklist, selected-packet evidence, lens selector, huddle drawers, escalation cards, and stable chart dimensions.
+   Implemented: public `Command Desk` page with selectable packet worklist, selected-packet evidence, trust gates, huddle drawers, escalation cards, operating playbook, and stable chart dimensions.
 
 3. Clinical informatician
    Finding: The product must separate observation, interpretation, and clinical action boundary.
@@ -95,12 +95,14 @@ The showcase is now credible as a pediatric command centre direction, but a deci
 
 - Added `Command Desk` as a public workspace.
 - Added generated decision packets with urgency, owner, signal, interpretation, scenario link, safety gate, evidence-to-clear, HR/finance constraints, follow-up window, and learning metric.
-- Added 15 expert-lens review rows as generated data and an interactive review board in the app.
+- Added generated packet readiness gates, production runway, and integration dependencies.
 - Added operating cadence rows for huddles and review boards.
 - Added escalation lane rows for flow, HR, finance/resource, source readiness, and clinical-AI safety.
-- Added packet, lens, huddle, and escalation drawers using the existing object-drawer pattern.
+- Added packet, huddle, and escalation drawers using the existing object-drawer pattern.
 - Added local synthetic command-packet review capture into Learning Memory.
 - Expanded chart catalog and Playwright coverage.
+
+The 15 expert lenses are intentionally an internal review method, not a public product module.
 
 ## Remaining Gaps
 

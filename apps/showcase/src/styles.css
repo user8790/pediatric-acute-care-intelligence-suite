@@ -1400,6 +1400,122 @@ dd {
   color: #26323b;
 }
 
+.interpretation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.decision-support-card,
+.simulation-hero {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid #dce6eb;
+  border-radius: 8px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.decision-support-card > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.decision-support-card strong,
+.simulation-hero strong {
+  color: #1d2b34;
+}
+
+.decision-support-card p,
+.simulation-hero p {
+  margin: 0;
+  color: #4e5d68;
+  line-height: 1.45;
+}
+
+.role-card {
+  background: #f8fcfd;
+}
+
+.so-what-list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+}
+
+.so-what-list div {
+  display: grid;
+  gap: 3px;
+}
+
+.so-what-list dt {
+  color: #176b87;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.so-what-list dd {
+  margin: 0;
+  color: #26323b;
+  line-height: 1.4;
+}
+
+.learning-loop-board {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.learning-loop-board article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid #dce6eb;
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
+}
+
+.learning-loop-board span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #176b87;
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.learning-loop-board strong {
+  color: #26323b;
+}
+
+.learning-loop-board p,
+.learning-loop-board em {
+  margin: 0;
+  color: #5a6873;
+  font-size: 0.82rem;
+  line-height: 1.38;
+}
+
+.learning-loop-board em {
+  color: #176b87;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.simulation-hero {
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  align-items: start;
+  background: #fbfcfd;
+}
+
 .driver-stack article,
 .warning-card,
 .event-log article,
@@ -1631,6 +1747,12 @@ dd {
   border-radius: 8px;
   padding: 4px;
   background: #f6f8fa;
+}
+
+.segmented-control.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .segmented-control button {
@@ -1920,10 +2042,13 @@ footer span {
   .definition-grid,
   .model-card-grid,
   .object-card-grid,
+  .interpretation-grid,
+  .learning-loop-board,
   .drilldown-card-grid,
   .comparison-board,
   .walkthrough-grid,
-  .operating-layer-map {
+  .operating-layer-map,
+  .simulation-hero {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1963,6 +2088,8 @@ footer span {
   .definition-grid,
   .model-card-grid,
   .object-card-grid,
+  .interpretation-grid,
+  .learning-loop-board,
   .drilldown-card-grid,
   .scenario-control-grid,
   .toggle-grid,
@@ -1971,7 +2098,8 @@ footer span {
   .walkthrough-grid,
   .narrative-band,
   .network-schematic,
-  .operating-layer-map {
+  .operating-layer-map,
+  .simulation-hero {
     grid-template-columns: 1fr;
   }
 

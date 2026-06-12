@@ -117,6 +117,11 @@ export type V3Data = {
     warnings: DataRow[];
     lakehouseTables: DataRow[];
     chartCatalog: string[];
+    interpretations: DataRow[];
+    roleGuidance: DataRow[];
+    implementationReadiness: DataRow[];
+    actionLearningLoops: DataRow[];
+    signalSimulations: DataRow[];
   };
 };
 

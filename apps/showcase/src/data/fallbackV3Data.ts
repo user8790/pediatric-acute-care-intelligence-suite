@@ -158,5 +158,10 @@ export const fallbackV3Data: V3Data = {
     warnings: [],
     lakehouseTables: [],
     chartCatalog: [],
+    interpretations: [],
+    roleGuidance: [],
+    implementationReadiness: [],
+    actionLearningLoops: [],
+    signalSimulations: [],
   },
 };

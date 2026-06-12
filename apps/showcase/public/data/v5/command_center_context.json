@@ -2131,5 +2131,1522 @@
     "model validation/drift table",
     "model coefficient bars",
     "source readiness stoplights"
+  ],
+  "interpretations": [
+    {
+      "signal_id": "SIG-SYSTEM-001",
+      "signal_type": "system_posture",
+      "object_type": "network",
+      "object_id": "SITE_PROV_NETWORK",
+      "persona": "Executive",
+      "headline": "System pressure is being shaped by effective capacity, not physical beds alone.",
+      "what_changed": "Network occupancy remains above the watch threshold after applying staffed/effective bed constraints.",
+      "likely_drivers": "Respiratory activity, ED placement pressure, discharge barriers, and aggregate HR gap hours are moving together.",
+      "review_action": "Use this as a huddle prioritization cue: confirm the highest-pressure units, ask whether barriers can be moved today, and check whether any scenario is feasible under HR and resource limits.",
+      "confidence": "medium-high",
+      "confidence_reason": "Direct synthetic capacity and staffing variables are ready; public-context and finance-resource variables remain review-grade.",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,PICU_NICU_PRESSURE",
+      "next_step": "Open the inpatient object list and compare action feasibility in the scenario lab."
+    },
+    {
+      "signal_id": "SIG-OPEN-001",
+      "signal_type": "open_context",
+      "object_type": "open_data",
+      "object_id": "OPEN_CONTEXT",
+      "persona": "Analytics / informatics / AI team",
+      "headline": "Open-context variables are forecast-shaping, but should stay visibly separable from operational feeds.",
+      "what_changed": "Current respiratory index is 0.474 and AQHI/smoke proxy is 4.94.",
+      "likely_drivers": "Cached respiratory-virus, AQHI/smoke, school-calendar, and pediatric-population context are adding small explicit lifts to demand and access forecasts.",
+      "review_action": "Validate source refresh cadence, missingness, regional mapping, and whether the lift coefficients should be site-specific before any production use.",
+      "confidence": "medium",
+      "confidence_reason": "Public sources are conceptually credible, but local calibration and denominator ownership are pending.",
+      "source_ids": "SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,AMB_REFERRAL_DEMAND_FORECAST",
+      "next_step": "Keep source badges visible and compare model performance with and without open-context features."
+    },
+    {
+      "signal_id": "SIG-UNIT-001",
+      "signal_type": "unit_pressure",
+      "object_type": "unit",
+      "object_id": "SITE_PROV_NETWORK_PICU",
+      "persona": "Patient-flow leader",
+      "headline": "PICU unit is a high-yield review target for today's progression huddle.",
+      "what_changed": "Occupancy is 111.1%, with 9 ED boarders and 14.2 synthetic HR gap hours.",
+      "likely_drivers": "Effective-bed loss, respiratory/open-context pressure, ED boarders, and discharge barriers are aligned.",
+      "review_action": "Consider a structured review of discharge barriers, role-group gaps, transfer requests, and whether a step-down or discharge-pull-forward scenario is feasible.",
+      "confidence": "medium",
+      "confidence_reason": "Capacity and HR variables are direct or derived synthetic signals; action impact remains modelled.",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,PICU_NICU_PRESSURE,DISCHARGE_BARRIER_RISK",
+      "next_step": "Open the unit drawer and inspect barriers, HR gap, cost ceiling, warnings, and model lineage."
+    },
+    {
+      "signal_id": "SIG-UNIT-002",
+      "signal_type": "unit_pressure",
+      "object_type": "unit",
+      "object_id": "SITE_ACH_INSPIRED_PICU",
+      "persona": "Unit manager",
+      "headline": "PICU unit is a high-yield review target for today's progression huddle.",
+      "what_changed": "Occupancy is 107.7%, with 8 ED boarders and 18.1 synthetic HR gap hours.",
+      "likely_drivers": "Effective-bed loss, respiratory/open-context pressure, ED boarders, and discharge barriers are aligned.",
+      "review_action": "Consider a structured review of discharge barriers, role-group gaps, transfer requests, and whether a step-down or discharge-pull-forward scenario is feasible.",
+      "confidence": "medium",
+      "confidence_reason": "Capacity and HR variables are direct or derived synthetic signals; action impact remains modelled.",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,PICU_NICU_PRESSURE,DISCHARGE_BARRIER_RISK",
+      "next_step": "Open the unit drawer and inspect barriers, HR gap, cost ceiling, warnings, and model lineage."
+    },
+    {
+      "signal_id": "SIG-UNIT-003",
+      "signal_type": "unit_pressure",
+      "object_type": "unit",
+      "object_id": "SITE_STOLLERY_INSPIRED_PICU",
+      "persona": "Patient-flow leader",
+      "headline": "PICU unit is a high-yield review target for today's progression huddle.",
+      "what_changed": "Occupancy is 106.7%, with 7 ED boarders and 19.3 synthetic HR gap hours.",
+      "likely_drivers": "Effective-bed loss, respiratory/open-context pressure, ED boarders, and discharge barriers are aligned.",
+      "review_action": "Consider a structured review of discharge barriers, role-group gaps, transfer requests, and whether a step-down or discharge-pull-forward scenario is feasible.",
+      "confidence": "medium",
+      "confidence_reason": "Capacity and HR variables are direct or derived synthetic signals; action impact remains modelled.",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,PICU_NICU_PRESSURE,DISCHARGE_BARRIER_RISK",
+      "next_step": "Open the unit drawer and inspect barriers, HR gap, cost ceiling, warnings, and model lineage."
+    },
+    {
+      "signal_id": "SIG-UNIT-004",
+      "signal_type": "unit_pressure",
+      "object_type": "unit",
+      "object_id": "SITE_PROV_NETWORK_RESPIRATORY",
+      "persona": "Unit manager",
+      "headline": "Respiratory unit is a high-yield review target for today's progression huddle.",
+      "what_changed": "Occupancy is 105.9%, with 11 ED boarders and 26.2 synthetic HR gap hours.",
+      "likely_drivers": "Effective-bed loss, respiratory/open-context pressure, ED boarders, and discharge barriers are aligned.",
+      "review_action": "Consider a structured review of discharge barriers, role-group gaps, transfer requests, and whether a step-down or discharge-pull-forward scenario is feasible.",
+      "confidence": "medium",
+      "confidence_reason": "Capacity and HR variables are direct or derived synthetic signals; action impact remains modelled.",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,PICU_NICU_PRESSURE,DISCHARGE_BARRIER_RISK",
+      "next_step": "Open the unit drawer and inspect barriers, HR gap, cost ceiling, warnings, and model lineage."
+    },
+    {
+      "signal_id": "SIG-PROGRAM-001",
+      "signal_type": "ambulatory_access",
+      "object_type": "program",
+      "object_id": "mental_health",
+      "persona": "Ambulatory program leader",
+      "headline": "Mental health access pressure has a clear template-and-resource review path.",
+      "what_changed": "TNA is 72 days, urgent waitlist is 235, and diagnostics readiness is 71%.",
+      "likely_drivers": "Referral load, template capacity, diagnostics readiness, no-show reliability, provider sessions, and HR/resource gaps.",
+      "review_action": "Review urgent-slot protection, diagnostics readiness, provider/allied-health capacity, and whether virtual/outreach substitution is appropriate for eligible follow-up.",
+      "confidence": "medium",
+      "confidence_reason": "Referral, waitlist, and template variables are synthetic direct/derived signals; scenario impact remains modelled.",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "AMBULATORY_ACCESS_FORECAST,URGENT_WAITLIST_BREACH_RISK,NO_SHOW_LATE_CANCEL_RISK",
+      "next_step": "Open the program drawer and compare template, no-show, diagnostics, HR, and finance/resource constraints."
+    },
+    {
+      "signal_id": "SIG-PROGRAM-002",
+      "signal_type": "ambulatory_access",
+      "object_type": "program",
+      "object_id": "respiratory",
+      "persona": "Clinic operations leader",
+      "headline": "Respiratory access pressure has a clear template-and-resource review path.",
+      "what_changed": "TNA is 71 days, urgent waitlist is 122, and diagnostics readiness is 71%.",
+      "likely_drivers": "Referral load, template capacity, diagnostics readiness, no-show reliability, provider sessions, and HR/resource gaps.",
+      "review_action": "Review urgent-slot protection, diagnostics readiness, provider/allied-health capacity, and whether virtual/outreach substitution is appropriate for eligible follow-up.",
+      "confidence": "medium-high",
+      "confidence_reason": "Referral, waitlist, and template variables are synthetic direct/derived signals; scenario impact remains modelled.",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "AMBULATORY_ACCESS_FORECAST,URGENT_WAITLIST_BREACH_RISK,NO_SHOW_LATE_CANCEL_RISK",
+      "next_step": "Open the program drawer and compare template, no-show, diagnostics, HR, and finance/resource constraints."
+    },
+    {
+      "signal_id": "SIG-PROGRAM-003",
+      "signal_type": "ambulatory_access",
+      "object_type": "program",
+      "object_id": "mental_health",
+      "persona": "Ambulatory program leader",
+      "headline": "Mental health access pressure has a clear template-and-resource review path.",
+      "what_changed": "TNA is 70 days, urgent waitlist is 225, and diagnostics readiness is 71%.",
+      "likely_drivers": "Referral load, template capacity, diagnostics readiness, no-show reliability, provider sessions, and HR/resource gaps.",
+      "review_action": "Review urgent-slot protection, diagnostics readiness, provider/allied-health capacity, and whether virtual/outreach substitution is appropriate for eligible follow-up.",
+      "confidence": "medium",
+      "confidence_reason": "Referral, waitlist, and template variables are synthetic direct/derived signals; scenario impact remains modelled.",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "AMBULATORY_ACCESS_FORECAST,URGENT_WAITLIST_BREACH_RISK,NO_SHOW_LATE_CANCEL_RISK",
+      "next_step": "Open the program drawer and compare template, no-show, diagnostics, HR, and finance/resource constraints."
+    },
+    {
+      "signal_id": "SIG-PROGRAM-004",
+      "signal_type": "ambulatory_access",
+      "object_type": "program",
+      "object_id": "respiratory",
+      "persona": "Clinic operations leader",
+      "headline": "Respiratory access pressure has a clear template-and-resource review path.",
+      "what_changed": "TNA is 69 days, urgent waitlist is 117, and diagnostics readiness is 71%.",
+      "likely_drivers": "Referral load, template capacity, diagnostics readiness, no-show reliability, provider sessions, and HR/resource gaps.",
+      "review_action": "Review urgent-slot protection, diagnostics readiness, provider/allied-health capacity, and whether virtual/outreach substitution is appropriate for eligible follow-up.",
+      "confidence": "medium-high",
+      "confidence_reason": "Referral, waitlist, and template variables are synthetic direct/derived signals; scenario impact remains modelled.",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "AMBULATORY_ACCESS_FORECAST,URGENT_WAITLIST_BREACH_RISK,NO_SHOW_LATE_CANCEL_RISK",
+      "next_step": "Open the program drawer and compare template, no-show, diagnostics, HR, and finance/resource constraints."
+    },
+    {
+      "signal_id": "SIG-SCN-INPT-STEPDOWN",
+      "signal_type": "scenario_decision",
+      "object_type": "scenario",
+      "object_id": "SCN-INPT-STEPDOWN",
+      "persona": "Site operations leader",
+      "headline": "Open protected step-down capacity has a visible feasibility and trade-off path.",
+      "what_changed": "Baseline 182 compares with scenario 142 for boarder_hours.",
+      "likely_drivers": "Scenario coefficients, HR hours required, resource cap, and affected unit/program exposure.",
+      "review_action": "Treat the result as a planning comparison, not an order. Confirm staffing, resource, and clinical-operational feasibility before any action.",
+      "confidence": "medium",
+      "confidence_reason": "Scenario coefficients are transparent proxy values with confidence bands and governance caveats.",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,AMBULATORY_ACCESS_FORECAST",
+      "next_step": "Open the scenario drawer, review affected objects, then capture a what-if for the learning log."
+    },
+    {
+      "signal_id": "SIG-SCN-INPT-DISCHARGE",
+      "signal_type": "scenario_decision",
+      "object_type": "scenario",
+      "object_id": "SCN-INPT-DISCHARGE",
+      "persona": "Site operations leader",
+      "headline": "Pull forward discharge barrier resolution has a visible feasibility and trade-off path.",
+      "what_changed": "Baseline 151 compares with scenario 118 for effective_bed_hours.",
+      "likely_drivers": "Scenario coefficients, HR hours required, resource cap, and affected unit/program exposure.",
+      "review_action": "Treat the result as a planning comparison, not an order. Confirm staffing, resource, and clinical-operational feasibility before any action.",
+      "confidence": "medium",
+      "confidence_reason": "Scenario coefficients are transparent proxy values with confidence bands and governance caveats.",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,AMBULATORY_ACCESS_FORECAST",
+      "next_step": "Open the scenario drawer, review affected objects, then capture a what-if for the learning log."
+    },
+    {
+      "signal_id": "SIG-SCN-AMB-SLOTS",
+      "signal_type": "scenario_decision",
+      "object_type": "scenario",
+      "object_id": "SCN-AMB-SLOTS",
+      "persona": "Site operations leader",
+      "headline": "Protect urgent ambulatory slots has a visible feasibility and trade-off path.",
+      "what_changed": "Baseline 133 compares with scenario 104 for waitlist_days_reduced.",
+      "likely_drivers": "Scenario coefficients, HR hours required, resource cap, and affected unit/program exposure.",
+      "review_action": "Treat the result as a planning comparison, not an order. Confirm staffing, resource, and clinical-operational feasibility before any action.",
+      "confidence": "medium",
+      "confidence_reason": "Scenario coefficients are transparent proxy values with confidence bands and governance caveats.",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,AMBULATORY_ACCESS_FORECAST",
+      "next_step": "Open the scenario drawer, review affected objects, then capture a what-if for the learning log."
+    },
+    {
+      "signal_id": "SIG-SCN-AMB-VIRTUAL",
+      "signal_type": "scenario_decision",
+      "object_type": "scenario",
+      "object_id": "SCN-AMB-VIRTUAL",
+      "persona": "Site operations leader",
+      "headline": "Shift eligible follow-up to virtual/outreach has a visible feasibility and trade-off path.",
+      "what_changed": "Baseline 97 compares with scenario 76 for templates_recovered.",
+      "likely_drivers": "Scenario coefficients, HR hours required, resource cap, and affected unit/program exposure.",
+      "review_action": "Treat the result as a planning comparison, not an order. Confirm staffing, resource, and clinical-operational feasibility before any action.",
+      "confidence": "medium",
+      "confidence_reason": "Scenario coefficients are transparent proxy values with confidence bands and governance caveats.",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "model_ids": "INPT_OCCUPANCY_FORECAST,AMBULATORY_ACCESS_FORECAST",
+      "next_step": "Open the scenario drawer, review affected objects, then capture a what-if for the learning log."
+    }
+  ],
+  "roleGuidance": [
+    {
+      "persona": "Executive",
+      "value_question": "Where is the pediatric system exposed, what is driving it, and which trade-offs need executive attention?",
+      "primary_view": "Network posture, site comparison, resource pressure, open-context trend, implementation-readiness exceptions.",
+      "math_note": "Uses the same source metrics as every persona; only aggregation, language, and action framing change.",
+      "recommended_actions": "Compare site posture, ask whether resource ceilings are constraining feasible actions, and sponsor governance decisions that unblock trusted signals."
+    },
+    {
+      "persona": "Site operations leader",
+      "value_question": "Which site objects need a huddle decision today and which scenario is feasible?",
+      "primary_view": "Site/unit/program objects, warnings, scenario feasibility, HR and finance constraints.",
+      "math_note": "Site filters preserve the same formulas and coefficients while narrowing object scope.",
+      "recommended_actions": "Review high-pressure units/programs, validate action feasibility, and capture scenario decisions for follow-up."
+    },
+    {
+      "persona": "Patient-flow leader",
+      "value_question": "What is blocking progression and where would action create the most effective capacity?",
+      "primary_view": "Unit heatmap, ED-to-inpatient flow, discharge funnel, predicted admits/discharges, affected units.",
+      "math_note": "Flow interpretation emphasizes capacity, boarders, transfers, and discharge barriers without changing calculation logic.",
+      "recommended_actions": "Open unit drawers, compare barriers and transfers, and use scenario lab to test discharge or step-down levers."
+    },
+    {
+      "persona": "Unit manager",
+      "value_question": "What is changing on my unit and what review would be reasonable this shift?",
+      "primary_view": "Unit drawer, staffing gap, effective beds, warnings, discharge barriers, source lineage.",
+      "math_note": "Unit view uses direct unit-level rows where available and avoids changing thresholds by role.",
+      "recommended_actions": "Review HR/allied gaps, discharge blockers, transfer requests, and source confidence before escalating."
+    },
+    {
+      "persona": "Ambulatory program leader",
+      "value_question": "Where are referrals, waitlist, diagnostics, templates, and follow-up becoming unsafe operational pressure?",
+      "primary_view": "Program object drawer, TNA, urgent waitlist, template gaps, diagnostics readiness, virtual/outreach scenario.",
+      "math_note": "Program calculations use the same waitlist, referral, and capacity formulas across roles.",
+      "recommended_actions": "Review urgent-slot protection, diagnostics readiness, and provider/allied-health capacity constraints."
+    },
+    {
+      "persona": "Clinic operations leader",
+      "value_question": "Which templates, no-shows, diagnostics, and follow-up queues need operational tuning?",
+      "primary_view": "Access heatmap, no-show frontier, provider capacity, diagnostics bars, program drawers.",
+      "math_note": "Clinic lens changes emphasis from strategic backlog to template mechanics, not the underlying math.",
+      "recommended_actions": "Compare template gap, no-show opportunity, and diagnostics readiness before changing clinic supply."
+    },
+    {
+      "persona": "Analytics / informatics / AI team",
+      "value_question": "Can each signal be trusted, implemented, governed, monitored, and retired safely?",
+      "primary_view": "Data & Model Readiness, model cards, coefficient registry, validation/drift, dependency graph, source badges.",
+      "math_note": "Technical persona exposes formulas, coefficients, thresholds, feature families, validation status, and dependencies.",
+      "recommended_actions": "Resolve blocked feeds, review metric definitions, validate coefficients, and maintain rollback/governance evidence."
+    }
+  ],
+  "implementationReadiness": [
+    {
+      "category": "synthetic_variable",
+      "item_id": "DEMO_UNIT_CENSUS",
+      "item": "Synthetic unit census and effective-bed variables",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "not_connected",
+      "owner": "Synthetic data product",
+      "trust_note": "Keep visible as future-state ready while labelling synthetic.",
+      "next_implementation_step": "Map to curated census and bed-status views; validate denominator and timestamp logic.",
+      "classification": "synthetic demo"
+    },
+    {
+      "category": "synthetic_variable",
+      "item_id": "DEMO_AMB_WAITLIST",
+      "item": "Synthetic referral, waitlist, template, and TNA variables",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "not_connected",
+      "owner": "Synthetic data product",
+      "trust_note": "Demonstrates future access command centre.",
+      "next_implementation_step": "Map referral, appointment, template, no-show, and diagnostics readiness views.",
+      "classification": "synthetic demo"
+    },
+    {
+      "category": "real_data_feed",
+      "item_id": "REAL_ADT_BED_STATUS",
+      "item": "ADT, bed status, unit census, transfer request feeds",
+      "status": "blocked",
+      "synthetic_demo_status": "simulated",
+      "real_data_status": "blocked",
+      "owner": "Source integration",
+      "trust_note": "Needs curated Snowflake views and source-owner signoff.",
+      "next_implementation_step": "Create read-only canonical views, freshness checks, and small-cell suppression.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "real_data_feed",
+      "item_id": "REAL_HR_ROSTER",
+      "item": "HR roster, absence, float-pool, skill-mix feeds",
+      "status": "pending",
+      "synthetic_demo_status": "simulated",
+      "real_data_status": "pending",
+      "owner": "Workforce analytics",
+      "trust_note": "Sensitive staff aggregate feed requires explicit governance.",
+      "next_implementation_step": "Define aggregate role groups, minimum cell sizes, and refresh cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "real_data_feed",
+      "item_id": "REAL_FINANCE_ENVELOPE",
+      "item": "Cost centre, overtime, agency, and resource-envelope feeds",
+      "status": "pending",
+      "synthetic_demo_status": "simulated",
+      "real_data_status": "pending",
+      "owner": "Finance partner",
+      "trust_note": "Finance proxy is useful but not production accounting.",
+      "next_implementation_step": "Agree on resource proxy, budget period, and allowed operational display granularity.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "metric_definition",
+      "item_id": "METRIC_EFFECTIVE_STAFFED_BEDS",
+      "item": "Effective staffed beds calculation",
+      "status": "review",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Patient Flow / HR",
+      "trust_note": "Formula is transparent but needs local definition ownership.",
+      "next_implementation_step": "Approve physical/staffed/effective bed denominator and effective-bed-loss logic.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "metric_definition",
+      "item_id": "METRIC_TNA",
+      "item": "Third-next-available and template capacity calculation",
+      "status": "review",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Ambulatory operations",
+      "trust_note": "Synthetic formula is visible and useful for implementation rehearsal.",
+      "next_implementation_step": "Confirm template rules, provider leave handling, virtual slots, and urgent-slot carve-outs.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "coefficient",
+      "item_id": "COEF_RESPIRATORY_LIFT",
+      "item": "Respiratory open-context forecast lift",
+      "status": "review",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Analytics",
+      "trust_note": "Coefficient is plausible proxy, not locally calibrated.",
+      "next_implementation_step": "Backtest forecast with and without respiratory/AQHI/calendar features by site and season.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "coefficient",
+      "item_id": "COEF_HR_CAPACITY",
+      "item": "HR constraint multiplier",
+      "status": "review",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Workforce analytics",
+      "trust_note": "Useful for scenario feasibility but requires local staffing model review.",
+      "next_implementation_step": "Calibrate role-group hours, float-pool substitution, and overtime/agency constraints.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "pending_model",
+      "item_id": "MODEL_RARE_DISEASE_CASE_FINDING",
+      "item": "Rare-disease case-finding simulation",
+      "status": "blocked",
+      "synthetic_demo_status": "prototype",
+      "real_data_status": "not_connected",
+      "owner": "Clinical informatics / genetics",
+      "trust_note": "Requires careful governance, precision review, and referral pathway design.",
+      "next_implementation_step": "Define eligible feature families, exclude identifiers, review alert burden, and create specialist review workflow.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "pending_model",
+      "item_id": "MODEL_EARLY_WARNING_DETERIORATION",
+      "item": "General pediatric deterioration early-warning simulation",
+      "status": "blocked",
+      "synthetic_demo_status": "prototype",
+      "real_data_status": "not_connected",
+      "owner": "Clinical safety",
+      "trust_note": "Must not surface as clinical advice without rigorous local validation.",
+      "next_implementation_step": "Run silent evaluation, subgroup calibration, alert-burden review, and human-factors testing.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "pending_model",
+      "item_id": "MODEL_NEC_RECOGNITION",
+      "item": "NEC recognition simulation",
+      "status": "blocked",
+      "synthetic_demo_status": "prototype",
+      "real_data_status": "not_connected",
+      "owner": "Neonatal clinical safety",
+      "trust_note": "High-stakes neonatal signal remains prototype-only.",
+      "next_implementation_step": "Define neonatal cohort, feature windows, escalation path, and safety review before any operational warning.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "validation",
+      "item_id": "VALIDATION_BACKTEST",
+      "item": "Temporal backtest and calibration checks",
+      "status": "pending",
+      "synthetic_demo_status": "synthetic_pass",
+      "real_data_status": "pending",
+      "owner": "Analytics / model risk",
+      "trust_note": "Synthetic validation exists but production validation is not complete.",
+      "next_implementation_step": "Backtest by site, service, age-band proxy, season, equity/travel proxy, and alert threshold.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "governance",
+      "item_id": "GOV_WARNING_RELEASE",
+      "item": "Warning release, acknowledgement, and rollback controls",
+      "status": "review",
+      "synthetic_demo_status": "defined",
+      "real_data_status": "pending",
+      "owner": "AI governance",
+      "trust_note": "Release pattern exists, but production policies and accountabilities must be approved.",
+      "next_implementation_step": "Define review board, approval evidence, canary scope, rollback trigger, and post-release monitoring.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "dependency",
+      "item_id": "DEP_LEARNING_WRITEBACK",
+      "item": "Scenario, acknowledgement, outcome-review writeback tables",
+      "status": "review",
+      "synthetic_demo_status": "defined",
+      "real_data_status": "pending",
+      "owner": "Snowflake app owner",
+      "trust_note": "Learning loop tables are defined but not wired to production operations.",
+      "next_implementation_step": "Implement APP/GOVERNANCE schemas, role grants, audit policy, and retention rules.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-INPT-STEPDOWN",
+      "item": "Open protected step-down capacity",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-INPT-DISCHARGE",
+      "item": "Pull forward discharge barrier resolution",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-AMB-SLOTS",
+      "item": "Protect urgent ambulatory slots",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-AMB-VIRTUAL",
+      "item": "Shift eligible follow-up to virtual/outreach",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-HR-FLOAT",
+      "item": "Deploy pediatric float-pool hours",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-HR-CROSSCOVER",
+      "item": "Cross-cover allied health bottlenecks",
+      "status": "ready",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-FIN-RESOURCE",
+      "item": "Release constrained surge resource envelope",
+      "status": "review",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    },
+    {
+      "category": "scenario",
+      "item_id": "SCN-OPEN-RESP",
+      "item": "Respiratory/AQHI surge pre-brief",
+      "status": "review",
+      "synthetic_demo_status": "ready",
+      "real_data_status": "pending",
+      "owner": "Operations / analytics",
+      "trust_note": "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+      "next_implementation_step": "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+      "classification": "implementation readiness"
+    }
+  ],
+  "actionLearningLoops": [
+    {
+      "loop_id": "LOOP-UNIT-PRESSURE",
+      "loop_name": "Unit progression pressure",
+      "stage_index": 1,
+      "stage_id": "detect",
+      "stage_name": "Signal detected",
+      "owner": "Patient-flow leader",
+      "status": "new",
+      "trigger": "Workforce constraint",
+      "description": "System surfaces the signal with classification, confidence, and source badges.",
+      "decision_support": "Open protected step-down capacity",
+      "follow_up_metric": "boarder_hours",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-UNIT-PRESSURE",
+      "loop_name": "Unit progression pressure",
+      "stage_index": 2,
+      "stage_id": "review",
+      "stage_name": "Team review",
+      "owner": "Patient-flow leader",
+      "status": "in review",
+      "trigger": "Workforce constraint",
+      "description": "Huddle or domain owner checks the drawer, lineage, drivers, and caveats.",
+      "decision_support": "Open protected step-down capacity",
+      "follow_up_metric": "boarder_hours",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-UNIT-PRESSURE",
+      "loop_name": "Unit progression pressure",
+      "stage_index": 3,
+      "stage_id": "act",
+      "stage_name": "Action considered",
+      "owner": "Patient-flow leader",
+      "status": "decision support",
+      "trigger": "Workforce constraint",
+      "description": "Team compares scenario feasibility, HR/resource constraints, and operational trade-offs.",
+      "decision_support": "Open protected step-down capacity",
+      "follow_up_metric": "boarder_hours",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-UNIT-PRESSURE",
+      "loop_name": "Unit progression pressure",
+      "stage_index": 4,
+      "stage_id": "follow_up",
+      "stage_name": "Follow-up check",
+      "owner": "Patient-flow leader",
+      "status": "pending",
+      "trigger": "Workforce constraint",
+      "description": "Outcome, exceptions, and unintended consequences are reviewed after the action window.",
+      "decision_support": "Open protected step-down capacity",
+      "follow_up_metric": "boarder_hours",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-UNIT-PRESSURE",
+      "loop_name": "Unit progression pressure",
+      "stage_index": 5,
+      "stage_id": "learn",
+      "stage_name": "Learning captured",
+      "owner": "Patient-flow leader",
+      "status": "learning",
+      "trigger": "Workforce constraint",
+      "description": "Scenario result, acknowledgement, and reviewer notes write back to governed tables.",
+      "decision_support": "Open protected step-down capacity",
+      "follow_up_metric": "boarder_hours",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-UNIT-PRESSURE",
+      "loop_name": "Unit progression pressure",
+      "stage_index": 6,
+      "stage_id": "spread",
+      "stage_name": "Spread or retire",
+      "owner": "Patient-flow leader",
+      "status": "governance",
+      "trigger": "Workforce constraint",
+      "description": "If useful, playbook is generalized; if noisy, coefficient/threshold is revised or retired.",
+      "decision_support": "Open protected step-down capacity",
+      "follow_up_metric": "boarder_hours",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-AMB-ACCESS",
+      "loop_name": "Ambulatory access breach",
+      "stage_index": 1,
+      "stage_id": "detect",
+      "stage_name": "Signal detected",
+      "owner": "Ambulatory program leader",
+      "status": "new",
+      "trigger": "Access breach risk",
+      "description": "System surfaces the signal with classification, confidence, and source badges.",
+      "decision_support": "Protect urgent ambulatory slots",
+      "follow_up_metric": "waitlist_days_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-AMB-ACCESS",
+      "loop_name": "Ambulatory access breach",
+      "stage_index": 2,
+      "stage_id": "review",
+      "stage_name": "Team review",
+      "owner": "Ambulatory program leader",
+      "status": "in review",
+      "trigger": "Access breach risk",
+      "description": "Huddle or domain owner checks the drawer, lineage, drivers, and caveats.",
+      "decision_support": "Protect urgent ambulatory slots",
+      "follow_up_metric": "waitlist_days_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-AMB-ACCESS",
+      "loop_name": "Ambulatory access breach",
+      "stage_index": 3,
+      "stage_id": "act",
+      "stage_name": "Action considered",
+      "owner": "Ambulatory program leader",
+      "status": "decision support",
+      "trigger": "Access breach risk",
+      "description": "Team compares scenario feasibility, HR/resource constraints, and operational trade-offs.",
+      "decision_support": "Protect urgent ambulatory slots",
+      "follow_up_metric": "waitlist_days_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-AMB-ACCESS",
+      "loop_name": "Ambulatory access breach",
+      "stage_index": 4,
+      "stage_id": "follow_up",
+      "stage_name": "Follow-up check",
+      "owner": "Ambulatory program leader",
+      "status": "pending",
+      "trigger": "Access breach risk",
+      "description": "Outcome, exceptions, and unintended consequences are reviewed after the action window.",
+      "decision_support": "Protect urgent ambulatory slots",
+      "follow_up_metric": "waitlist_days_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-AMB-ACCESS",
+      "loop_name": "Ambulatory access breach",
+      "stage_index": 5,
+      "stage_id": "learn",
+      "stage_name": "Learning captured",
+      "owner": "Ambulatory program leader",
+      "status": "learning",
+      "trigger": "Access breach risk",
+      "description": "Scenario result, acknowledgement, and reviewer notes write back to governed tables.",
+      "decision_support": "Protect urgent ambulatory slots",
+      "follow_up_metric": "waitlist_days_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-AMB-ACCESS",
+      "loop_name": "Ambulatory access breach",
+      "stage_index": 6,
+      "stage_id": "spread",
+      "stage_name": "Spread or retire",
+      "owner": "Ambulatory program leader",
+      "status": "governance",
+      "trigger": "Access breach risk",
+      "description": "If useful, playbook is generalized; if noisy, coefficient/threshold is revised or retired.",
+      "decision_support": "Protect urgent ambulatory slots",
+      "follow_up_metric": "waitlist_days_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_REFERRAL_TRIAGE,SRC_SYNTH_WAITLIST_SNAPSHOTS,SRC_SYNTH_CLINIC_TEMPLATES,SRC_SYNTH_PROVIDER_AVAILABILITY,SRC_SYNTH_NO_SHOW_LATE_CANCEL,SRC_SYNTH_DIAGNOSTIC_READINESS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-HR-CONSTRAINT",
+      "loop_name": "HR-constrained capacity",
+      "stage_index": 1,
+      "stage_id": "detect",
+      "stage_name": "Signal detected",
+      "owner": "Site operations leader",
+      "status": "new",
+      "trigger": "Effective bed pressure",
+      "description": "System surfaces the signal with classification, confidence, and source badges.",
+      "decision_support": "Deploy pediatric float-pool hours",
+      "follow_up_metric": "effective_capacity_gain",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-HR-CONSTRAINT",
+      "loop_name": "HR-constrained capacity",
+      "stage_index": 2,
+      "stage_id": "review",
+      "stage_name": "Team review",
+      "owner": "Site operations leader",
+      "status": "in review",
+      "trigger": "Effective bed pressure",
+      "description": "Huddle or domain owner checks the drawer, lineage, drivers, and caveats.",
+      "decision_support": "Deploy pediatric float-pool hours",
+      "follow_up_metric": "effective_capacity_gain",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-HR-CONSTRAINT",
+      "loop_name": "HR-constrained capacity",
+      "stage_index": 3,
+      "stage_id": "act",
+      "stage_name": "Action considered",
+      "owner": "Site operations leader",
+      "status": "decision support",
+      "trigger": "Effective bed pressure",
+      "description": "Team compares scenario feasibility, HR/resource constraints, and operational trade-offs.",
+      "decision_support": "Deploy pediatric float-pool hours",
+      "follow_up_metric": "effective_capacity_gain",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-HR-CONSTRAINT",
+      "loop_name": "HR-constrained capacity",
+      "stage_index": 4,
+      "stage_id": "follow_up",
+      "stage_name": "Follow-up check",
+      "owner": "Site operations leader",
+      "status": "pending",
+      "trigger": "Effective bed pressure",
+      "description": "Outcome, exceptions, and unintended consequences are reviewed after the action window.",
+      "decision_support": "Deploy pediatric float-pool hours",
+      "follow_up_metric": "effective_capacity_gain",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-HR-CONSTRAINT",
+      "loop_name": "HR-constrained capacity",
+      "stage_index": 5,
+      "stage_id": "learn",
+      "stage_name": "Learning captured",
+      "owner": "Site operations leader",
+      "status": "learning",
+      "trigger": "Effective bed pressure",
+      "description": "Scenario result, acknowledgement, and reviewer notes write back to governed tables.",
+      "decision_support": "Deploy pediatric float-pool hours",
+      "follow_up_metric": "effective_capacity_gain",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-HR-CONSTRAINT",
+      "loop_name": "HR-constrained capacity",
+      "stage_index": 6,
+      "stage_id": "spread",
+      "stage_name": "Spread or retire",
+      "owner": "Site operations leader",
+      "status": "governance",
+      "trigger": "Effective bed pressure",
+      "description": "If useful, playbook is generalized; if noisy, coefficient/threshold is revised or retired.",
+      "decision_support": "Deploy pediatric float-pool hours",
+      "follow_up_metric": "effective_capacity_gain",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_BED_STATUS,SRC_SYNTH_ED_VISITS,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_DISCHARGE_BARRIERS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_COST_CENTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-MODEL-READINESS",
+      "loop_name": "Model readiness exception",
+      "stage_index": 1,
+      "stage_id": "detect",
+      "stage_name": "Signal detected",
+      "owner": "Analytics / informatics / AI team",
+      "status": "new",
+      "trigger": "Validation hold",
+      "description": "System surfaces the signal with classification, confidence, and source badges.",
+      "decision_support": "Respiratory/AQHI surge pre-brief",
+      "follow_up_metric": "forecast_error_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-MODEL-READINESS",
+      "loop_name": "Model readiness exception",
+      "stage_index": 2,
+      "stage_id": "review",
+      "stage_name": "Team review",
+      "owner": "Analytics / informatics / AI team",
+      "status": "in review",
+      "trigger": "Validation hold",
+      "description": "Huddle or domain owner checks the drawer, lineage, drivers, and caveats.",
+      "decision_support": "Respiratory/AQHI surge pre-brief",
+      "follow_up_metric": "forecast_error_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-MODEL-READINESS",
+      "loop_name": "Model readiness exception",
+      "stage_index": 3,
+      "stage_id": "act",
+      "stage_name": "Action considered",
+      "owner": "Analytics / informatics / AI team",
+      "status": "decision support",
+      "trigger": "Validation hold",
+      "description": "Team compares scenario feasibility, HR/resource constraints, and operational trade-offs.",
+      "decision_support": "Respiratory/AQHI surge pre-brief",
+      "follow_up_metric": "forecast_error_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-MODEL-READINESS",
+      "loop_name": "Model readiness exception",
+      "stage_index": 4,
+      "stage_id": "follow_up",
+      "stage_name": "Follow-up check",
+      "owner": "Analytics / informatics / AI team",
+      "status": "pending",
+      "trigger": "Validation hold",
+      "description": "Outcome, exceptions, and unintended consequences are reviewed after the action window.",
+      "decision_support": "Respiratory/AQHI surge pre-brief",
+      "follow_up_metric": "forecast_error_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-MODEL-READINESS",
+      "loop_name": "Model readiness exception",
+      "stage_index": 5,
+      "stage_id": "learn",
+      "stage_name": "Learning captured",
+      "owner": "Analytics / informatics / AI team",
+      "status": "learning",
+      "trigger": "Validation hold",
+      "description": "Scenario result, acknowledgement, and reviewer notes write back to governed tables.",
+      "decision_support": "Respiratory/AQHI surge pre-brief",
+      "follow_up_metric": "forecast_error_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    },
+    {
+      "loop_id": "LOOP-MODEL-READINESS",
+      "loop_name": "Model readiness exception",
+      "stage_index": 6,
+      "stage_id": "spread",
+      "stage_name": "Spread or retire",
+      "owner": "Analytics / informatics / AI team",
+      "status": "governance",
+      "trigger": "Validation hold",
+      "description": "If useful, playbook is generalized; if noisy, coefficient/threshold is revised or retired.",
+      "decision_support": "Respiratory/AQHI surge pre-brief",
+      "follow_up_metric": "forecast_error_reduced",
+      "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+      "source_ids": "SRC_MODEL_PREDICTIONS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_OPEN_AQHI_SMOKE_CONTEXT,SRC_OPEN_SCHOOL_HOLIDAY_CALENDAR,SRC_OPEN_STATCAN_PED_POPULATION",
+      "caveat": "Prototype learning loop content only; not connected to real operations."
+    }
+  ],
+  "signalSimulations": [
+    {
+      "simulation_id": "SIM-TRIAGE-LOS",
+      "label": "Triage and LOS orchestration",
+      "domain": "ED / inpatient flow",
+      "inspiration": "Frontier LOS orchestration and ED triage queueing methods",
+      "clinical_boundary": "Operational flow support only; does not replace triage, assessment, or physician judgement.",
+      "target_question": "Which arrivals are likely to consume constrained downstream capacity, and what operational constraint is driving the queue?",
+      "cohort": "Synthetic pediatric ED arrivals and admitted-boarder aggregates; no direct personal identifiers.",
+      "primary_output": "predicted_los_hours",
+      "threshold_logic": "Watch when predicted LOS exceeds service-adjusted 80th percentile; high when boarding risk and downstream capacity constraint align.",
+      "validation_status": "synthetic silent replay only; real temporal validation pending",
+      "governance_status": "prototype hold",
+      "model_family": "survival/gradient boosting plus queueing constraint overlay",
+      "feature_families": "arrival pattern, CTAS-style acuity band, bed capacity, consult bottleneck, diagnostics turnaround, staffing, transfer pressure, open context",
+      "source_ids": "SRC_SYNTH_ED_VISITS,SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_OPEN_ED_WAIT_TIME_LOGIC",
+      "coefficients": [
+        {
+          "coefficient_name": "acuity_band_weight",
+          "default_value": 0.31
+        },
+        {
+          "coefficient_name": "boarder_queue_weight",
+          "default_value": 0.27
+        },
+        {
+          "coefficient_name": "diagnostic_turnaround_weight",
+          "default_value": 0.16
+        },
+        {
+          "coefficient_name": "staffed_capacity_weight",
+          "default_value": -0.22
+        },
+        {
+          "coefficient_name": "respiratory_context_weight",
+          "default_value": 0.08
+        }
+      ],
+      "factors": [
+        {
+          "factor": "ED arrivals",
+          "demand": 96,
+          "supply": 72,
+          "pressure": 0.78
+        },
+        {
+          "factor": "Admitted boarders",
+          "demand": 31,
+          "supply": 18,
+          "pressure": 0.86
+        },
+        {
+          "factor": "Consult queue",
+          "demand": 22,
+          "supply": 14,
+          "pressure": 0.72
+        },
+        {
+          "factor": "Diagnostic turnaround",
+          "demand": 44,
+          "supply": 35,
+          "pressure": 0.63
+        }
+      ],
+      "timeline": [
+        {
+          "hour": 0,
+          "risk": 0.493,
+          "lower": 0.35,
+          "upper": 0.5
+        },
+        {
+          "hour": 3,
+          "risk": 0.529,
+          "lower": 0.377,
+          "upper": 0.545
+        },
+        {
+          "hour": 6,
+          "risk": 0.565,
+          "lower": 0.404,
+          "upper": 0.59
+        },
+        {
+          "hour": 12,
+          "risk": 0.637,
+          "lower": 0.458,
+          "upper": 0.68
+        },
+        {
+          "hour": 18,
+          "risk": 0.709,
+          "lower": 0.512,
+          "upper": 0.77
+        },
+        {
+          "hour": 24,
+          "risk": 0.781,
+          "lower": 0.566,
+          "upper": 0.86
+        },
+        {
+          "hour": 48,
+          "risk": 1.069,
+          "lower": 0.782,
+          "upper": 1.22
+        },
+        {
+          "hour": 72,
+          "risk": 1.357,
+          "lower": 0.998,
+          "upper": 1.58
+        }
+      ],
+      "so_what": "The signal separates arrival pressure from downstream bed and consult constraints so teams can decide whether the bottleneck is triage room, diagnostics, consult, bed, transport, or staffing capacity.",
+      "now_what": "Review the top constrained factor, compare a step-down/discharge scenario, and capture whether the queue actually improved after the huddle window.",
+      "baseline_vs_scenario": [
+        {
+          "label": "Baseline",
+          "value": 1,
+          "classification": "derived"
+        },
+        {
+          "label": "Scenario with governed signal",
+          "value": 0.78,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI low",
+          "value": 0.66,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI high",
+          "value": 0.92,
+          "classification": "modelled"
+        }
+      ],
+      "implementation_steps": [
+        "Define cohort and exclusion criteria without identifiers.",
+        "Map curated aggregate fields through governed Snowflake views.",
+        "Backtest silently with temporal validation and subgroup review.",
+        "Review alert burden, false-positive impact, and human-factors risk.",
+        "Approve release gate, owner, rollback trigger, and learning writeback."
+      ]
+    },
+    {
+      "simulation_id": "SIM-RARE-DISEASE",
+      "label": "Rare-disease case finding",
+      "domain": "complex diagnostic pathway",
+      "inspiration": "ThinkRare-style phenotype patterning and pediatric rare-disease diagnostic support",
+      "clinical_boundary": "Case-finding queue only; no diagnosis, no automated referral, and no display of patient identifiers.",
+      "target_question": "Which aggregate synthetic phenotype patterns might warrant specialist review of a cohort, pathway, or referral delay?",
+      "cohort": "Synthetic de-identified feature bundles only; excludes direct chart or personal identifiers.",
+      "primary_output": "review_priority_score",
+      "threshold_logic": "Watch when phenotype burden, diagnostic odyssey duration, and repeated specialty touchpoints align; high requires human genetics/specialist review queue approval.",
+      "validation_status": "prototype-only; requires precision, bias, referral-burden, and specialist review validation",
+      "governance_status": "blocked for real data until clinical governance and family-impact review",
+      "model_family": "phenotype embedding similarity plus rules-based pathway delay features",
+      "feature_families": "problem clusters, repeated referrals, abnormal-result families, growth/development proxies, medication class patterns, family history proxy flags, utilization path length",
+      "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_ORDERS,SRC_SYNTH_LAB_RESULTS,SRC_SYNTH_CARE_PLAN_MILESTONES,SRC_MODEL_VALIDATION_RESULTS",
+      "coefficients": [
+        {
+          "coefficient_name": "phenotype_cluster_similarity",
+          "default_value": 0.34
+        },
+        {
+          "coefficient_name": "multi_specialty_path_weight",
+          "default_value": 0.18
+        },
+        {
+          "coefficient_name": "diagnostic_odyssey_duration",
+          "default_value": 0.21
+        },
+        {
+          "coefficient_name": "abnormal_result_family_weight",
+          "default_value": 0.15
+        },
+        {
+          "coefficient_name": "equity_guardrail_penalty",
+          "default_value": -0.09
+        }
+      ],
+      "factors": [
+        {
+          "factor": "Phenotype cluster burden",
+          "demand": 128,
+          "supply": 36,
+          "pressure": 0.81
+        },
+        {
+          "factor": "Genetics review slots",
+          "demand": 42,
+          "supply": 18,
+          "pressure": 0.88
+        },
+        {
+          "factor": "Cross-specialty touchpoints",
+          "demand": 76,
+          "supply": 44,
+          "pressure": 0.67
+        },
+        {
+          "factor": "Family impact review",
+          "demand": 34,
+          "supply": 20,
+          "pressure": 0.62
+        }
+      ],
+      "timeline": [
+        {
+          "week": 1,
+          "risk": 0.374,
+          "lower": 0.294,
+          "upper": 0.447
+        },
+        {
+          "week": 2,
+          "risk": 0.388,
+          "lower": 0.298,
+          "upper": 0.454
+        },
+        {
+          "week": 4,
+          "risk": 0.413,
+          "lower": 0.306,
+          "upper": 0.468
+        },
+        {
+          "week": 8,
+          "risk": 0.448,
+          "lower": 0.322,
+          "upper": 0.496
+        },
+        {
+          "week": 12,
+          "risk": 0.459,
+          "lower": 0.338,
+          "upper": 0.524
+        },
+        {
+          "week": 18,
+          "risk": 0.45,
+          "lower": 0.362,
+          "upper": 0.566
+        },
+        {
+          "week": 26,
+          "risk": 0.481,
+          "lower": 0.394,
+          "upper": 0.622
+        }
+      ],
+      "so_what": "This is a pathway-learning tool: it asks whether patterns of delay and repeated touchpoints indicate a cohort that deserves specialist review, not whether a child has a specific disease.",
+      "now_what": "Route only aggregate candidates to a governed review queue, measure false-positive burden, and tune thresholds with specialists before any live signal.",
+      "baseline_vs_scenario": [
+        {
+          "label": "Baseline",
+          "value": 100,
+          "classification": "derived"
+        },
+        {
+          "label": "Scenario with governed signal",
+          "value": 78.0,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI low",
+          "value": 66.0,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI high",
+          "value": 92.0,
+          "classification": "modelled"
+        }
+      ],
+      "implementation_steps": [
+        "Define cohort and exclusion criteria without identifiers.",
+        "Map curated aggregate fields through governed Snowflake views.",
+        "Backtest silently with temporal validation and subgroup review.",
+        "Review alert burden, false-positive impact, and human-factors risk.",
+        "Approve release gate, owner, rollback trigger, and learning writeback."
+      ]
+    },
+    {
+      "simulation_id": "SIM-EARLY-WARNING",
+      "label": "General deterioration early warning",
+      "domain": "inpatient safety / surveillance",
+      "inspiration": "Pediatric early warning and deterioration-risk surveillance methods",
+      "clinical_boundary": "Synthetic surveillance rehearsal only; not a bedside alarm, diagnosis, or treatment recommendation.",
+      "target_question": "Where might aggregate deterioration-risk signals, staffing pressure, and workload context align enough to warrant review of monitoring reliability?",
+      "cohort": "Synthetic unit-level surveillance aggregates and score-band proxies; no identifiable child-level display.",
+      "primary_output": "deterioration_review_risk",
+      "threshold_logic": "Watch when score-band trend, respiratory support escalation, abnormal observation burden, and staffing gap align; high requires clinical safety review before display.",
+      "validation_status": "synthetic calibration only; real subgroup calibration and alert-burden review blocked",
+      "governance_status": "prototype hold",
+      "model_family": "calibrated logistic/gradient boosting risk with alert-burden governor",
+      "feature_families": "vital-sign completeness, respiratory support, abnormal score bands, escalation events, workload acuity, staffing gap, unit context",
+      "source_ids": "SRC_SYNTH_VITAL_SIGNS_AGG,SRC_SYNTH_RESPIRATORY_SUPPORT,SRC_SYNTH_CLINICAL_SCORES,SRC_SYNTH_WORKLOAD_ACUITY,SRC_SYNTH_HR_SHIFT_ROSTER",
+      "coefficients": [
+        {
+          "coefficient_name": "respiratory_support_escalation",
+          "default_value": 0.29
+        },
+        {
+          "coefficient_name": "score_band_trend",
+          "default_value": 0.24
+        },
+        {
+          "coefficient_name": "vital_completeness_gap",
+          "default_value": 0.11
+        },
+        {
+          "coefficient_name": "workload_acuity_weight",
+          "default_value": 0.17
+        },
+        {
+          "coefficient_name": "alert_burden_governor",
+          "default_value": -0.13
+        }
+      ],
+      "factors": [
+        {
+          "factor": "Respiratory escalation",
+          "demand": 21,
+          "supply": 16,
+          "pressure": 0.7
+        },
+        {
+          "factor": "Observation completeness",
+          "demand": 88,
+          "supply": 94,
+          "pressure": 0.38
+        },
+        {
+          "factor": "Workload acuity",
+          "demand": 79,
+          "supply": 61,
+          "pressure": 0.74
+        },
+        {
+          "factor": "Clinical review bandwidth",
+          "demand": 18,
+          "supply": 14,
+          "pressure": 0.66
+        }
+      ],
+      "timeline": [
+        {
+          "hour": 0,
+          "risk": 0.348,
+          "lower": 0.24,
+          "upper": 0.39
+        },
+        {
+          "hour": 3,
+          "risk": 0.378,
+          "lower": 0.261,
+          "upper": 0.426
+        },
+        {
+          "hour": 6,
+          "risk": 0.408,
+          "lower": 0.282,
+          "upper": 0.462
+        },
+        {
+          "hour": 12,
+          "risk": 0.468,
+          "lower": 0.324,
+          "upper": 0.534
+        },
+        {
+          "hour": 18,
+          "risk": 0.528,
+          "lower": 0.366,
+          "upper": 0.606
+        },
+        {
+          "hour": 24,
+          "risk": 0.588,
+          "lower": 0.408,
+          "upper": 0.678
+        },
+        {
+          "hour": 36,
+          "risk": 0.708,
+          "lower": 0.492,
+          "upper": 0.822
+        },
+        {
+          "hour": 48,
+          "risk": 0.828,
+          "lower": 0.576,
+          "upper": 0.966
+        }
+      ],
+      "so_what": "The prototype demonstrates how safety surveillance must sit beside capacity and workload context so leaders can separate signal quality from staffing strain and alert burden.",
+      "now_what": "Run silent mode first, compare with existing escalation workflows, review false-positive burden, and require clinical safety approval before any alert display.",
+      "baseline_vs_scenario": [
+        {
+          "label": "Baseline",
+          "value": 1,
+          "classification": "derived"
+        },
+        {
+          "label": "Scenario with governed signal",
+          "value": 0.78,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI low",
+          "value": 0.66,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI high",
+          "value": 0.92,
+          "classification": "modelled"
+        }
+      ],
+      "implementation_steps": [
+        "Define cohort and exclusion criteria without identifiers.",
+        "Map curated aggregate fields through governed Snowflake views.",
+        "Backtest silently with temporal validation and subgroup review.",
+        "Review alert burden, false-positive impact, and human-factors risk.",
+        "Approve release gate, owner, rollback trigger, and learning writeback."
+      ]
+    },
+    {
+      "simulation_id": "SIM-NEC",
+      "label": "NEC recognition rehearsal",
+      "domain": "neonatal safety / NICU",
+      "inspiration": "Necrotizing enterocolitis early-recognition risk modelling and neonatal deterioration surveillance",
+      "clinical_boundary": "Prototype-only neonatal surveillance rehearsal; not diagnostic, not an alarm, and not validated for care decisions.",
+      "target_question": "Can a governed aggregate signal show how feeding, prematurity, infection/inflammation, vitals, labs, and imaging readiness might combine for NEC review?",
+      "cohort": "Synthetic NICU aggregate feature windows; no infant identifiers, free-text extraction, names, direct dates, or bedside instructions.",
+      "primary_output": "nec_review_risk",
+      "threshold_logic": "Watch when feeding intolerance proxy, inflammatory/lab family, abdominal imaging readiness, and prematurity context align; high remains blocked until neonatal safety review.",
+      "validation_status": "prototype-only; requires neonatal cohort definition, temporal leakage review, and silent validation",
+      "governance_status": "blocked for live use",
+      "model_family": "time-windowed logistic/gradient boosting ensemble with leakage guardrails",
+      "feature_families": "gestational-age proxy, feeding trajectory, abdominal symptom proxy, lab/inflammation family, antibiotic/order family, imaging readiness, respiratory support, unit workload",
+      "source_ids": "SRC_SYNTH_NICU_FEATURE_WINDOWS,SRC_SYNTH_LAB_RESULTS,SRC_SYNTH_IMAGING_ORDERS,SRC_SYNTH_MEDICATION_ORDERS,SRC_SYNTH_RESPIRATORY_SUPPORT,SRC_MODEL_VALIDATION_RESULTS",
+      "coefficients": [
+        {
+          "coefficient_name": "feeding_intolerance_proxy",
+          "default_value": 0.28
+        },
+        {
+          "coefficient_name": "prematurity_context_weight",
+          "default_value": 0.22
+        },
+        {
+          "coefficient_name": "lab_inflammation_family",
+          "default_value": 0.19
+        },
+        {
+          "coefficient_name": "abdominal_imaging_readiness",
+          "default_value": 0.14
+        },
+        {
+          "coefficient_name": "temporal_leakage_penalty",
+          "default_value": -0.18
+        }
+      ],
+      "factors": [
+        {
+          "factor": "Feeding trajectory proxy",
+          "demand": 18,
+          "supply": 15,
+          "pressure": 0.63
+        },
+        {
+          "factor": "Lab/inflammation family",
+          "demand": 26,
+          "supply": 20,
+          "pressure": 0.68
+        },
+        {
+          "factor": "Imaging readiness",
+          "demand": 11,
+          "supply": 9,
+          "pressure": 0.57
+        },
+        {
+          "factor": "Neonatal review bandwidth",
+          "demand": 9,
+          "supply": 7,
+          "pressure": 0.64
+        }
+      ],
+      "timeline": [
+        {
+          "hour": 0,
+          "risk": 0.18,
+          "lower": 0.12,
+          "upper": 0.25
+        },
+        {
+          "hour": 3,
+          "risk": 0.213,
+          "lower": 0.135,
+          "upper": 0.28
+        },
+        {
+          "hour": 6,
+          "risk": 0.245,
+          "lower": 0.15,
+          "upper": 0.31
+        },
+        {
+          "hour": 12,
+          "risk": 0.301,
+          "lower": 0.18,
+          "upper": 0.37
+        },
+        {
+          "hour": 18,
+          "risk": 0.343,
+          "lower": 0.21,
+          "upper": 0.43
+        },
+        {
+          "hour": 24,
+          "risk": 0.376,
+          "lower": 0.24,
+          "upper": 0.49
+        },
+        {
+          "hour": 36,
+          "risk": 0.444,
+          "lower": 0.3,
+          "upper": 0.61
+        },
+        {
+          "hour": 48,
+          "risk": 0.557,
+          "lower": 0.36,
+          "upper": 0.73
+        }
+      ],
+      "so_what": "NEC is exactly the kind of high-stakes signal that should be shown as implementation design first: transparent variables, leakage guardrails, governance blocks, and no automated clinical instruction.",
+      "now_what": "Define neonatal cohort windows, run silent validation, require neonatal clinical-safety review, and track whether any signal would have added useful review time without unsafe alert burden.",
+      "baseline_vs_scenario": [
+        {
+          "label": "Baseline",
+          "value": 1,
+          "classification": "derived"
+        },
+        {
+          "label": "Scenario with governed signal",
+          "value": 0.78,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI low",
+          "value": 0.66,
+          "classification": "modelled"
+        },
+        {
+          "label": "CI high",
+          "value": 0.92,
+          "classification": "modelled"
+        }
+      ],
+      "implementation_steps": [
+        "Define cohort and exclusion criteria without identifiers.",
+        "Map curated aggregate fields through governed Snowflake views.",
+        "Backtest silently with temporal validation and subgroup review.",
+        "Review alert burden, false-positive impact, and human-factors risk.",
+        "Approve release gate, owner, rollback trigger, and learning writeback."
+      ]
+    }
   ]
 }

@@ -146,6 +146,46 @@ Implementation requirements for v5:
 6. Synthetic data must expand:
    at least dozens of unit/program objects, hundreds of time-series rows, and app-ready overlays for HR, finance, open data, model warnings, and source readiness. All data remains aggregate and synthetic.
 
+## Decision-Grade Refinement: Clinical AI Simulation Research Inputs
+
+The next showcase layer adds four deep AI-tool-inspired implementation rehearsals. These are not production clinical tools. They are prototype pages that show how a pediatric intelligence layer could connect signal design, operational context, coefficients, thresholds, source readiness, validation, governance, action, and learning before any local clinical deployment.
+
+### Triage and LOS Orchestration
+
+Public ED wait-time logic already emphasizes that operational delay is a function of people waiting, acuity, and available resources. Pediatric ED and inpatient LOS research also shows that admission, ICU utilization, prolonged LOS, orders, disposition timing, diagnostics, and clinical context can be modelled from EHR data, but performance depends on missing-data handling, cohort definition, calibration, and workflow fit. Useful anchors include [AHS ED wait-time logic](https://www.albertahealthservices.ca/waittimes/waittimes.aspx), pediatric ED prolonged-LOS modelling in PubMed ([PMID 40203463](https://pubmed.ncbi.nlm.nih.gov/40203463/)), ED LOS data-mining work ([PMID 31808312](https://pubmed.ncbi.nlm.nih.gov/31808312/)), and real-time PICU LOS forecasting from updated orders ([PMID 22824935](https://pubmed.ncbi.nlm.nih.gov/22824935/)).
+
+Design implication: the showcase should treat LOS orchestration as demand-and-supply operations intelligence, not as a clinical triage directive. It should show ED arrivals, acuity mix, bed blockers, diagnostic turnaround, staffing, effective bed supply, and resource ceilings together, with transparent proxy weights and confidence bands.
+
+### Rare-Disease Case Finding
+
+CHEO's public ThinkRare materials describe a rules-based/search algorithm that uses routinely collected clinical information to identify children who may have undiagnosed rare genetic disease for clinician review and possible referral. Public anchors include CHEO's national-expansion reporting, the University of Ottawa summary, and the PubMed-indexed Genetics in Medicine article ([PMID 40856103](https://pubmed.ncbi.nlm.nih.gov/40856103/)).
+
+Design implication: the showcase should frame rare-disease intelligence as clinician-facing case-finding and pathway support. It should show phenotype-pattern logic, repeated utilization, referral gaps, diagnostic delay proxies, governance status, source readiness, genetic-testing capacity, and an implementation queue. It must avoid diagnostic claims.
+
+### General Pediatric Deterioration Early Warning
+
+Paediatric Early Warning Scores are widely used to detect physiological deterioration, but reviews emphasize mixed evidence, local variation, human-factors dependency, alert-burden risk, and the need for careful validation. Useful anchors include PubMed overviews and reviews ([PMID 30413488](https://pubmed.ncbi.nlm.nih.gov/30413488/), [PMID 31061010](https://pubmed.ncbi.nlm.nih.gov/31061010/), [PMID 37121311](https://pubmed.ncbi.nlm.nih.gov/37121311/)).
+
+Design implication: the showcase should show an early-warning simulation as a silent-evaluation and governance design. It should include trend features, workload/staffing context, calibration, subgroup performance, alert burden, review workflow, and rollback dependencies. It must not present a bedside alarm.
+
+### NEC Recognition Rehearsal
+
+NEC prediction and neonatal AI literature shows active work across risk prediction, biomarkers, diagnosis/prognosis, and neonatal morbidity forecasting, but the clinical stakes and cohort sensitivity require especially strong safety and governance. Useful anchors include neonatal AI prediction review work ([PMID 35562414](https://pubmed.ncbi.nlm.nih.gov/35562414/)), NEC AI/ML reviews ([PMID 37303753](https://pubmed.ncbi.nlm.nih.gov/37303753/), [PMID 40310141](https://pubmed.ncbi.nlm.nih.gov/40310141/)), and diagnostic-challenge literature ([PMID 32855507](https://pubmed.ncbi.nlm.nih.gov/32855507/)).
+
+Design implication: the showcase should make NEC an explicit "blocked until governed" prototype. It should show neonatal cohort definition, feeding and prematurity features, infection/inflammation signals, vitals/labs, imaging readiness, leakage controls, model-card caveats, silent validation, and neonatal safety review before any operational warning.
+
+### Cross-Cutting Governance Requirements
+
+The four simulation pages should share the same trust language:
+
+- Aggregate synthetic demonstration data only.
+- No direct personal identifiers in the display layer.
+- Source readiness before model readiness.
+- Proxy coefficients labelled as such until validated.
+- Silent evaluation before alerts.
+- Subgroup calibration, drift, alert-burden, and human-factors review before release.
+- Clinical owner, analytics owner, governance owner, and rollback path required.
+
 ## Implementation Notes And Gaps
 
 This research is sufficient to guide v5. Remaining future gaps:
@@ -154,4 +194,3 @@ This research is sufficient to guide v5. Remaining future gaps:
 - Public source availability changes over time; any production pipeline would require a governed open-data ingestion registry, caching, provenance, and refresh monitoring.
 - HR and finance integration must be handled through approved workforce and finance marts with role-based governance; v5 uses synthetic resource proxies only.
 - Clinical surveillance outputs must stay explicitly non-clinical until local validation, calibration, governance approval, and rollback procedures exist.
-

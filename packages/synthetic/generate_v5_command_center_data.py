@@ -241,6 +241,17 @@ def v5_sources() -> list[dict[str, Any]]:
             "ED-boarder and triage-to-physician wait-time style context",
             "public-method synthetic proxy",
         ),
+        source_row(
+            "SRC_SYNTH_NICU_FEATURE_WINDOWS",
+            "CANONICAL.VW_SYNTH_NICU_FEATURE_WINDOWS",
+            "neonatal safety / surveillance",
+            "unit-feature-window aggregate",
+            "site_id, unit_id, feature_window_start, gestational_age_band_proxy, feeding_trajectory_proxy, abdominal_symptom_proxy, small_cell_suppressed",
+            "hourly to daily synthetic replay",
+            "derived_operational_intelligence",
+            "NEC recognition rehearsal and neonatal safety implementation design",
+            "sensitive aggregate only",
+        ),
     ]
     known = {row["source_id"] for row in sources}
     sources.extend(row for row in extras if row["source_id"] not in known)
@@ -977,7 +988,411 @@ def command_center_context(
             "model coefficient bars",
             "source readiness stoplights",
         ],
+        "interpretations": interpretation_rows(inpatient, ambulatory, scenarios, open_rows),
+        "roleGuidance": role_guidance_rows(),
+        "implementationReadiness": implementation_readiness_rows(scenarios),
+        "actionLearningLoops": action_learning_loop_rows(inpatient, ambulatory, scenarios),
+        "signalSimulations": signal_simulation_rows(open_rows),
     }
+
+
+def interpretation_rows(
+    inpatient: dict[str, list[dict[str, Any]]],
+    ambulatory: dict[str, list[dict[str, Any]]],
+    scenarios: dict[str, list[dict[str, Any]]],
+    open_rows: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    context = latest_context(open_rows)
+    top_units = sorted(inpatient["unitDetails"], key=lambda row: (row["occupancy_pct"], row["ed_boarders"], row["staffing_gap_hours"]), reverse=True)[:4]
+    top_programs = sorted(ambulatory["programDetails"], key=lambda row: (row["third_next_available_days"], row["urgent_waitlist"]), reverse=True)[:4]
+    rows: list[dict[str, Any]] = [
+        {
+            "signal_id": "SIG-SYSTEM-001",
+            "signal_type": "system_posture",
+            "object_type": "network",
+            "object_id": "SITE_PROV_NETWORK",
+            "persona": "Executive",
+            "headline": "System pressure is being shaped by effective capacity, not physical beds alone.",
+            "what_changed": "Network occupancy remains above the watch threshold after applying staffed/effective bed constraints.",
+            "likely_drivers": "Respiratory activity, ED placement pressure, discharge barriers, and aggregate HR gap hours are moving together.",
+            "review_action": "Use this as a huddle prioritization cue: confirm the highest-pressure units, ask whether barriers can be moved today, and check whether any scenario is feasible under HR and resource limits.",
+            "confidence": "medium-high",
+            "confidence_reason": "Direct synthetic capacity and staffing variables are ready; public-context and finance-resource variables remain review-grade.",
+            "source_ids": "SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_OPEN_RESPIRATORY_VIRUS_DASHBOARD,SRC_SYNTH_FINANCE_RESOURCE_ENVELOPE",
+            "model_ids": "INPT_OCCUPANCY_FORECAST,PICU_NICU_PRESSURE",
+            "next_step": "Open the inpatient object list and compare action feasibility in the scenario lab.",
+        },
+        {
+            "signal_id": "SIG-OPEN-001",
+            "signal_type": "open_context",
+            "object_type": "open_data",
+            "object_id": "OPEN_CONTEXT",
+            "persona": "Analytics / informatics / AI team",
+            "headline": "Open-context variables are forecast-shaping, but should stay visibly separable from operational feeds.",
+            "what_changed": f"Current respiratory index is {context['respiratory_activity_index']} and AQHI/smoke proxy is {context['aqhi_max_proxy']}.",
+            "likely_drivers": "Cached respiratory-virus, AQHI/smoke, school-calendar, and pediatric-population context are adding small explicit lifts to demand and access forecasts.",
+            "review_action": "Validate source refresh cadence, missingness, regional mapping, and whether the lift coefficients should be site-specific before any production use.",
+            "confidence": "medium",
+            "confidence_reason": "Public sources are conceptually credible, but local calibration and denominator ownership are pending.",
+            "source_ids": OPEN_SOURCE_IDS,
+            "model_ids": "INPT_OCCUPANCY_FORECAST,AMB_REFERRAL_DEMAND_FORECAST",
+            "next_step": "Keep source badges visible and compare model performance with and without open-context features.",
+        },
+    ]
+    for index, unit in enumerate(top_units):
+        rows.append(
+            {
+                "signal_id": f"SIG-UNIT-{index + 1:03d}",
+                "signal_type": "unit_pressure",
+                "object_type": "unit",
+                "object_id": unit["unit_id"],
+                "persona": "Patient-flow leader" if index % 2 == 0 else "Unit manager",
+                "headline": f"{unit['unit_name']} is a high-yield review target for today's progression huddle.",
+                "what_changed": f"Occupancy is {round(unit['occupancy_pct'] * 100, 1)}%, with {unit['ed_boarders']} ED boarders and {unit['staffing_gap_hours']} synthetic HR gap hours.",
+                "likely_drivers": "Effective-bed loss, respiratory/open-context pressure, ED boarders, and discharge barriers are aligned.",
+                "review_action": "Consider a structured review of discharge barriers, role-group gaps, transfer requests, and whether a step-down or discharge-pull-forward scenario is feasible.",
+                "confidence": unit["confidence"],
+                "confidence_reason": "Capacity and HR variables are direct or derived synthetic signals; action impact remains modelled.",
+                "source_ids": unit["source_ids"],
+                "model_ids": unit["model_ids"],
+                "next_step": "Open the unit drawer and inspect barriers, HR gap, cost ceiling, warnings, and model lineage.",
+            }
+        )
+    for index, program in enumerate(top_programs):
+        rows.append(
+            {
+                "signal_id": f"SIG-PROGRAM-{index + 1:03d}",
+                "signal_type": "ambulatory_access",
+                "object_type": "program",
+                "object_id": program["program_id"],
+                "persona": "Ambulatory program leader" if index % 2 == 0 else "Clinic operations leader",
+                "headline": f"{program['program']} access pressure has a clear template-and-resource review path.",
+                "what_changed": f"TNA is {program['third_next_available_days']} days, urgent waitlist is {program['urgent_waitlist']}, and diagnostics readiness is {round(program['diagnostic_readiness'] * 100)}%.",
+                "likely_drivers": "Referral load, template capacity, diagnostics readiness, no-show reliability, provider sessions, and HR/resource gaps.",
+                "review_action": "Review urgent-slot protection, diagnostics readiness, provider/allied-health capacity, and whether virtual/outreach substitution is appropriate for eligible follow-up.",
+                "confidence": program["confidence"],
+                "confidence_reason": "Referral, waitlist, and template variables are synthetic direct/derived signals; scenario impact remains modelled.",
+                "source_ids": program["source_ids"],
+                "model_ids": program["model_ids"],
+                "next_step": "Open the program drawer and compare template, no-show, diagnostics, HR, and finance/resource constraints.",
+            }
+        )
+    for scenario in scenarios["scenarios"][:4]:
+        rows.append(
+            {
+                "signal_id": f"SIG-{scenario['scenario_id']}",
+                "signal_type": "scenario_decision",
+                "object_type": "scenario",
+                "object_id": scenario["scenario_id"],
+                "persona": "Site operations leader",
+                "headline": f"{scenario['scenario_name']} has a visible feasibility and trade-off path.",
+                "what_changed": f"Baseline {scenario['baseline_value']} compares with scenario {scenario['scenario_value']} for {scenario['primary_outcome']}.",
+                "likely_drivers": "Scenario coefficients, HR hours required, resource cap, and affected unit/program exposure.",
+                "review_action": "Treat the result as a planning comparison, not an order. Confirm staffing, resource, and clinical-operational feasibility before any action.",
+                "confidence": "medium",
+                "confidence_reason": "Scenario coefficients are transparent proxy values with confidence bands and governance caveats.",
+                "source_ids": scenario["source_ids"],
+                "model_ids": "INPT_OCCUPANCY_FORECAST,AMBULATORY_ACCESS_FORECAST",
+                "next_step": "Open the scenario drawer, review affected objects, then capture a what-if for the learning log.",
+            }
+        )
+    return rows
+
+
+def role_guidance_rows() -> list[dict[str, Any]]:
+    return [
+        {
+            "persona": "Executive",
+            "value_question": "Where is the pediatric system exposed, what is driving it, and which trade-offs need executive attention?",
+            "primary_view": "Network posture, site comparison, resource pressure, open-context trend, implementation-readiness exceptions.",
+            "math_note": "Uses the same source metrics as every persona; only aggregation, language, and action framing change.",
+            "recommended_actions": "Compare site posture, ask whether resource ceilings are constraining feasible actions, and sponsor governance decisions that unblock trusted signals.",
+        },
+        {
+            "persona": "Site operations leader",
+            "value_question": "Which site objects need a huddle decision today and which scenario is feasible?",
+            "primary_view": "Site/unit/program objects, warnings, scenario feasibility, HR and finance constraints.",
+            "math_note": "Site filters preserve the same formulas and coefficients while narrowing object scope.",
+            "recommended_actions": "Review high-pressure units/programs, validate action feasibility, and capture scenario decisions for follow-up.",
+        },
+        {
+            "persona": "Patient-flow leader",
+            "value_question": "What is blocking progression and where would action create the most effective capacity?",
+            "primary_view": "Unit heatmap, ED-to-inpatient flow, discharge funnel, predicted admits/discharges, affected units.",
+            "math_note": "Flow interpretation emphasizes capacity, boarders, transfers, and discharge barriers without changing calculation logic.",
+            "recommended_actions": "Open unit drawers, compare barriers and transfers, and use scenario lab to test discharge or step-down levers.",
+        },
+        {
+            "persona": "Unit manager",
+            "value_question": "What is changing on my unit and what review would be reasonable this shift?",
+            "primary_view": "Unit drawer, staffing gap, effective beds, warnings, discharge barriers, source lineage.",
+            "math_note": "Unit view uses direct unit-level rows where available and avoids changing thresholds by role.",
+            "recommended_actions": "Review HR/allied gaps, discharge blockers, transfer requests, and source confidence before escalating.",
+        },
+        {
+            "persona": "Ambulatory program leader",
+            "value_question": "Where are referrals, waitlist, diagnostics, templates, and follow-up becoming unsafe operational pressure?",
+            "primary_view": "Program object drawer, TNA, urgent waitlist, template gaps, diagnostics readiness, virtual/outreach scenario.",
+            "math_note": "Program calculations use the same waitlist, referral, and capacity formulas across roles.",
+            "recommended_actions": "Review urgent-slot protection, diagnostics readiness, and provider/allied-health capacity constraints.",
+        },
+        {
+            "persona": "Clinic operations leader",
+            "value_question": "Which templates, no-shows, diagnostics, and follow-up queues need operational tuning?",
+            "primary_view": "Access heatmap, no-show frontier, provider capacity, diagnostics bars, program drawers.",
+            "math_note": "Clinic lens changes emphasis from strategic backlog to template mechanics, not the underlying math.",
+            "recommended_actions": "Compare template gap, no-show opportunity, and diagnostics readiness before changing clinic supply.",
+        },
+        {
+            "persona": "Analytics / informatics / AI team",
+            "value_question": "Can each signal be trusted, implemented, governed, monitored, and retired safely?",
+            "primary_view": "Data & Model Readiness, model cards, coefficient registry, validation/drift, dependency graph, source badges.",
+            "math_note": "Technical persona exposes formulas, coefficients, thresholds, feature families, validation status, and dependencies.",
+            "recommended_actions": "Resolve blocked feeds, review metric definitions, validate coefficients, and maintain rollback/governance evidence.",
+        },
+    ]
+
+
+def implementation_readiness_rows(scenarios: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
+    rows = [
+        ("synthetic_variable", "DEMO_UNIT_CENSUS", "Synthetic unit census and effective-bed variables", "ready", "ready", "not_connected", "Synthetic data product", "Keep visible as future-state ready while labelling synthetic.", "Map to curated census and bed-status views; validate denominator and timestamp logic."),
+        ("synthetic_variable", "DEMO_AMB_WAITLIST", "Synthetic referral, waitlist, template, and TNA variables", "ready", "ready", "not_connected", "Synthetic data product", "Demonstrates future access command centre.", "Map referral, appointment, template, no-show, and diagnostics readiness views."),
+        ("real_data_feed", "REAL_ADT_BED_STATUS", "ADT, bed status, unit census, transfer request feeds", "blocked", "simulated", "blocked", "Source integration", "Needs curated Snowflake views and source-owner signoff.", "Create read-only canonical views, freshness checks, and small-cell suppression."),
+        ("real_data_feed", "REAL_HR_ROSTER", "HR roster, absence, float-pool, skill-mix feeds", "pending", "simulated", "pending", "Workforce analytics", "Sensitive staff aggregate feed requires explicit governance.", "Define aggregate role groups, minimum cell sizes, and refresh cadence."),
+        ("real_data_feed", "REAL_FINANCE_ENVELOPE", "Cost centre, overtime, agency, and resource-envelope feeds", "pending", "simulated", "pending", "Finance partner", "Finance proxy is useful but not production accounting.", "Agree on resource proxy, budget period, and allowed operational display granularity."),
+        ("metric_definition", "METRIC_EFFECTIVE_STAFFED_BEDS", "Effective staffed beds calculation", "review", "ready", "pending", "Patient Flow / HR", "Formula is transparent but needs local definition ownership.", "Approve physical/staffed/effective bed denominator and effective-bed-loss logic."),
+        ("metric_definition", "METRIC_TNA", "Third-next-available and template capacity calculation", "review", "ready", "pending", "Ambulatory operations", "Synthetic formula is visible and useful for implementation rehearsal.", "Confirm template rules, provider leave handling, virtual slots, and urgent-slot carve-outs."),
+        ("coefficient", "COEF_RESPIRATORY_LIFT", "Respiratory open-context forecast lift", "review", "ready", "pending", "Analytics", "Coefficient is plausible proxy, not locally calibrated.", "Backtest forecast with and without respiratory/AQHI/calendar features by site and season."),
+        ("coefficient", "COEF_HR_CAPACITY", "HR constraint multiplier", "review", "ready", "pending", "Workforce analytics", "Useful for scenario feasibility but requires local staffing model review.", "Calibrate role-group hours, float-pool substitution, and overtime/agency constraints."),
+        ("pending_model", "MODEL_RARE_DISEASE_CASE_FINDING", "Rare-disease case-finding simulation", "blocked", "prototype", "not_connected", "Clinical informatics / genetics", "Requires careful governance, precision review, and referral pathway design.", "Define eligible feature families, exclude identifiers, review alert burden, and create specialist review workflow."),
+        ("pending_model", "MODEL_EARLY_WARNING_DETERIORATION", "General pediatric deterioration early-warning simulation", "blocked", "prototype", "not_connected", "Clinical safety", "Must not surface as clinical advice without rigorous local validation.", "Run silent evaluation, subgroup calibration, alert-burden review, and human-factors testing."),
+        ("pending_model", "MODEL_NEC_RECOGNITION", "NEC recognition simulation", "blocked", "prototype", "not_connected", "Neonatal clinical safety", "High-stakes neonatal signal remains prototype-only.", "Define neonatal cohort, feature windows, escalation path, and safety review before any operational warning."),
+        ("validation", "VALIDATION_BACKTEST", "Temporal backtest and calibration checks", "pending", "synthetic_pass", "pending", "Analytics / model risk", "Synthetic validation exists but production validation is not complete.", "Backtest by site, service, age-band proxy, season, equity/travel proxy, and alert threshold."),
+        ("governance", "GOV_WARNING_RELEASE", "Warning release, acknowledgement, and rollback controls", "review", "defined", "pending", "AI governance", "Release pattern exists, but production policies and accountabilities must be approved.", "Define review board, approval evidence, canary scope, rollback trigger, and post-release monitoring."),
+        ("dependency", "DEP_LEARNING_WRITEBACK", "Scenario, acknowledgement, outcome-review writeback tables", "review", "defined", "pending", "Snowflake app owner", "Learning loop tables are defined but not wired to production operations.", "Implement APP/GOVERNANCE schemas, role grants, audit policy, and retention rules."),
+    ]
+    for scenario in scenarios["scenarios"]:
+        rows.append(
+            (
+                "scenario",
+                scenario["scenario_id"],
+                scenario["scenario_name"],
+                scenario["readiness"],
+                "ready",
+                "pending",
+                "Operations / analytics",
+                "Scenario is useful for what-if rehearsal, but should not be treated as an operational directive.",
+                "Validate coefficients, affected-object mapping, HR and resource constraints, and outcome follow-up cadence.",
+            )
+        )
+    return [
+        {
+            "category": category,
+            "item_id": item_id,
+            "item": item,
+            "status": status,
+            "synthetic_demo_status": synthetic_status,
+            "real_data_status": real_status,
+            "owner": owner,
+            "trust_note": trust_note,
+            "next_implementation_step": next_step,
+            "classification": "synthetic demo" if category == "synthetic_variable" else "implementation readiness",
+        }
+        for category, item_id, item, status, synthetic_status, real_status, owner, trust_note, next_step in rows
+    ]
+
+
+def action_learning_loop_rows(
+    inpatient: dict[str, list[dict[str, Any]]],
+    ambulatory: dict[str, list[dict[str, Any]]],
+    scenarios: dict[str, list[dict[str, Any]]],
+) -> list[dict[str, Any]]:
+    loops = [
+        ("LOOP-UNIT-PRESSURE", "Unit progression pressure", "Patient-flow leader", inpatient["warnings"][0] if inpatient["warnings"] else {}, scenarios["scenarios"][0]),
+        ("LOOP-AMB-ACCESS", "Ambulatory access breach", "Ambulatory program leader", ambulatory["warnings"][0] if ambulatory["warnings"] else {}, scenarios["scenarios"][2]),
+        ("LOOP-HR-CONSTRAINT", "HR-constrained capacity", "Site operations leader", inpatient["warnings"][1] if len(inpatient["warnings"]) > 1 else {}, scenarios["scenarios"][4]),
+        ("LOOP-MODEL-READINESS", "Model readiness exception", "Analytics / informatics / AI team", {"title": "Validation hold", "message": "A modelled signal is blocked until local validation and governance review are complete."}, scenarios["scenarios"][-1]),
+    ]
+    stages = [
+        ("detect", "Signal detected", "System surfaces the signal with classification, confidence, and source badges.", "new"),
+        ("review", "Team review", "Huddle or domain owner checks the drawer, lineage, drivers, and caveats.", "in review"),
+        ("act", "Action considered", "Team compares scenario feasibility, HR/resource constraints, and operational trade-offs.", "decision support"),
+        ("follow_up", "Follow-up check", "Outcome, exceptions, and unintended consequences are reviewed after the action window.", "pending"),
+        ("learn", "Learning captured", "Scenario result, acknowledgement, and reviewer notes write back to governed tables.", "learning"),
+        ("spread", "Spread or retire", "If useful, playbook is generalized; if noisy, coefficient/threshold is revised or retired.", "governance"),
+    ]
+    rows: list[dict[str, Any]] = []
+    for loop_id, loop_name, owner, warning, scenario in loops:
+        for stage_index, (stage_id, stage_name, description, status) in enumerate(stages, start=1):
+            rows.append(
+                {
+                    "loop_id": loop_id,
+                    "loop_name": loop_name,
+                    "stage_index": stage_index,
+                    "stage_id": stage_id,
+                    "stage_name": stage_name,
+                    "owner": owner,
+                    "status": status,
+                    "trigger": warning.get("title", loop_name),
+                    "description": description,
+                    "decision_support": scenario["scenario_name"],
+                    "follow_up_metric": scenario["primary_outcome"],
+                    "learning_output": "APP.SCENARIO_RUN_LOG, APP.WARNING_ACKNOWLEDGEMENT, APP.LEARNING_SYSTEM_OUTCOME_REVIEW",
+                    "source_ids": warning.get("source_ids", scenario["source_ids"]),
+                    "caveat": "Prototype learning loop content only; not connected to real operations.",
+                }
+            )
+    return rows
+
+
+def signal_simulation_rows(open_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    latest = latest_context(open_rows)
+    configs = [
+        {
+            "simulation_id": "SIM-TRIAGE-LOS",
+            "label": "Triage and LOS orchestration",
+            "domain": "ED / inpatient flow",
+            "inspiration": "Frontier LOS orchestration and ED triage queueing methods",
+            "clinical_boundary": "Operational flow support only; does not replace triage, assessment, or physician judgement.",
+            "target_question": "Which arrivals are likely to consume constrained downstream capacity, and what operational constraint is driving the queue?",
+            "cohort": "Synthetic pediatric ED arrivals and admitted-boarder aggregates; no direct personal identifiers.",
+            "primary_output": "predicted_los_hours",
+            "threshold_logic": "Watch when predicted LOS exceeds service-adjusted 80th percentile; high when boarding risk and downstream capacity constraint align.",
+            "validation_status": "synthetic silent replay only; real temporal validation pending",
+            "governance_status": "prototype hold",
+            "model_family": "survival/gradient boosting plus queueing constraint overlay",
+            "feature_families": "arrival pattern, CTAS-style acuity band, bed capacity, consult bottleneck, diagnostics turnaround, staffing, transfer pressure, open context",
+            "source_ids": "SRC_SYNTH_ED_VISITS,SRC_SYNTH_UNIT_CENSUS_HOURLY,SRC_SYNTH_TRANSFER_REQUESTS,SRC_SYNTH_HR_SHIFT_ROSTER,SRC_OPEN_ED_WAIT_TIME_LOGIC",
+            "coefficients": [
+                {"coefficient_name": "acuity_band_weight", "default_value": 0.31},
+                {"coefficient_name": "boarder_queue_weight", "default_value": 0.27},
+                {"coefficient_name": "diagnostic_turnaround_weight", "default_value": 0.16},
+                {"coefficient_name": "staffed_capacity_weight", "default_value": -0.22},
+                {"coefficient_name": "respiratory_context_weight", "default_value": 0.08},
+            ],
+            "factors": [
+                {"factor": "ED arrivals", "demand": 96, "supply": 72, "pressure": 0.78},
+                {"factor": "Admitted boarders", "demand": 31, "supply": 18, "pressure": 0.86},
+                {"factor": "Consult queue", "demand": 22, "supply": 14, "pressure": 0.72},
+                {"factor": "Diagnostic turnaround", "demand": 44, "supply": 35, "pressure": 0.63},
+            ],
+            "timeline": [{"hour": hour, "risk": round(0.42 + hour * 0.012 + float(latest["ed_wait_pressure_proxy"]) * 0.12, 3), "lower": round(0.35 + hour * 0.009, 3), "upper": round(0.5 + hour * 0.015, 3)} for hour in [0, 3, 6, 12, 18, 24, 48, 72]],
+            "so_what": "The signal separates arrival pressure from downstream bed and consult constraints so teams can decide whether the bottleneck is triage room, diagnostics, consult, bed, transport, or staffing capacity.",
+            "now_what": "Review the top constrained factor, compare a step-down/discharge scenario, and capture whether the queue actually improved after the huddle window.",
+        },
+        {
+            "simulation_id": "SIM-RARE-DISEASE",
+            "label": "Rare-disease case finding",
+            "domain": "complex diagnostic pathway",
+            "inspiration": "ThinkRare-style phenotype patterning and pediatric rare-disease diagnostic support",
+            "clinical_boundary": "Case-finding queue only; no diagnosis, no automated referral, and no display of patient identifiers.",
+            "target_question": "Which aggregate synthetic phenotype patterns might warrant specialist review of a cohort, pathway, or referral delay?",
+            "cohort": "Synthetic de-identified feature bundles only; excludes direct chart or personal identifiers.",
+            "primary_output": "review_priority_score",
+            "threshold_logic": "Watch when phenotype burden, diagnostic odyssey duration, and repeated specialty touchpoints align; high requires human genetics/specialist review queue approval.",
+            "validation_status": "prototype-only; requires precision, bias, referral-burden, and specialist review validation",
+            "governance_status": "blocked for real data until clinical governance and family-impact review",
+            "model_family": "phenotype embedding similarity plus rules-based pathway delay features",
+            "feature_families": "problem clusters, repeated referrals, abnormal-result families, growth/development proxies, medication class patterns, family history proxy flags, utilization path length",
+            "source_ids": "SRC_SYNTH_REFERRALS,SRC_SYNTH_ORDERS,SRC_SYNTH_LAB_RESULTS,SRC_SYNTH_CARE_PLAN_MILESTONES,SRC_MODEL_VALIDATION_RESULTS",
+            "coefficients": [
+                {"coefficient_name": "phenotype_cluster_similarity", "default_value": 0.34},
+                {"coefficient_name": "multi_specialty_path_weight", "default_value": 0.18},
+                {"coefficient_name": "diagnostic_odyssey_duration", "default_value": 0.21},
+                {"coefficient_name": "abnormal_result_family_weight", "default_value": 0.15},
+                {"coefficient_name": "equity_guardrail_penalty", "default_value": -0.09},
+            ],
+            "factors": [
+                {"factor": "Phenotype cluster burden", "demand": 128, "supply": 36, "pressure": 0.81},
+                {"factor": "Genetics review slots", "demand": 42, "supply": 18, "pressure": 0.88},
+                {"factor": "Cross-specialty touchpoints", "demand": 76, "supply": 44, "pressure": 0.67},
+                {"factor": "Family impact review", "demand": 34, "supply": 20, "pressure": 0.62},
+            ],
+            "timeline": [{"week": week, "risk": round(0.36 + week * 0.006 + math.sin(week / 5) * 0.04, 3), "lower": round(0.29 + week * 0.004, 3), "upper": round(0.44 + week * 0.007, 3)} for week in [1, 2, 4, 8, 12, 18, 26]],
+            "so_what": "This is a pathway-learning tool: it asks whether patterns of delay and repeated touchpoints indicate a cohort that deserves specialist review, not whether a child has a specific disease.",
+            "now_what": "Route only aggregate candidates to a governed review queue, measure false-positive burden, and tune thresholds with specialists before any live signal.",
+        },
+        {
+            "simulation_id": "SIM-EARLY-WARNING",
+            "label": "General deterioration early warning",
+            "domain": "inpatient safety / surveillance",
+            "inspiration": "Pediatric early warning and deterioration-risk surveillance methods",
+            "clinical_boundary": "Synthetic surveillance rehearsal only; not a bedside alarm, diagnosis, or treatment recommendation.",
+            "target_question": "Where might aggregate deterioration-risk signals, staffing pressure, and workload context align enough to warrant review of monitoring reliability?",
+            "cohort": "Synthetic unit-level surveillance aggregates and score-band proxies; no identifiable child-level display.",
+            "primary_output": "deterioration_review_risk",
+            "threshold_logic": "Watch when score-band trend, respiratory support escalation, abnormal observation burden, and staffing gap align; high requires clinical safety review before display.",
+            "validation_status": "synthetic calibration only; real subgroup calibration and alert-burden review blocked",
+            "governance_status": "prototype hold",
+            "model_family": "calibrated logistic/gradient boosting risk with alert-burden governor",
+            "feature_families": "vital-sign completeness, respiratory support, abnormal score bands, escalation events, workload acuity, staffing gap, unit context",
+            "source_ids": "SRC_SYNTH_VITAL_SIGNS_AGG,SRC_SYNTH_RESPIRATORY_SUPPORT,SRC_SYNTH_CLINICAL_SCORES,SRC_SYNTH_WORKLOAD_ACUITY,SRC_SYNTH_HR_SHIFT_ROSTER",
+            "coefficients": [
+                {"coefficient_name": "respiratory_support_escalation", "default_value": 0.29},
+                {"coefficient_name": "score_band_trend", "default_value": 0.24},
+                {"coefficient_name": "vital_completeness_gap", "default_value": 0.11},
+                {"coefficient_name": "workload_acuity_weight", "default_value": 0.17},
+                {"coefficient_name": "alert_burden_governor", "default_value": -0.13},
+            ],
+            "factors": [
+                {"factor": "Respiratory escalation", "demand": 21, "supply": 16, "pressure": 0.7},
+                {"factor": "Observation completeness", "demand": 88, "supply": 94, "pressure": 0.38},
+                {"factor": "Workload acuity", "demand": 79, "supply": 61, "pressure": 0.74},
+                {"factor": "Clinical review bandwidth", "demand": 18, "supply": 14, "pressure": 0.66},
+            ],
+            "timeline": [{"hour": hour, "risk": round(0.31 + hour * 0.01 + float(latest["respiratory_activity_index"]) * 0.08, 3), "lower": round(0.24 + hour * 0.007, 3), "upper": round(0.39 + hour * 0.012, 3)} for hour in [0, 3, 6, 12, 18, 24, 36, 48]],
+            "so_what": "The prototype demonstrates how safety surveillance must sit beside capacity and workload context so leaders can separate signal quality from staffing strain and alert burden.",
+            "now_what": "Run silent mode first, compare with existing escalation workflows, review false-positive burden, and require clinical safety approval before any alert display.",
+        },
+        {
+            "simulation_id": "SIM-NEC",
+            "label": "NEC recognition rehearsal",
+            "domain": "neonatal safety / NICU",
+            "inspiration": "Necrotizing enterocolitis early-recognition risk modelling and neonatal deterioration surveillance",
+            "clinical_boundary": "Prototype-only neonatal surveillance rehearsal; not diagnostic, not an alarm, and not validated for care decisions.",
+            "target_question": "Can a governed aggregate signal show how feeding, prematurity, infection/inflammation, vitals, labs, and imaging readiness might combine for NEC review?",
+            "cohort": "Synthetic NICU aggregate feature windows; no infant identifiers, free-text extraction, names, direct dates, or bedside instructions.",
+            "primary_output": "nec_review_risk",
+            "threshold_logic": "Watch when feeding intolerance proxy, inflammatory/lab family, abdominal imaging readiness, and prematurity context align; high remains blocked until neonatal safety review.",
+            "validation_status": "prototype-only; requires neonatal cohort definition, temporal leakage review, and silent validation",
+            "governance_status": "blocked for live use",
+            "model_family": "time-windowed logistic/gradient boosting ensemble with leakage guardrails",
+            "feature_families": "gestational-age proxy, feeding trajectory, abdominal symptom proxy, lab/inflammation family, antibiotic/order family, imaging readiness, respiratory support, unit workload",
+            "source_ids": "SRC_SYNTH_NICU_FEATURE_WINDOWS,SRC_SYNTH_LAB_RESULTS,SRC_SYNTH_IMAGING_ORDERS,SRC_SYNTH_MEDICATION_ORDERS,SRC_SYNTH_RESPIRATORY_SUPPORT,SRC_MODEL_VALIDATION_RESULTS",
+            "coefficients": [
+                {"coefficient_name": "feeding_intolerance_proxy", "default_value": 0.28},
+                {"coefficient_name": "prematurity_context_weight", "default_value": 0.22},
+                {"coefficient_name": "lab_inflammation_family", "default_value": 0.19},
+                {"coefficient_name": "abdominal_imaging_readiness", "default_value": 0.14},
+                {"coefficient_name": "temporal_leakage_penalty", "default_value": -0.18},
+            ],
+            "factors": [
+                {"factor": "Feeding trajectory proxy", "demand": 18, "supply": 15, "pressure": 0.63},
+                {"factor": "Lab/inflammation family", "demand": 26, "supply": 20, "pressure": 0.68},
+                {"factor": "Imaging readiness", "demand": 11, "supply": 9, "pressure": 0.57},
+                {"factor": "Neonatal review bandwidth", "demand": 9, "supply": 7, "pressure": 0.64},
+            ],
+            "timeline": [{"hour": hour, "risk": round(0.18 + hour * 0.008 + math.sin(hour / 8) * 0.025, 3), "lower": round(0.12 + hour * 0.005, 3), "upper": round(0.25 + hour * 0.01, 3)} for hour in [0, 3, 6, 12, 18, 24, 36, 48]],
+            "so_what": "NEC is exactly the kind of high-stakes signal that should be shown as implementation design first: transparent variables, leakage guardrails, governance blocks, and no automated clinical instruction.",
+            "now_what": "Define neonatal cohort windows, run silent validation, require neonatal clinical-safety review, and track whether any signal would have added useful review time without unsafe alert burden.",
+        },
+    ]
+    for config in configs:
+        baseline = 100 if "RARE" in config["simulation_id"] else 1
+        config["baseline_vs_scenario"] = [
+            {"label": "Baseline", "value": baseline, "classification": "derived"},
+            {"label": "Scenario with governed signal", "value": round(baseline * 0.78, 2), "classification": "modelled"},
+            {"label": "CI low", "value": round(baseline * 0.66, 2), "classification": "modelled"},
+            {"label": "CI high", "value": round(baseline * 0.92, 2), "classification": "modelled"},
+        ]
+        config["implementation_steps"] = [
+            "Define cohort and exclusion criteria without identifiers.",
+            "Map curated aggregate fields through governed Snowflake views.",
+            "Backtest silently with temporal validation and subgroup review.",
+            "Review alert burden, false-positive impact, and human-factors risk.",
+            "Approve release gate, owner, rollback trigger, and learning writeback.",
+        ]
+    return configs
 
 
 def panel_lineage() -> list[dict[str, Any]]:

@@ -96,6 +96,11 @@ def test_v5_metadata_and_command_center_context():
     assert len(command["openContext"]) >= 52
     assert len(command["chartCatalog"]) >= 20
     assert len(command["lakehouseTables"]) >= 6
+    assert len(command["interpretations"]) >= 10
+    assert len(command["roleGuidance"]) == 7
+    assert len(command["implementationReadiness"]) >= 20
+    assert len(command["actionLearningLoops"]) >= 20
+    assert len(command["signalSimulations"]) == 4
 
 
 def test_v5_service_unit_and_program_depth():
@@ -181,6 +186,38 @@ def test_v5_model_cards_have_wiring_fields():
     for model in models:
         assert required.issubset(model)
         json.loads(model["proxy_coefficients"])
+
+
+def test_v5_decision_support_readiness_and_signal_simulations():
+    command = load_json("command_center_context.json")
+    for row in command["interpretations"]:
+        assert {"what_changed", "likely_drivers", "review_action", "confidence", "confidence_reason", "next_step"}.issubset(row)
+
+    readiness_categories = {row["category"] for row in command["implementationReadiness"]}
+    assert {
+        "synthetic_variable",
+        "real_data_feed",
+        "metric_definition",
+        "coefficient",
+        "pending_model",
+        "validation",
+        "governance",
+        "dependency",
+    }.issubset(readiness_categories)
+    assert any(row["real_data_status"] in {"blocked", "not_connected"} for row in command["implementationReadiness"])
+
+    labels = {row["label"] for row in command["signalSimulations"]}
+    assert {
+        "Triage and LOS orchestration",
+        "Rare-disease case finding",
+        "General deterioration early warning",
+        "NEC recognition rehearsal",
+    } == labels
+    for row in command["signalSimulations"]:
+        assert {"coefficients", "factors", "timeline", "implementation_steps", "clinical_boundary", "threshold_logic"}.issubset(row)
+        assert len(row["coefficients"]) >= 5
+        assert len(row["factors"]) >= 4
+        assert "identifier" in row["cohort"] or "identifiable" in row["cohort"]
 
 
 def test_v5_classification_and_source_readiness_layers_present():

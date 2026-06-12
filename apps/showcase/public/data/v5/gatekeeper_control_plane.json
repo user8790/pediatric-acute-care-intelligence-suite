@@ -2,7 +2,7 @@
   "controlPlane": [
     {
       "area": "Direct source readiness",
-      "ready": 68,
+      "ready": 69,
       "review": 11,
       "blocked": 3,
       "mode": "executive lite"

@@ -68,8 +68,8 @@ function postureTone(value: unknown): "steady" | "watch" | "high" {
 function statusTone(value: unknown): string {
   const status = String(value ?? "").toLowerCase();
   if (status.includes("ready") || status.includes("approved") || status.includes("pass")) return "ready";
-  if (status.includes("hold") || status.includes("blocked") || status.includes("high")) return "high";
-  if (status.includes("review") || status.includes("watch") || status.includes("open")) return "review";
+  if (status.includes("hold") || status.includes("blocked") || status.includes("not_connected") || status.includes("not mapped") || status.includes("high")) return "high";
+  if (status.includes("pending") || status.includes("review") || status.includes("watch") || status.includes("open")) return "review";
   return "neutral";
 }
 
@@ -969,6 +969,130 @@ function contextSummary(data: V3Data, context: AppContext): string {
   return `${context.persona} lens | ${siteLabel(context.site)} | ${context.horizon} | ${service} | ${unit} | ${program} | ${scenario}`;
 }
 
+function roleGuidance(data: V3Data, persona: string): DataRow | undefined {
+  return data.commandCenter.roleGuidance.find((row) => stringValue(row, "persona") === persona) ?? data.commandCenter.roleGuidance[0];
+}
+
+function contextInterpretations(data: V3Data, context: AppContext, limit = 4): DataRow[] {
+  const rows = data.commandCenter.interpretations.filter((row) => {
+    const persona = stringValue(row, "persona");
+    const objectType = stringValue(row, "object_type");
+    const objectId = stringValue(row, "object_id");
+    const personaOk = persona === context.persona || persona === "Executive" || context.persona === "Analytics / informatics / AI team";
+    const unitOk = context.unit === "All units" || objectId === context.unit || objectType !== "unit";
+    const programOk = context.program === "All programs" || objectId === context.program || objectType !== "program";
+    const scenarioOk = context.scenario === "All scenarios" || objectId === context.scenario || objectType !== "scenario";
+    return personaOk && unitOk && programOk && scenarioOk;
+  });
+  return (rows.length ? rows : data.commandCenter.interpretations).slice(0, limit);
+}
+
+function RoleGuidancePanel({ data, context }: { data: V3Data; context: AppContext }) {
+  const row = roleGuidance(data, context.persona);
+  if (!row) return null;
+  return (
+    <article className="decision-support-card role-card">
+      <div>
+        <Users size={18} />
+        <strong>{stringValue(row, "persona")}</strong>
+        <ClassificationBadge value="role lens" />
+      </div>
+      <p>{stringValue(row, "value_question")}</p>
+      <DetailList
+        rows={[
+          ["Primary view", stringValue(row, "primary_view")],
+          ["Math alignment", stringValue(row, "math_note")],
+          ["Reasonable next action", stringValue(row, "recommended_actions")],
+        ]}
+      />
+    </article>
+  );
+}
+
+function InterpretationPanel({
+  data,
+  context,
+  onOpenSource,
+  limit = 4,
+}: {
+  data: V3Data;
+  context: AppContext;
+  onOpenSource: (sourceId: string) => void;
+  limit?: number;
+}) {
+  const rows = contextInterpretations(data, context, limit);
+  if (!rows.length) return <p className="muted">No interpretation rows are available for this lens.</p>;
+  return (
+    <div className="interpretation-grid">
+      {rows.map((row) => (
+        <article className="decision-support-card" key={stringValue(row, "signal_id")}>
+          <div>
+            <Activity size={18} />
+            <strong>{stringValue(row, "headline")}</strong>
+            <ReadinessBadge value={row.confidence} />
+          </div>
+          <dl className="so-what-list">
+            <div>
+              <dt>What changed</dt>
+              <dd>{stringValue(row, "what_changed")}</dd>
+            </div>
+            <div>
+              <dt>Likely drivers</dt>
+              <dd>{stringValue(row, "likely_drivers")}</dd>
+            </div>
+            <div>
+              <dt>Now what</dt>
+              <dd>{stringValue(row, "review_action")}</dd>
+            </div>
+            <div>
+              <dt>Confidence</dt>
+              <dd>{stringValue(row, "confidence_reason")}</dd>
+            </div>
+          </dl>
+          <SourceChipGroup data={data} sourceIds={csvIds(row.source_ids)} onOpen={onOpenSource} limit={4} />
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function readinessSummary(rows: DataRow[]) {
+  return {
+    ready: rows.filter((row) => statusTone(row.status) === "ready" || statusTone(row.synthetic_demo_status) === "ready").length,
+    review: rows.filter((row) => statusTone(row.status) === "review").length,
+    blocked: rows.filter((row) => statusTone(row.status) === "high" || statusTone(row.real_data_status) === "high").length,
+  };
+}
+
+function actionLoopStages(data: V3Data, loopId?: string): DataRow[] {
+  const rows = data.commandCenter.actionLearningLoops;
+  const selectedLoop = loopId ?? stringValue(rows[0], "loop_id");
+  return rows.filter((row) => stringValue(row, "loop_id") === selectedLoop).sort((a, b) => numberValue(a, "stage_index") - numberValue(b, "stage_index"));
+}
+
+function ActionLearningLoopBoard({
+  data,
+  loopId,
+}: {
+  data: V3Data;
+  loopId?: string;
+}) {
+  const stages = actionLoopStages(data, loopId);
+  if (!stages.length) return <p className="muted">No action-learning loop has been generated.</p>;
+  return (
+    <div className="learning-loop-board">
+      {stages.map((stage) => (
+        <article key={`${stringValue(stage, "loop_id")}-${stringValue(stage, "stage_id")}`}>
+          <span>{numberValue(stage, "stage_index")}</span>
+          <strong>{stringValue(stage, "stage_name")}</strong>
+          <p>{stringValue(stage, "description")}</p>
+          <em>{stringValue(stage, "status")} | {stringValue(stage, "owner")}</em>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function systemKpis(data: V3Data, context: AppContext, units: DataRow[], programs: DataRow[]): DataRow[] {
   const latest = latestOpenContext(data);
   const factor = horizonFactor(context.horizon);
@@ -1087,6 +1211,14 @@ export function SystemPosturePage({
             Scenario lab
           </button>
         </div>
+      </Panel>
+
+      <Panel span="normal" eyebrow="Role value" title="Why this persona exists" icon={<Users size={22} />}>
+        <RoleGuidancePanel data={data} context={context} />
+      </Panel>
+
+      <Panel span="xlarge" eyebrow="So what / now what" title="Interpretation, drivers, confidence, and review path" icon={<Sparkles size={22} />}>
+        <InterpretationPanel data={data} context={context} onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })} />
       </Panel>
 
       {kpis.map((row) => (
@@ -1229,6 +1361,10 @@ export function FrontierInpatientPage({ data, context }: { data: V3Data; context
         <LineageCard data={data} panelId="PANEL_INPATIENT_COMMAND" />
       </Panel>
 
+      <Panel span="wide" eyebrow="Decision support" title="What is changing, why it may matter, and what to review" icon={<Sparkles size={22} />}>
+        <InterpretationPanel data={data} context={context} onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })} limit={3} />
+      </Panel>
+
       {metricRows.map((row) => (
         <WorkspaceMetricTile
           key={stringValue(row, "metric_id")}
@@ -1347,6 +1483,10 @@ export function FrontierAmbulatoryPage({ data, context }: { data: V3Data; contex
       <Panel span="wide" eyebrow="Ambulatory access command centre" title="Program objects with referrals, triage, waitlists, TNA, templates, diagnostics, HR, finance, and source readiness" icon={<CalendarClock size={22} />}>
         <p className="section-intro">{contextSummary(data, context)}. The service control acts as a program lens when there is a natural pediatric progression relationship.</p>
         <LineageCard data={data} panelId="PANEL_AMBULATORY_COMMAND" />
+      </Panel>
+
+      <Panel span="wide" eyebrow="Decision support" title="Access interpretation, drivers, confidence, and review path" icon={<Sparkles size={22} />}>
+        <InterpretationPanel data={data} context={context} onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })} limit={3} />
       </Panel>
 
       {metricRows.map((row) => (
@@ -1669,6 +1809,241 @@ export function ScenarioLabPage({
       <Panel span="wide" eyebrow="Scenario table" title="Readiness, writeback path, and clickable scenario drawers" icon={<FileCheck2 size={22} />}>
         <RegistryTable rows={data.scenarioLab.scenarios} columns={["scenario_id", "domain", "scenario_name", "readiness", "classification", "writeback_table"]} limit={10} onSelect={(row) => setDrawer({ kind: "scenario", id: stringValue(row, "scenario_id"), row })} />
       </Panel>
+      <Panel span="wide" eyebrow="Action and learning loop" title="Detection to review to action to follow-up to learning" icon={<Workflow size={22} />}>
+        <ActionLearningLoopBoard data={data} loopId="LOOP-UNIT-PRESSURE" />
+      </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
+    </section>
+  );
+}
+
+export function ImplementationReadinessPage({ data, context }: { data: V3Data; context: AppContext }) {
+  const [category, setCategory] = useState("all");
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const rows = data.commandCenter.implementationReadiness;
+  const filtered = category === "all" ? rows : rows.filter((row) => stringValue(row, "category") === category);
+  const categories = Array.from(new Set(rows.map((row) => stringValue(row, "category"))));
+  const summary = readinessSummary(rows);
+  const blocked = rows.filter((row) => statusTone(row.status) === "high" || statusTone(row.real_data_status) === "high");
+  const readySynthetic = rows.filter((row) => statusTone(row.synthetic_demo_status) === "ready");
+  return (
+    <section className="dashboard-grid">
+      <Panel span="wide" eyebrow="Data & Model Readiness" title="Implementation transparency for feeds, calculations, coefficients, models, validation, governance, and dependencies" icon={<DatabaseZap size={22} />}>
+        <p className="section-intro">
+          {contextSummary(data, context)}. This surface intentionally separates synthetic demo readiness from real-data readiness. Green synthetic variables show the future-state experience; red and pending real-data items show the honest implementation path.
+        </p>
+        <RoleGuidancePanel data={data} context={{ ...context, persona: "Analytics / informatics / AI team" }} />
+      </Panel>
+
+      <WorkspaceMetricTile
+        label="Synthetic demo ready"
+        value={formatInteger(readySynthetic.length)}
+        detail="Variables, calculations, or scenarios ready for future-state demonstration"
+        delta="Synthetic does not imply production-ready"
+        tone="good"
+        classification="synthetic demo"
+        sourceIds={["SRC_SYNTH_UNIT_CENSUS_HOURLY", "SRC_SYNTH_WAITLIST_SNAPSHOTS"]}
+        data={data}
+        onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+      />
+      <WorkspaceMetricTile
+        label="Review / pending"
+        value={formatInteger(summary.review)}
+        detail="Definitions, coefficients, validation, governance, or dependencies needing owner review"
+        delta="Honest implementation queue"
+        tone="watch"
+        classification="implementation readiness"
+        sourceIds={["SRC_MODEL_VALIDATION_RESULTS", "SRC_MODEL_DRIFT_RESULTS"]}
+        data={data}
+        onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+      />
+      <WorkspaceMetricTile
+        label="Blocked / not connected"
+        value={formatInteger(summary.blocked)}
+        detail="Real data feeds or model signals intentionally blocked until governance and validation"
+        delta="Safety feature, not a product defect"
+        tone="high"
+        classification="governance"
+        sourceIds={["SRC_DIRECT_LINKAGE_VALIDATION", "SRC_MODEL_VALIDATION_RESULTS"]}
+        data={data}
+        onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+      />
+
+      <Panel span="wide" eyebrow="Readiness filters" title="Implementation queue by category" icon={<SlidersHorizontal size={22} />}>
+        <div className="segmented-control wrap" role="group" aria-label="Readiness category">
+          <button className={category === "all" ? "active" : ""} onClick={() => setCategory("all")}>
+            All
+          </button>
+          {categories.map((item) => (
+            <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>
+              {titleCase(item)}
+            </button>
+          ))}
+        </div>
+      </Panel>
+
+      <Panel span="xlarge" eyebrow="Implementation details" title="Status, owner, trust note, and next implementation step" icon={<FileCheck2 size={22} />}>
+        <RegistryTable
+          rows={filtered}
+          columns={["category", "item", "status", "synthetic_demo_status", "real_data_status", "owner", "next_implementation_step"]}
+          limit={40}
+        />
+      </Panel>
+      <Panel span="normal" eyebrow="Blocked items" title="Red/pending by design" icon={<AlertTriangle size={22} />}>
+        <RegistryTable rows={blocked} columns={["item_id", "item", "real_data_status", "next_implementation_step"]} limit={8} />
+      </Panel>
+      <Panel span="xlarge" eyebrow="Dependencies" title="Source readiness and validation gates" icon={<Network size={22} />}>
+        <SourceReadinessTable rows={data.directLinkValidation} limit={18} onSelect={(sourceId) => setDrawer({ kind: "source", id: sourceId })} />
+      </Panel>
+      <Panel span="normal" eyebrow="Model release gates" title="Validation, drift, release, rollback" icon={<BrainCircuit size={22} />}>
+        <RegistryTable rows={data.gatekeeper.validationDrift} columns={["asset_id", "primary_metric", "primary_metric_value", "drift_status", "release_gate"]} limit={8} />
+      </Panel>
+      <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
+    </section>
+  );
+}
+
+export function SignalSimulationsPage({
+  data,
+  context,
+  addMemoryEvent,
+}: {
+  data: V3Data;
+  context: AppContext;
+  addMemoryEvent: (event: DataRow) => void;
+}) {
+  const simulations = data.commandCenter.signalSimulations;
+  const [selectedId, setSelectedId] = useState(stringValue(simulations[0], "simulation_id"));
+  const [drawer, setDrawer] = useState<DrawerState>(null);
+  const selected = simulations.find((row) => stringValue(row, "simulation_id") === selectedId) ?? simulations[0] ?? {};
+  const timeline = (selected.timeline as DataRow[] | undefined) ?? [];
+  const factors = (selected.factors as DataRow[] | undefined) ?? [];
+  const coefficients = (selected.coefficients as DataRow[] | undefined) ?? [];
+  const baseline = (selected.baseline_vs_scenario as DataRow[] | undefined) ?? [];
+  const implementationSteps = (selected.implementation_steps as string[] | undefined) ?? [];
+
+  function captureReview() {
+    addMemoryEvent({
+      event_id: `EVT-SIGNAL-${Date.now()}`,
+      event_type: "signal_simulation_review",
+      created_at: new Date().toISOString(),
+      created_by: "showcase_local_user",
+      app_area: "AI Signals",
+      site_id: context.site,
+      unit_or_program: stringValue(selected, "domain"),
+      related_ids: stringValue(selected, "simulation_id"),
+      related_model_id: stringValue(selected, "simulation_id"),
+      status: "review captured locally",
+      severity: "medium",
+      note: `${stringValue(selected, "label")} reviewed as a synthetic implementation rehearsal.`,
+      payload_json: JSON.stringify({ synthetic_demo: true, simulation_id: stringValue(selected, "simulation_id") }),
+      synthetic_demo_flag: true,
+      writeback_table: "APP.MODEL_REVIEW_NOTE",
+    });
+  }
+
+  return (
+    <section className="dashboard-grid">
+      <Panel span="wide" eyebrow="AI Signal Simulations" title="Four deep-dive implementation rehearsals for high-value pediatric intelligence signals" icon={<Sparkles size={22} />}>
+        <p className="section-intro">
+          {contextSummary(data, context)}. These pages show how advanced signals could be governed, interpreted, validated, constrained, and learned from. They do not diagnose, triage, alarm, recommend treatment, or display patient identifiers.
+        </p>
+        <div className="segmented-control wrap" role="group" aria-label="AI simulation selector">
+          {simulations.map((simulation) => (
+            <button key={stringValue(simulation, "simulation_id")} className={selectedId === stringValue(simulation, "simulation_id") ? "active" : ""} onClick={() => setSelectedId(stringValue(simulation, "simulation_id"))}>
+              {stringValue(simulation, "label")}
+            </button>
+          ))}
+        </div>
+      </Panel>
+
+      <Panel span="wide" eyebrow={stringValue(selected, "domain")} title={stringValue(selected, "label", "Signal simulation")} icon={<BrainCircuit size={22} />}>
+        <div className="simulation-hero">
+          <div>
+            <strong>{stringValue(selected, "target_question")}</strong>
+            <p>{stringValue(selected, "so_what")}</p>
+            <p>{stringValue(selected, "now_what")}</p>
+          </div>
+          <DetailList
+            rows={[
+              ["Inspired by", stringValue(selected, "inspiration")],
+              ["Clinical boundary", stringValue(selected, "clinical_boundary")],
+              ["Cohort", stringValue(selected, "cohort")],
+              ["Model family", stringValue(selected, "model_family")],
+              ["Threshold logic", stringValue(selected, "threshold_logic")],
+              ["Validation", stringValue(selected, "validation_status")],
+              ["Governance", stringValue(selected, "governance_status")],
+            ]}
+          />
+        </div>
+      </Panel>
+
+      <WorkspaceMetricTile
+        label="Signal output"
+        value={titleCase(stringValue(selected, "primary_output"))}
+        detail="Primary synthetic model output for this rehearsal"
+        delta={stringValue(selected, "governance_status")}
+        tone={statusTone(selected.governance_status) === "high" ? "high" : "watch"}
+        classification="modelled"
+        sourceIds={csvIds(selected.source_ids)}
+        data={data}
+        onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+      />
+      <WorkspaceMetricTile
+        label="Feature families"
+        value={formatInteger(stringValue(selected, "feature_families").split(",").length)}
+        detail={stringValue(selected, "feature_families")}
+        delta="Transparent model wiring"
+        tone="watch"
+        classification="derived"
+        sourceIds={csvIds(selected.source_ids)}
+        data={data}
+        onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+      />
+      <WorkspaceMetricTile
+        label="Identifier stance"
+        value="Aggregate only"
+        detail="No direct personal identifiers or free-text extraction in the synthetic display"
+        delta="Aggregate feature windows only"
+        tone="good"
+        classification="governance"
+        sourceIds={csvIds(selected.source_ids)}
+        data={data}
+        onOpenSource={(sourceId) => setDrawer({ kind: "source", id: sourceId })}
+      />
+
+      <Panel span="xlarge" eyebrow="Risk trajectory" title="Forecast ribbon with uncertainty" icon={<Activity size={22} />}>
+        <ForecastRibbonChart rows={timeline} xKey={timeline[0]?.week ? "week" : "hour"} predictionKey="risk" lowerKey="lower" upperKey="upper" label={`${stringValue(selected, "label")} risk trajectory`} />
+      </Panel>
+      <Panel span="normal" eyebrow="Demand / supply" title="System factors shaping signal usefulness" icon={<Workflow size={22} />}>
+        <HorizontalBarChart rows={factors} labelKey="factor" valueKey="pressure" label="Signal pressure factors" />
+      </Panel>
+      <Panel span="normal" eyebrow="Coefficients" title="Transparent proxy feature weights" icon={<SlidersHorizontal size={22} />}>
+        <SensitivityTornado rows={coefficients} label={`${stringValue(selected, "label")} coefficients`} />
+      </Panel>
+      <Panel span="normal" eyebrow="Baseline vs governed signal" title="Decision-support comparison" icon={<GitBranch size={22} />}>
+        <RegistryTable rows={baseline} columns={["label", "value", "classification"]} limit={4} />
+      </Panel>
+      <Panel span="xlarge" eyebrow="Implementation steps" title="What has to be true before a real signal could be trusted" icon={<FileCheck2 size={22} />}>
+        <div className="phase-grid">
+          {implementationSteps.map((step, index) => (
+            <article key={step}>
+              <strong>{index + 1}. {step}</strong>
+              <em>Required before production display</em>
+            </article>
+          ))}
+        </div>
+      </Panel>
+      <Panel span="normal" eyebrow="Action loop" title="Capture a governed review note" icon={<History size={22} />}>
+        <button className="primary-action" onClick={captureReview}>
+          <Plus size={18} />
+          Capture signal review
+        </button>
+        <p className="muted">This writes only to local showcase memory; production would use governed Snowflake APP/GOVERNANCE tables.</p>
+      </Panel>
+      <Panel span="wide" eyebrow="Learning loop" title="How this signal moves from detection to learning" icon={<Workflow size={22} />}>
+        <ActionLearningLoopBoard data={data} loopId="LOOP-MODEL-READINESS" />
+      </Panel>
       <ObjectDrawer data={data} drawer={drawer} context={context} onClose={() => setDrawer(null)} setDrawer={setDrawer} />
     </section>
   );
@@ -1782,6 +2157,9 @@ export function LearningMemoryPage({
     <section className="dashboard-grid">
       <Panel span="wide" eyebrow="Learning System Memory" title="Snowflake writeback tables turn the product into a governed learning loop" icon={<History size={22} />}>
         <LineageCard data={data} panelId="PANEL_MEMORY" />
+      </Panel>
+      <Panel span="wide" eyebrow="Action and learning loop" title="Signals move from detection to review, action, follow-up, learning, and spread" icon={<Workflow size={22} />}>
+        <ActionLearningLoopBoard data={data} />
       </Panel>
       <Panel span="normal" eyebrow="Local showcase action" title="Capture an acknowledgement" icon={<Plus size={22} />}>
         <button className="primary-action" onClick={addAcknowledgement}>

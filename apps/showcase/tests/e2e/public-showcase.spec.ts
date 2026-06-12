@@ -6,6 +6,8 @@ const publicPages = [
   { button: "Ambulatory", text: "Ambulatory access command centre" },
   { button: "Predictive Assets", text: "Predictive asset layer" },
   { button: "Scenarios", text: "Interactive scenario lab" },
+  { button: "Readiness", text: "Data & Model Readiness" },
+  { button: "AI Signals", text: "AI Signal Simulations" },
   { button: "Gatekeeper", text: "Gatekeeper Control Plane" },
   { button: "Memory", text: "Learning System Memory" },
   { button: "Wiring", text: "Future Real-Data Wiring" },
@@ -140,10 +142,32 @@ test("scenario sliders, toggles, HR, and finance constraints recompute outputs",
   await expect(page.getByText("Finance cap", { exact: true })).toBeVisible();
 });
 
+test("readiness and AI signal simulation pages expose implementation transparency", async ({ page }) => {
+  await page.goto("/");
+  const nav = page.getByRole("navigation", { name: "Product areas" });
+
+  await nav.getByRole("button", { name: "Readiness", exact: true }).click();
+  await expect(page.getByText("Implementation transparency for feeds")).toBeVisible();
+  await expect(page.getByText("Blocked / not connected")).toBeVisible();
+  await page.getByRole("button", { name: /Pending Model/i }).click();
+  await expect(page.getByRole("cell", { name: "Rare-disease case-finding simulation" }).first()).toBeVisible();
+
+  await nav.getByRole("button", { name: "AI Signals", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Triage and LOS orchestration" })).toBeVisible();
+  await page.getByRole("button", { name: "Rare-disease case finding", exact: true }).click();
+  await expect(page.getByText("phenotype patterning")).toBeVisible();
+  await page.getByRole("button", { name: "NEC recognition rehearsal", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "NEC recognition rehearsal" })).toBeVisible();
+  await expect(page.getByText("Aggregate only")).toBeVisible();
+  await page.getByRole("button", { name: /Capture signal review/i }).click();
+  await nav.getByRole("button", { name: "Memory", exact: true }).click();
+  await expect(page.getByText("reviewed as a synthetic implementation rehearsal")).toBeVisible();
+});
+
 test("at least twenty interactive charts exist across the public workspace and layout avoids horizontal overflow", async ({ page }) => {
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Product areas" });
-  const pages = ["System Posture", "Inpatient", "Ambulatory", "Predictive Assets", "Scenarios"];
+  const pages = ["System Posture", "Inpatient", "Ambulatory", "Predictive Assets", "Scenarios", "AI Signals"];
   let chartCount = 0;
 
   for (const pageName of pages) {

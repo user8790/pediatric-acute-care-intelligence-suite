@@ -1721,6 +1721,27 @@
       "owner": "Synthetic data product steward",
       "last_reviewed_at": "2026-06-11T08:30:00-07:00",
       "caveat": "Synthetic v5 readiness: requires local owner review before production use."
+    },
+    {
+      "source_id": "SRC_SYNTH_NICU_FEATURE_WINDOWS",
+      "source_view_name": "VW_SYNTH_NICU_FEATURE_WINDOWS",
+      "curated_view": "CANONICAL.VW_SYNTH_NICU_FEATURE_WINDOWS",
+      "source_domain": "neonatal safety / surveillance",
+      "source_view_present": "pass",
+      "field_populated": "pass",
+      "freshness": "pass",
+      "row_count": "pass",
+      "timestamp_logic": "pass",
+      "referential_integrity": "pass",
+      "metric_definition_approved": "pass",
+      "small_cell_suppression": "pass",
+      "overall_readiness": "ready",
+      "stoplight": "green",
+      "freshness_minutes": 507,
+      "row_count_value": 8006,
+      "owner": "Synthetic data product steward",
+      "last_reviewed_at": "2026-06-11T08:30:00-07:00",
+      "caveat": "Synthetic readiness demonstration; production use needs source-by-source signoff."
     }
   ]
 }

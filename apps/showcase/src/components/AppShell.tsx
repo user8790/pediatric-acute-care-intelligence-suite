@@ -23,6 +23,8 @@ export type PageId =
   | "ambulatory"
   | "predictive"
   | "scenarios"
+  | "readiness"
+  | "signals"
   | "gatekeeper"
   | "memory"
   | "wiring"
@@ -36,6 +38,8 @@ export const PUBLIC_PAGES: PageConfig[] = [
   { id: "ambulatory", label: "Ambulatory", icon: CalendarClock },
   { id: "predictive", label: "Predictive Assets", icon: BrainCircuit },
   { id: "scenarios", label: "Scenarios", icon: SlidersHorizontal },
+  { id: "readiness", label: "Readiness", icon: DatabaseZap },
+  { id: "signals", label: "AI Signals", icon: Sparkles },
   { id: "gatekeeper", label: "Gatekeeper", icon: ShieldCheck },
   { id: "memory", label: "Memory", icon: History },
   { id: "wiring", label: "Wiring", icon: Network },

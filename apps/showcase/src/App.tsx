@@ -8,9 +8,11 @@ import {
   FrontierInpatientPage,
   FutureWiringPage,
   GatekeeperControlPlanePage,
+  ImplementationReadinessPage,
   LearningMemoryPage,
   PredictiveAssetsPage,
   ScenarioLabPage,
+  SignalSimulationsPage,
   SystemPosturePage,
 } from "./pages/FrontierPages";
 import { WalkthroughPage } from "./pages/WalkthroughPage";
@@ -72,6 +74,8 @@ function App() {
       {activePage === "ambulatory" && <FrontierAmbulatoryPage data={data} context={context} />}
       {activePage === "predictive" && <PredictiveAssetsPage data={data} context={context} />}
       {activePage === "scenarios" && <ScenarioLabPage data={data} context={context} addMemoryEvent={addMemoryEvent} />}
+      {activePage === "readiness" && <ImplementationReadinessPage data={data} context={context} />}
+      {activePage === "signals" && <SignalSimulationsPage data={data} context={context} addMemoryEvent={addMemoryEvent} />}
       {activePage === "gatekeeper" && <GatekeeperControlPlanePage data={data} />}
       {activePage === "memory" && <LearningMemoryPage data={data} events={events} addMemoryEvent={addMemoryEvent} />}
       {activePage === "wiring" && <FutureWiringPage data={data} />}

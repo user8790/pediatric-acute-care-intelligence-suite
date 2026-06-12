@@ -513,6 +513,12 @@
       "future_mapping_placeholder": "CURATED_SRC_OPEN_ED_WAIT_TIME_LOGIC_VIEW_MAPPING_TBD",
       "first_validation": "source view present, fields populated, freshness, row count",
       "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
+    },
+    {
+      "source_id": "SRC_SYNTH_NICU_FEATURE_WINDOWS",
+      "future_mapping_placeholder": "CURATED_SRC_SYNTH_NICU_FEATURE_WINDOWS_VIEW_MAPPING_TBD",
+      "first_validation": "source view present, fields populated, freshness, row count",
+      "production_note": "Map only through curated governed views; never hardcode confidential operational table names."
     }
   ]
 }

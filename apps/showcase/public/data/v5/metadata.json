@@ -1,0 +1,9 @@
+{
+  "appVersion": "v5.0",
+  "generatedAt": "2026-06-11T08:30:00-07:00",
+  "mode": "Synthetic demonstration data",
+  "clinicalUse": "Not validated for clinical decision-making",
+  "historyWindow": "Synthetic 24-month replay plus 52-week cached public-context layer",
+  "sourceBoundary": "Future real data maps through curated governed Snowflake views only.",
+  "productName": "Pediatric Command Centre / Progression Hub"
+}

@@ -1,30 +1,50 @@
 import {
   BedDouble,
   CalendarClock,
+  BrainCircuit,
   DatabaseZap,
   FileText,
-  FlaskConical,
   HeartPulse,
+  History,
   Home,
   MapPinned,
+  Network,
   ShieldCheck,
   SlidersHorizontal,
   Sparkles,
+  Workflow,
 } from "lucide-react";
-import type { AppContext, Metadata } from "../data/types";
+import type { AppContext, ControlOptions, Metadata } from "../data/types";
 import { HORIZONS, PERSONAS, SITES } from "../data/types";
 
-export type PageId = "overview" | "inpatient" | "ambulatory" | "simulation" | "methods" | "governance" | "walkthrough";
+export type PageId =
+  | "posture"
+  | "ops"
+  | "inpatient"
+  | "ambulatory"
+  | "predictive"
+  | "scenarios"
+  | "readiness"
+  | "signals"
+  | "gatekeeper"
+  | "memory"
+  | "wiring"
+  | "walkthrough";
 
 type PageConfig = { id: PageId; label: string; icon: typeof Home };
 
 export const PUBLIC_PAGES: PageConfig[] = [
-  { id: "overview", label: "Overview", icon: Home },
+  { id: "posture", label: "System Posture", icon: Home },
+  { id: "ops", label: "Command Desk", icon: Workflow },
   { id: "inpatient", label: "Inpatient", icon: BedDouble },
   { id: "ambulatory", label: "Ambulatory", icon: CalendarClock },
-  { id: "simulation", label: "Simulation", icon: SlidersHorizontal },
-  { id: "methods", label: "Methods", icon: FlaskConical },
-  { id: "governance", label: "Governance", icon: ShieldCheck },
+  { id: "predictive", label: "Predictive Assets", icon: BrainCircuit },
+  { id: "scenarios", label: "Scenarios", icon: SlidersHorizontal },
+  { id: "readiness", label: "Readiness", icon: DatabaseZap },
+  { id: "signals", label: "AI Signals", icon: Sparkles },
+  { id: "gatekeeper", label: "Gatekeeper", icon: ShieldCheck },
+  { id: "memory", label: "Memory", icon: History },
+  { id: "wiring", label: "Wiring", icon: Network },
 ];
 
 export const INTERNAL_PAGES: PageConfig[] = [
@@ -40,13 +60,13 @@ export function AppHeader({ metadata, isLoading }: { metadata: Metadata; isLoadi
         </div>
         <div>
           <p className="eyebrow">Pediatric Acute Care Intelligence Suite</p>
-          <h1>Executive command centre for inpatient flow and ambulatory access</h1>
+          <h1>{metadata.productName ?? "Provincial Pediatric Acute Care Intelligence Operating Layer"}</h1>
         </div>
       </div>
       <div className="status-stack">
         <span className="status-pill">{metadata.mode}</span>
         <span className="status-pill quiet">{metadata.clinicalUse}</span>
-        {isLoading && <span className="status-pill loading">Loading v2 assets</span>}
+        {isLoading && <span className="status-pill loading">Loading v5 assets</span>}
       </div>
     </header>
   );
@@ -56,10 +76,12 @@ export function ControlBand({
   context,
   setContext,
   generatedAt,
+  controlOptions,
 }: {
   context: AppContext;
   setContext: (context: AppContext) => void;
   generatedAt: string;
+  controlOptions: ControlOptions;
 }) {
   return (
     <section className="control-band" aria-label="Product controls">
@@ -89,13 +111,60 @@ export function ControlBand({
           ))}
         </select>
       </label>
+      <label>
+        Service
+        <select
+          value={context.service}
+          onChange={(event) => setContext({ ...context, service: event.target.value, unit: "All units" })}
+        >
+          {controlOptions.services.map((service) => (
+            <option key={service.value} value={service.value}>
+              {service.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Unit
+        <select value={context.unit} onChange={(event) => setContext({ ...context, unit: event.target.value })}>
+          {controlOptions.units.map((unit) => (
+            <option key={unit.value} value={unit.value}>
+              {unit.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Program
+        <select value={context.program} onChange={(event) => setContext({ ...context, program: event.target.value })}>
+          {controlOptions.programs.map((program) => (
+            <option key={program.value} value={program.value}>
+              {program.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Scenario
+        <select value={context.scenario} onChange={(event) => setContext({ ...context, scenario: event.target.value })}>
+          {controlOptions.scenarios.map((scenario) => (
+            <option key={scenario.value} value={scenario.value}>
+              {scenario.label}
+            </option>
+          ))}
+        </select>
+      </label>
       <div className="freshness">
         <DatabaseZap size={18} />
         <span>Generated {new Date(generatedAt).toLocaleString()}</span>
       </div>
       <div className="freshness">
         <MapPinned size={18} />
-        <span>Curated-view real-data path, synthetic demo only</span>
+        <span>Direct, derived, and modelled layers; synthetic demo only</span>
+      </div>
+      <div className="freshness">
+        <Workflow size={18} />
+        <span>Snowflake writeback path for learning memory</span>
       </div>
     </section>
   );
@@ -131,7 +200,7 @@ export function ProductFooter() {
     <footer>
       Synthetic demonstration data only. Not connected to real hospital systems. Not validated for clinical decision-making. Future production use requires local governance, validation, and curated governed views.
       <span>
-        <FileText size={15} /> v2 Snowflake transferability hardening
+        <FileText size={15} /> v5 command-centre prototype
       </span>
     </footer>
   );

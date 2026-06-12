@@ -8,7 +8,9 @@
     "build:showcase": "pnpm --dir apps/showcase build",
     "test:showcase:e2e": "pnpm --dir apps/showcase test:e2e",
     "test:py": "python -m pytest",
-    "generate:data": "python packages/synthetic/generate_synthetic_data.py"
+    "generate:data": "python packages/synthetic/generate_synthetic_data.py && python packages/synthetic/generate_v3_frontier_data.py && python packages/synthetic/generate_v5_command_center_data.py",
+    "generate:v3": "python packages/synthetic/generate_v3_frontier_data.py",
+    "generate:v5": "python packages/synthetic/generate_v5_command_center_data.py"
   },
   "workspaces": [
     "apps/showcase"

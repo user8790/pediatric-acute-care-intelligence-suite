@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -27,6 +29,7 @@ try:
         panel_note,
         safe_metric,
         status_panel,
+        try_store_learning_event,
         try_store_scenario,
     )
 except Exception:  # pragma: no cover - local repo fallback
@@ -37,6 +40,7 @@ except Exception:  # pragma: no cover - local repo fallback
         panel_note,
         safe_metric,
         status_panel,
+        try_store_learning_event,
         try_store_scenario,
     )
 
@@ -54,6 +58,10 @@ TRAVEL_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.MART.MART_V2_AMBULATORY_TRAVEL OR
 QUALITY_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.MART.MART_V2_DATA_QUALITY_STATUS ORDER BY table_name, check_name"
 MODEL_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.MODEL.DIM_V2_MODEL_REGISTRY ORDER BY model_id"
 COEFFICIENT_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.MODEL.DIM_V2_COEFFICIENT_REGISTRY ORDER BY coefficient_name"
+V3_READINESS_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.GOVERNANCE.V3_DIRECT_LINK_VALIDATION ORDER BY source_id"
+V3_MODEL_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.MODEL.V3_MODEL_REGISTRY ORDER BY asset_id"
+V3_EVENT_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.APP.V3_LEARNING_SYSTEM_EVENT ORDER BY created_at DESC"
+V3_WARNING_SQL = "SELECT * FROM PEDIATRIC_AHA_DEMO.CONFIG.V3_WARNING_LOGIC_REGISTRY ORDER BY warning_id"
 
 mission = load_table_or_sample(MISSION_SQL, "v2_ambulatory_mission.csv")
 access = load_table_or_sample(ACCESS_SQL, "v2_ambulatory_access.csv")
@@ -67,6 +75,10 @@ travel = load_table_or_sample(TRAVEL_SQL, "v2_ambulatory_travel.csv")
 quality = load_table_or_sample(QUALITY_SQL, "v2_data_quality.csv")
 models = load_table_or_sample(MODEL_SQL, "v2_model_registry.csv")
 coefficients = load_table_or_sample(COEFFICIENT_SQL, "v2_coefficient_registry.csv")
+v3_readiness = load_table_or_sample(V3_READINESS_SQL, "v3_direct_link_validation.csv")
+v3_models = load_table_or_sample(V3_MODEL_SQL, "v3_model_registry.csv")
+v3_events = load_table_or_sample(V3_EVENT_SQL, "v3_learning_system_events.csv")
+v3_warnings = load_table_or_sample(V3_WARNING_SQL, "v3_warning_logic_registry.csv")
 
 last_refresh = None
 if "data_freshness" in mission.data.columns and not mission.data.empty:
@@ -142,6 +154,9 @@ tabs = st.tabs(
         "Scenario Lab",
         "Data Quality",
         "Model Registry / Methods",
+        "v3 Source Readiness",
+        "v3 Predictive Assets",
+        "v3 Learning Notes",
     ]
 )
 
@@ -322,3 +337,72 @@ with tabs[7]:
         "Methods caveat",
         "Streamlit/Snowflake uses SQL-precomputed scenario tables, coefficient registries, Snowflake-compatible analytics packages, and deterministic fallbacks. Advanced simulation packages are not required in this path.",
     )
+
+with tabs[8]:
+    st.subheader("v3 ambulatory source readiness")
+    readiness_view = v3_readiness.data.copy()
+    if not readiness_view.empty and "source_domain" in readiness_view.columns:
+        readiness_view = readiness_view[
+            readiness_view["source_domain"].astype(str).str.contains("ambulatory|model / governance|open data", case=False, regex=True, na=False)
+        ]
+    if not readiness_view.empty:
+        fig = px.histogram(readiness_view, x="overall_readiness", color="source_domain", title="v3 source-readiness overlay for ambulatory panels")
+        st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(readiness_view, use_container_width=True, hide_index=True)
+    panel_note(
+        "v3 source boundary",
+        "The access centre can read v3 referral, waitlist, clinic-template, diagnostic-readiness, and governance views without adding showcase-only dependencies.",
+    )
+
+with tabs[9]:
+    st.subheader("v3 predictive assets and governed warning logic")
+    ambulatory_asset_tokens = ["AMB_", "NO_SHOW", "URGENT", "DIAGNOSTIC"]
+    model_view = v3_models.data.copy()
+    if not model_view.empty and "asset_id" in model_view.columns:
+        model_view = model_view[model_view["asset_id"].astype(str).str.contains("|".join(ambulatory_asset_tokens), regex=True, na=False)]
+        st.dataframe(model_view, use_container_width=True, hide_index=True)
+    warning_view = v3_warnings.data.copy()
+    if not warning_view.empty and "asset_id" in warning_view.columns:
+        warning_view = warning_view[warning_view["asset_id"].astype(str).str.contains("|".join(ambulatory_asset_tokens), regex=True, na=False)]
+        fig = px.histogram(warning_view, x="severity", color="status", title="Ambulatory-linked v3 warning rules")
+        st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(warning_view, use_container_width=True, hide_index=True)
+    panel_note(
+        "Access safety boundary",
+        "No-show and waitlist-breach assets are planning and huddle aids only. They must not automate individual scheduling action without local governance.",
+    )
+
+with tabs[10]:
+    st.subheader("v3 learning-system notes")
+    event_view = v3_events.data.copy()
+    if not event_view.empty and "related_panel_id" in event_view.columns:
+        event_view = event_view[event_view["related_panel_id"].astype(str).isin(["PANEL_AMBULATORY_COMMAND", "PANEL_SCENARIO_LAB"])]
+    st.dataframe(event_view, use_container_width=True, hide_index=True)
+    with st.form("ambulatory-v3-learning-note"):
+        related_metric_id = st.text_input("Related metric id", value="METRIC_WAITLIST_PRESSURE")
+        related_model_id = st.text_input("Related model id", value="URGENT_WAITLIST_BREACH_RISK")
+        related_panel_id = st.text_input("Related panel id", value="PANEL_AMBULATORY_COMMAND")
+        related_scenario_id = st.text_input("Related scenario id", value="SCN-AMB-001")
+        note = st.text_area("Synthetic note", value="Ambulatory huddle reviewed urgent-slot protection and diagnostic readiness.")
+        submitted = st.form_submit_button("Store v3 learning note")
+    if submitted:
+        payload = {
+            "event_id": f"AMB-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}",
+            "event_type": "huddle_review_event",
+            "created_at": datetime.now(UTC).isoformat(),
+            "created_by": "synthetic_snowflake_user",
+            "app_area": "Ambulatory Access Intelligence",
+            "site_id": site if site != "All sites" else "SITE_PROV_NETWORK",
+            "unit_or_program": program if program != "All programs" else "Access centre",
+            "related_ids": ",".join(value for value in [related_metric_id, related_model_id, related_panel_id, related_scenario_id] if value),
+            "related_metric_id": related_metric_id,
+            "related_model_id": related_model_id,
+            "related_panel_id": related_panel_id,
+            "related_scenario_id": related_scenario_id,
+            "status": "submitted",
+            "severity": "medium",
+            "note": note,
+            "payload_json": json.dumps({"synthetic_demo": True, "app": "ambulatory_access_centre"}),
+            "synthetic_demo_flag": True,
+        }
+        st.success(try_store_learning_event("APP.HUDDLE_REVIEW_EVENT", payload))

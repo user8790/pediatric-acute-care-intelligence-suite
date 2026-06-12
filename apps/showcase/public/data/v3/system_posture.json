@@ -1,0 +1,88 @@
+{
+  "kpis": [
+    {
+      "label": "Network occupancy",
+      "value": "93.4%",
+      "detail": "Effective staffed beds across synthetic pediatric network",
+      "delta": "+2.8 pts",
+      "tone": "watch",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    },
+    {
+      "label": "ED boarder hours",
+      "value": "186",
+      "detail": "Next 24h forecast, synthetic",
+      "delta": "+21",
+      "tone": "high",
+      "panel_id": "PANEL_SYSTEM_POSTURE"
+    },
+    {
+      "label": "Ambulatory backlog",
+      "value": "8,940",
+      "detail": "Waitlist records in aggregate synthetic marts",
+      "delta": "+4.6%",
+      "tone": "watch",
+      "panel_id": "PANEL_AMBULATORY_COMMAND"
+    },
+    {
+      "label": "Governed active assets",
+      "value": "15",
+      "detail": "Model cards with review state and fallback",
+      "delta": "3 review",
+      "tone": "neutral",
+      "panel_id": "PANEL_GATEKEEPER"
+    }
+  ],
+  "postureCards": [
+    {
+      "label": "Why this changed",
+      "value": "Respiratory + staffing + discharge reliability",
+      "detail": "Occupancy moved because effective beds fell while respiratory demand and discharge barriers rose.",
+      "tone": "watch"
+    },
+    {
+      "label": "Huddle mode",
+      "value": "3 decisions",
+      "detail": "Protect PICU step-down, advance discharge barriers, add urgent ambulatory slots.",
+      "tone": "steady"
+    },
+    {
+      "label": "Readiness overlay",
+      "value": "63 green / 7 yellow / 3 gray",
+      "detail": "Full v3 source catalog is wired with explicit owner-review and not-yet-mapped states.",
+      "tone": "watch"
+    },
+    {
+      "label": "Learning memory",
+      "value": "12 events this week",
+      "detail": "Scenario runs, warning acknowledgements, issue flags, and governance decisions are captured.",
+      "tone": "steady"
+    }
+  ],
+  "whyChanged": [
+    {
+      "driver": "Respiratory activity",
+      "change": "+7.2%",
+      "contribution": 34,
+      "evidence": "OPEN_DATA.VW_OPEN_RESPIRATORY_ACTIVITY rose above seasonal baseline."
+    },
+    {
+      "driver": "Effective staffed beds",
+      "change": "-11 beds",
+      "contribution": 29,
+      "evidence": "CANONICAL.VW_SYNTH_STAFFING_ROSTER shows skill-mix gaps in PICU/NICU and respiratory units."
+    },
+    {
+      "driver": "Discharge reliability",
+      "change": "-4.8 pts",
+      "contribution": 22,
+      "evidence": "Discharge milestone barriers concentrated in pharmacy, transport, and family readiness."
+    },
+    {
+      "driver": "Ambulatory diagnostic readiness",
+      "change": "-6.1 pts",
+      "contribution": 15,
+      "evidence": "Dependency completion lag affects complex care and neurology backlogs."
+    }
+  ]
+}

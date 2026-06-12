@@ -6,6 +6,7 @@ def test_streamlit_apps_compile():
     files = [
         Path("apps/snowflake_streamlit/inpatient/streamlit_app.py"),
         Path("apps/snowflake_streamlit/ambulatory/streamlit_app.py"),
+        Path("apps/snowflake_streamlit/gatekeeper_control_plane/streamlit_app.py"),
         Path("apps/snowflake_streamlit/shared/lib/common.py"),
         Path("apps/streamlit_cloud/inpatient/streamlit_app.py"),
         Path("apps/streamlit_cloud/ambulatory/streamlit_app.py"),

@@ -7,6 +7,7 @@ export type Metadata = {
   clinicalUse: string;
   historyWindow: string;
   sourceBoundary: string;
+  productName?: string;
 };
 
 export type RowsPayload = { rows: DataRow[] };
@@ -49,10 +50,107 @@ export type V2Data = {
   coefficients: DataRow[];
 };
 
+export type V3Data = {
+  metadata: Metadata & { productName?: string };
+  sourceRegistry: DataRow[];
+  directLinkValidation: DataRow[];
+  metricRegistry: DataRow[];
+  modelRegistry: DataRow[];
+  panelLineage: DataRow[];
+  systemPosture: {
+    kpis: DataRow[];
+    postureCards: DataRow[];
+    whyChanged: DataRow[];
+  };
+  inpatient: {
+    unitPressure: DataRow[];
+    unitDetails: DataRow[];
+    unitTimeline: DataRow[];
+    flowDrivers: DataRow[];
+    forecast: DataRow[];
+    warnings: DataRow[];
+  };
+  ambulatory: {
+    programAccess: DataRow[];
+    programDetails: DataRow[];
+    programTimeline: DataRow[];
+    noShowFrontier: DataRow[];
+    forecast: DataRow[];
+    warnings: DataRow[];
+  };
+  predictiveAssets: {
+    signals: DataRow[];
+    evidenceTrails: DataRow[];
+  };
+  scenarioLab: {
+    scenarios: DataRow[];
+    comparisons: DataRow[];
+    baselines: DataRow[];
+    controlRanges: DataRow[];
+  };
+  gatekeeper: {
+    controlPlane: DataRow[];
+    dependencyEdges: DataRow[];
+    issues: DataRow[];
+    approvals: DataRow[];
+    warningLogic: DataRow[];
+    coefficients: DataRow[];
+    dataQualityRules: DataRow[];
+    validationDrift: DataRow[];
+    releaseRollback: DataRow[];
+  };
+  learningMemory: {
+    events: DataRow[];
+    writebackTables: DataRow[];
+  };
+  futureWiring: {
+    phases: DataRow[];
+    mappings: DataRow[];
+  };
+  commandCenter: {
+    sites: DataRow[];
+    serviceLines: DataRow[];
+    programs: DataRow[];
+    openContext: DataRow[];
+    edWaitLogic: DataRow[];
+    scenarioAssumptions: DataRow[];
+    warnings: DataRow[];
+    lakehouseTables: DataRow[];
+    chartCatalog: string[];
+    interpretations: DataRow[];
+    roleGuidance: DataRow[];
+    implementationReadiness: DataRow[];
+    actionLearningLoops: DataRow[];
+    signalSimulations: DataRow[];
+    decisionPackets: DataRow[];
+    packetReadinessGates: DataRow[];
+    operatingCadence: DataRow[];
+    escalationLanes: DataRow[];
+    productionRunway: DataRow[];
+    integrationDependencies: DataRow[];
+  };
+};
+
 export type AppContext = {
   persona: string;
   site: string;
   horizon: string;
+  service: string;
+  unit: string;
+  program: string;
+  scenario: string;
+};
+
+export type SelectOption = {
+  value: string;
+  label: string;
+};
+
+export type ControlOptions = {
+  services: SelectOption[];
+  units: SelectOption[];
+  programs: SelectOption[];
+  scenarios: SelectOption[];
 };
 
 export const PERSONAS = [
